@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOU MATTER - Mental Health Support & Resources</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Hero Section Enhancements */
+        .text-box h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .text-box p {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Main Sections */
+        .homepage-section {
+            width: 100%;
+            padding: 80px 20px;
+        }
+
+        .homepage-section h2 {
+            text-align: center;
+            font-size: 2.4rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .homepage-section-subtitle {
+            text-align: center;
+            font-size: 1.05rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            line-height: 1.7;
+        }
+
+        /* Four Tab Section */
+        .four-tabs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .four-tab {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(13, 43, 87, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .four-tab:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(13, 43, 87, 0.15);
+        }
+
+        .four-tab-icon {
+            font-size: 48px;
+            color: #ff8c3a;
+            margin-bottom: 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .four-tab h3 {
+            font-size: 1.6rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .four-tab p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .four-tab-btn {
+            display: inline-block;
+            background: #ff8c3a;
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            align-self: center;
+        }
+
+        .four-tab-btn:hover {
+            background: #e67e2f;
+        }
+
+        /* Quick Links Section */
+        .quick-links-section {
+            background: #f7fafc;
+            padding: 80px 20px;
+        }
+
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .quick-link-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 16px rgba(13, 43, 87, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-card:hover {
+            box-shadow: 0 10px 25px rgba(13, 43, 87, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .quick-link-card i {
+            font-size: 36px;
+            color: #ff8c3a;
+            margin-bottom: 12px;
+        }
+
+        .quick-link-card h4 {
+            font-size: 1.1rem;
+            color: #0d2b57;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .quick-link-card p {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .quick-link-card a {
+            color: #ff8c3a;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .quick-link-card a:hover {
+            color: #e67e2f;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0d2b57 0%, #1a3a6e 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .cta-section h2 {
+            color: #ffffff;
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #ffffff;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #ff8c3a;
+            color: #ffffff;
+            padding: 16px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 18px rgba(255, 140, 58, 0.3);
+        }
+
+        .cta-btn:hover {
+            background: #e67e2f;
+            box-shadow: 0 12px 24px rgba(255, 140, 58, 0.4);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .text-box h1 {
+                font-size: 48px;
+            }
+
+            .text-box p {
+                font-size: 16px;
+            }
+
+            .homepage-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .four-tab h3 {
+                font-size: 1.3rem;
+            }
+
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer Styling Override */
+        .footer {
+            background: #0d2b57;
+            color: #ffffff;
+        }
+
+        .footer h4 {
+            color: #ffffff;
+        }
+
+        .footer p {
+            color: #e4edf9;
+        }
+
+        .footer i {
+            color: #ff8c3a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html" aria-current="page">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                            <li><a href="about-youmatter.html#mission">Our Mission</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <div class="text-box">
+            <h1>YOU MATTER</h1>
+            <p>Your mental health deserves care, support, and resources. We're here to help you take that first step.</p>
+            <a href="#main-tabs" class="hero-btn">Explore Resources</a>
+        </div>
+    </section>    <!-- Main Four Tabs Section -->
+    <section class="homepage-section" id="main-tabs">
+        <h2>Explore YOU MATTER</h2>
+        <p class="homepage-section-subtitle">Everything you need to understand mental health, get support, and connect with others on similar journeys.</p>
+        
+        <div class="four-tabs-container">
+            <!-- Tab 1: About Us -->
+            <a href="about-youmatter.html" class="four-tab">
+                <div class="four-tab-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>About Us</h3>
+                <p>Learn about YOU MATTER's mission, who we are, and why we started this journey to make mental health care accessible to everyone.</p>
+                <span class="four-tab-btn">Learn More</span>
+            </a>
+
+            <!-- Tab 2: Mental Health Conditions -->
+            <a href="disorders.html" class="four-tab">
+                <div class="four-tab-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Mental Health Conditions</h3>
+                <p>Learn about common mental health conditions, their symptoms, and treatment options. Understanding is the first step toward healing.</p>
+                <span class="four-tab-btn">Explore</span>
+            </a>
+
+            <!-- Tab 3: Testimonials -->
+            <a href="testimonials.html" class="four-tab">
+                <div class="four-tab-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Stories of Hope</h3>
+                <p>Real people, real journeys. Read inspiring stories from individuals who've navigated their mental health challenges and found support.</p>
+                <span class="four-tab-btn">Read Stories</span>
+            </a>
+
+            <!-- Tab 4: Blog -->
+            <a href="blog.html" class="four-tab">
+                <div class="four-tab-icon">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <h3>Blog & Insights</h3>
+                <p>Stay informed with articles, tips, and insights about mental health, wellness strategies, and self-care practices.</p>
+                <span class="four-tab-btn">Read Blog</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Quick Links Section -->
+    <section class="quick-links-section">
+        <h2 style="margin-bottom: 16px;">Quick Access</h2>
+        <p class="homepage-section-subtitle">Go straight to what you need.</p>
+
+        <div class="quick-links-grid">
+            <div class="quick-link-card">
+                <i class="fas fa-stethoscope"></i>
+                <h4>Mental Health Conditions</h4>
+                <p>Understand anxiety, depression, ADHD, and more.</p>
+                <a href="disorders.html">Learn More →</a>
+            </div>
+
+            <div class="quick-link-card">
+                <i class="fas fa-calendar-check"></i>
+                <h4>Book an Appointment</h4>
+                <p>Schedule a session with a mental health professional.</p>
+                <a href="appointment.html">Book Now →</a>
+            </div>
+
+            <div class="quick-link-card">
+                <i class="fas fa-check-circle"></i>
+                <h4>Mental Health Check-in</h4>
+                <p>Take a quick self-assessment to check how you're doing.</p>
+                <a href="check-in.html">Start →</a>
+            </div>
+
+            <div class="quick-link-card">
+                <i class="fas fa-lightbulb"></i>
+                <h4>Wellness Tips</h4>
+                <p>Get practical advice and self-care strategies.</p>
+                <a href="blog.html">Explore →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Take the First Step?</h2>
+        <p>Your mental health matters. Whether you're looking for information, support, or just want to understand yourself better, we're here to help.</p>
+        <a href="about-youmatter.html" class="cta-btn">Explore Support Options</a>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>
+</body>
+</html>

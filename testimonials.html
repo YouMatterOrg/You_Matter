@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Content Section Padding */
+        .content-section {
+            padding: 60px 20px;
+        }
+
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Stories of Hope Heading */
+        .content-section h2 {
+            padding: 20px 0;
+            font-size: 2.4rem;
+        }
+
+        .content-section > div > p {
+            padding: 0 20px 30px;
+        }
+
+        .testimonial-card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(13, 43, 87, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(13, 43, 87, 0.15);
+        }
+
+        .testimonial-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-image-wrapper {
+            cursor: pointer;
+        }
+
+        .testimonial-image {
+            width: 200px;
+            height: 250px;
+            object-fit: cover;
+            background: #f0f4f8;
+            margin: 0 auto;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .testimonial-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-card h3 {
+            color: #0d2b57;
+            font-size: 1.4rem;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+        }
+
+        .testimonial-role {
+            color: #ff8c3a;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .testimonial-quote {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .learn-more-btn {
+            display: inline-block;
+            background: #ff8c3a;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            text-align: center;
+        }
+
+        .learn-more-btn:hover {
+            background: #e67e2f;
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html" aria-current="page">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Testimonials</h1>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container">
+            <h2 style="text-align: center; color: #0d2b57; margin-bottom: 10px;">Stories of Hope</h2>
+            <p style="text-align: center; color: #4a5568; max-width: 800px; margin: 0 auto 40px;">Real people, real journeys. These stories remind us that change is possible and help is worth it.</p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <a href="testimonial-maya.html" class="testimonial-card-link">
+                        <div class="testimonial-image-wrapper">
+                            <img src="images/maya.png" alt="Maya" class="testimonial-image">
+                        </div>
+                        <div class="testimonial-content">
+                            <h3>Maya</h3>
+                            <p class="testimonial-role">Former Bartender</p>
+                            <p class="testimonial-quote">I spent years behind a bar pretending everything was fine. It took walking away from the job to finally start walking back to myself.</p>
+                            <span class="learn-more-btn">Learn More</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="testimonial-card">
+                    <a href="testimonial-jordan.html" class="testimonial-card-link">
+                        <div class="testimonial-image-wrapper">
+                            <img src="images/jordan.png" alt="Jordan" class="testimonial-image">
+                        </div>
+                        <div class="testimonial-content">
+                            <h3>Jordan</h3>
+                            <p class="testimonial-role">High School Student</p>
+                            <p class="testimonial-quote">Anxiety used to control my school day. Once I understood what was happening, I learned how to work with my brain instead of against it.</p>
+                            <span class="learn-more-btn">Learn More</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="testimonial-card">
+                    <a href="testimonial-alex.html" class="testimonial-card-link">
+                        <div class="testimonial-image-wrapper">
+                            <img src="images/alex.png" alt="Alex" class="testimonial-image">
+                        </div>
+                        <div class="testimonial-content">
+                            <h3>Alex</h3>
+                            <p class="testimonial-role">College Student</p>
+                            <p class="testimonial-quote">College wasn't the "best years of my life" at first. Getting support for depression helped me feel present again.</p>
+                            <span class="learn-more-btn">Learn More</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="testimonial-card">
+                    <a href="testimonial-riley.html" class="testimonial-card-link">
+                        <div class="testimonial-image-wrapper">
+                            <img src="images/riley.png" alt="Riley" class="testimonial-image">
+                        </div>
+                        <div class="testimonial-content">
+                            <h3>Riley</h3>
+                            <p class="testimonial-role">Teacher</p>
+                            <p class="testimonial-quote">Burnout almost made me leave teaching for good. Naming what I was going through gave me a way to rebuild.</p>
+                            <span class="learn-more-btn">Learn More</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="testimonial-card">
+                    <a href="testimonial-noah.html" class="testimonial-card-link">
+                        <div class="testimonial-image-wrapper">
+                            <img src="images/noah.png" alt="Noah" class="testimonial-image">
+                        </div>
+                        <div class="testimonial-content">
+                            <h3>Noah</h3>
+                            <p class="testimonial-role">Student Athlete</p>
+                            <p class="testimonial-quote">I went from hiding my panic attacks to talking about them with my coach and team. Asking for help made me stronger.</p>
+                            <span class="learn-more-btn">Learn More</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="testimonial-card">
+                    <a href="testimonial-leah.html" class="testimonial-card-link">
+                        <div class="testimonial-image-wrapper">
+                            <img src="images/leah.png" alt="Leah" class="testimonial-image">
+                        </div>
+                        <div class="testimonial-content">
+                            <h3>Leah</h3>
+                            <p class="testimonial-role">Older Sister</p>
+                            <p class="testimonial-quote">Supporting my brother through depression taught me that families don't have to do this alone. It's okay to ask for backup.</p>
+                            <span class="learn-more-btn">Learn More</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>

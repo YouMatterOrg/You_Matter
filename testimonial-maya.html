@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya's Story - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Page body section (same pattern as other content pages) */
+        .content-section {
+            width: 100%;
+            background: #ffffff;
+            padding: 60px 20px 70px;
+        }
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ---------- HERO PANEL (matches screenshot style) ---------- */
+        .story-hero-panel {
+            background: #2c4e83; /* deep blue */
+            border-radius: 32px;
+            padding: 40px 34px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle diagonal overlay on the right */
+        .story-hero-panel::after {
+            content: "";
+            position: absolute;
+            right: -120px;
+            top: -80px;
+            width: 60%;
+            height: 160%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(12,29,54,0.2));
+            transform: skewX(-6deg);
+        }
+
+        .story-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* circular image on the left */
+        .story-image-wrap {
+            flex: 0 0 260px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .story-image {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #f8e6d1;  /* light border ring */
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+            background: #d9d9d9; /* placeholder bg if image missing */
+        }
+
+        /* text on the right */
+        .story-intro {
+            flex: 1;
+            min-width: 260px;
+            color: #f7fafc;
+        }
+
+        .story-name {
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #e4edf9;
+        }
+
+        .story-intro h2 {
+            color: #ff9f3b;           /* warm orange headline */
+            font-size: 2.4rem;
+            margin: 0 0 18px 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .story-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin: 0;
+            color: #fdfdfd;
+        }
+
+        @media (max-width: 900px) {
+            .story-hero-panel {
+                padding: 32px 22px;
+            }
+            .story-intro h2 {
+                font-size: 2rem;
+            }
+            .story-quote {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ---------- BODY COPY ---------- */
+        .story-content p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff8c3a;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: gap 0.2s ease;
+        }
+        .back-link:hover {
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Maya's Story</h1>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container">
+            <a href="testimonials.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Back to Testimonials
+            </a>
+
+            <!-- New hero banner -->
+            <div class="story-hero-panel">
+                <div class="story-header">
+                    <div class="story-image-wrap">
+                        <!-- replace with Maya's real image -->
+                        <img src="images/maya.png" alt="Maya" class="story-image">
+                    </div>
+                    <div class="story-intro">
+                        <p class="story-name">Maya M.</p>
+                        <h2>I Walked Away From The Bar</h2>
+                        <p class="story-quote">
+                            "I walked away from the bar and back to myself."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full story body -->
+            <div class="story-content">
+                <p>
+                    When I first started bartending, it felt like a dream job. I was surrounded by people, music, and late-night energy. I told myself I loved the chaos — it meant I was fun and confident. But underneath the jokes and small talk, I was using the job as a way to avoid my own life. If I was always working, always pouring drinks, I didn't have to think about how anxious and disconnected I really felt.
+                </p>
+                <p>
+                    Over time, the line between "after work" drinks and "getting through the shift" blurred. I started drinking to feel less nervous, then to feel less exhausted, and eventually just to feel normal. There were nights I barely remembered closing the bar. I still showed up, still smiled for customers, so I convinced myself it wasn't a problem. On the outside, I was the fun bartender everyone knew. On the inside, I felt like I was falling apart.
+                </p>
+                <p>
+                    The turning point came one night when I had a full panic attack in the alley behind the bar. My chest tightened, my hands shook, and I was sure something terrible was happening to me. I couldn't go back inside and pretend everything was fine. Sitting on the curb, I realized I didn't recognize the person I'd become. I wasn't in control anymore — the alcohol and the pace of that life were.
+                </p>
+                <p>
+                    The next day, I called my doctor and told a close friend the truth. Saying the words out loud was terrifying, but it also felt like relief. I started treatment for substance use and anxiety, and with support from professionals and friends, I made the decision to leave the bar job. Those first months were difficult. I had to relearn how to relax without a drink in my hand, how to cope with stress in ways that didn't involve escaping.
+                </p>
+                <p>
+                    Today, I work at a small café during the day, keep a consistent sleep schedule, and actually remember my evenings. I still have hard days, but I know how to reach for help instead of a bottle. Walking away from that bar wasn't just leaving a job — it was choosing myself for the first time in a long time. If you're stuck in a life that looks "fun" on the outside but hurts on the inside, I hope my story reminds you that you are allowed to step out and start again.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>

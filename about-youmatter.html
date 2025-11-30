@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About YouMatter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        /* ====== PAGE WRAPPER (matches other About pages) ====== */
+        .content-section {
+            width: 100%;
+            background: #f7fafc;
+            padding: 60px 20px 70px;
+        }
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ====== HERO: intro + large image ====== */
+        .about-ym-hero {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 32px;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 900px) {
+            .about-ym-hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-ym-hero-text h2 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #0d2b57;
+            margin-bottom: 10px;
+        }
+
+        .about-ym-tagline {
+            color: #2d86ff;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .about-ym-hero-text p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .about-ym-hero-image img {
+            width: 100%;
+            border-radius: 22px;
+            object-fit: cover;
+            box-shadow: 0 12px 30px rgba(13, 43, 87, 0.16);
+            background: #d9e2f7;
+        }
+
+        /* ====== WHAT YOUTMATTER OFFERS LIST ====== */
+        .about-ym-offers {
+            margin-bottom: 40px;
+        }
+
+        .about-ym-offers h3 {
+            font-size: 1.4rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .about-ym-offers p {
+            color: #4a5568;
+            margin-bottom: 14px;
+        }
+
+        .about-ym-offers ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px 26px;
+        }
+
+        @media (max-width: 720px) {
+            .about-ym-offers ul {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-ym-offers li {
+            color: #0d2b57;
+            font-weight: 600;
+            font-size: 0.98rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-ym-offers li span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: #ff8c3a;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* ====== PILLAR CARDS (community / trust / youth-led) ====== */
+        .about-ym-pillars-heading {
+            font-size: 1.35rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .about-ym-pillars-sub {
+            color: #4a5568;
+            margin-bottom: 24px;
+        }
+
+        .about-ym-pillars {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 960px) {
+            .about-ym-pillars {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .about-ym-pillars {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-ym-card {
+            background: #ffffff;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 24px rgba(13, 43, 87, 0.09);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .about-ym-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .about-ym-card-body {
+            padding: 16px 16px 18px;
+        }
+
+        .about-ym-card-body h4 {
+            margin: 0 0 6px;
+            font-size: 1.05rem;
+            color: #0d2b57;
+            font-weight: 700;
+        }
+
+        .about-ym-card-body p {
+            margin: 0;
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* ====== BOTTOM STRIP OF IMAGES ====== */
+        .about-ym-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 720px) {
+            .about-ym-strip {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-ym-strip img {
+            width: 100%;
+            height: 130px;
+            border-radius: 14px;
+            object-fit: cover;
+            background: #d9e2f7;
+        }
+
+        /* ====== SMALL CTA BANNER ====== */
+        .about-ym-cta {
+            margin-top: 40px;
+            padding: 20px 22px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ffeedb, #ffe0c2);
+            border: 1px solid rgba(13, 43, 87, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .about-ym-cta p {
+            margin: 0;
+            color: #5a4332;
+            max-width: 620px;
+            font-size: 0.98rem;
+        }
+
+        .about-ym-cta a {
+            padding: 10px 20px;
+            border-radius: 999px;
+            background: #e74c3c;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 8px 18px rgba(231, 76, 60, 0.35);
+        }
+
+        .about-ym-cta a:hover {
+            filter: brightness(1.05);
+        }
+
+        /* ====== MISSION SECTION ====== */
+        .mission-section {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 3px solid #e4edf9;
+        }
+
+        .mission-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .mission-header h2 {
+            font-size: 2.4rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .mission-subtitle {
+            font-size: 1.2rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* Mission Statement Box */
+        .mission-statement-box {
+            background: linear-gradient(135deg, #0d2b57 0%, #1a3a6e 100%);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            margin-bottom: 50px;
+            color: #ffffff;
+        }
+
+        .mission-statement-icon {
+            font-size: 48px;
+            color: #ff8c3a;
+            flex-shrink: 0;
+        }
+
+        .mission-statement-text h3 {
+            font-size: 1.6rem;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .mission-statement-text p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .mission-statement-text strong {
+            font-weight: 700;
+            color: #ff8c3a;
+        }
+
+        @media (max-width: 768px) {
+            .mission-statement-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .mission-statement-icon {
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        /* Mission Pillars */
+        .mission-pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .mission-pillar {
+            background: #ffffff;
+            border: 2px solid #e4edf9;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .mission-pillar:hover {
+            border-color: #ff8c3a;
+            box-shadow: 0 12px 32px rgba(255, 140, 58, 0.15);
+            transform: translateY(-6px);
+        }
+
+        .pillar-icon {
+            font-size: 42px;
+            color: #ff8c3a;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .mission-pillar h4 {
+            font-size: 1.3rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+
+        .mission-pillar p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Values Section */
+        .values-section {
+            background: #f7fafc;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 50px;
+        }
+
+        .values-section h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 40px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .value-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 8px 20px rgba(13, 43, 87, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(13, 43, 87, 0.12);
+        }
+
+        .value-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ff8c3a;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .value-card h4 {
+            font-size: 1.2rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .value-card p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Mission CTA */
+        .mission-cta {
+            background: linear-gradient(135deg, #ff8c3a 0%, #e67e2f 100%);
+            border-radius: 18px;
+            padding: 45px 40px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .mission-cta h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+        }
+
+        .mission-cta p {
+            font-size: 1.05rem;
+            margin: 0 0 28px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .mission-cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mission-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .mission-btn.primary {
+            background: #ffffff;
+            color: #ff8c3a;
+        }
+
+        .mission-btn.primary:hover {
+            background: #f0f4f8;
+            transform: translateY(-2px);
+        }
+
+        .mission-btn.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+
+        .mission-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .mission-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .mission-statement-box {
+                padding: 30px;
+            }
+
+            .mission-statement-text h3 {
+                font-size: 1.4rem;
+            }
+
+            .values-section {
+                padding: 30px 20px;
+            }
+
+            .mission-cta {
+                padding: 30px 20px;
+            }
+
+            .mission-cta h3 {
+                font-size: 1.4rem;
+            }
+
+            .mission-cta-buttons {
+                gap: 10px;
+            }
+
+            .mission-btn {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shared header/nav (same layout as other pages) -->
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html" aria-current="page">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                            <li><a href="about-our-mission.html">Our Mission</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>About YouMatter</h1>
+    </section>
+
+    <!-- ====== MAIN CONTENT ====== -->
+    <section class="content-section">
+        <div class="content-container">
+
+            <!-- HERO SECTION -->
+            <div class="about-ym-hero">
+                <div class="about-ym-hero-text">
+                    <h2>Helping Students Put Words to What They Feel.</h2>
+                    <p class="about-ym-tagline">YouMatter is a student-led mental health hub built to be clear, relatable, and stigma-free.</p>
+                    <p>
+                        We created YouMatter because so many teens and young adults were scrolling through dense,
+                        clinical websites and leaving with even more questions. Our goal is to make mental health
+                        education feel human — something you can understand on your phone between classes, not just in a
+                        therapist’s office.
+                    </p>
+                    <p>
+                        Every page on YouMatter is written with three promises in mind: be honest, be kind, and be
+                        useful. That means explaining conditions in real language, sharing practical coping tools, and
+                        reminding you at every step that needing help doesn’t make you weak — it makes you human.
+                    </p>
+                </div>
+
+                <!-- HERO PLACEHOLDER IMAGE (swap with real photo) -->
+                <div class="about-ym-hero-image">
+                    <img src="images/mainaboutuspic1.png" alt="Students exploring mental health resources together">
+                </div>
+            </div>
+
+            <!-- WHAT WE OFFER QUICK LIST -->
+            <div class="about-ym-offers">
+                <h3>What YouMatter Offers</h3>
+                <p>
+                    YouMatter brings together the pieces that students, families, and schools kept saying they needed in
+                    one place:
+                </p>
+                <ul>
+                    <li><span>1</span>Clear explanations of common mental health conditions and symptoms.</li>
+                    <li><span>2</span>Short blog posts that translate research and lived experience into real talk.</li>
+                    <li><span>3</span>Coping tools and checklists that are actually doable in daily life.</li>
+                    <li><span>4</span>Self-assessment style questions that help you decide if it’s time to reach out.</li>
+                    <li><span>5</span>Guidance on talking to trusted adults, counselors, or health professionals.</li>
+                    <li><span>6</span>School-friendly content that can be used in classrooms and counseling offices.</li>
+                </ul>
+            </div>
+
+            <!-- PILLARS / CARDS WITH PLACEHOLDER IMAGES -->
+            <h3 class="about-ym-pillars-heading">How We’re Different</h3>
+            <p class="about-ym-pillars-sub">
+                YouMatter is built at the intersection of student voice, science-backed information, and genuine care.
+                These pillars guide everything we design.
+            </p>
+
+            <div class="about-ym-pillars">
+                <!-- Card 1 -->
+                <article class="about-ym-card">
+                    <img src="images/aboutusyouthled.png" alt="Youth-Led Perspective - diverse students talking together">
+                    <div class="about-ym-card-body">
+                        <h4>Youth-Led Perspective</h4>
+                        <p>
+                            Our content is shaped by the questions real students ask — about anxiety, burnout,
+                            relationships, school pressure, and identity. We write the way we talk to our friends, then
+                            check it against trusted sources.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="about-ym-card">
+                    <img src="images/reallife.png" alt="Designed for Real Life - practical resources">
+                    <div class="about-ym-card-body">
+                        <h4>Designed for Real Life</h4>
+                        <p>
+                            We know that when you’re overwhelmed, you don’t need a textbook. You need something short,
+                            clear, and actionable. That’s why we focus on bite-sized explanations, step-by-step tools,
+                            and examples that feel familiar.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="about-ym-card">
+                    <img src="images/aboutuschecklist.png" alt="Action Over Perfection - progress and growth">
+                    <div class="about-ym-card-body">
+                        <h4>Action Over Perfection</h4>
+                        <p>
+                            Whether it’s planning a conversation with a counselor, starting a sleep routine, or trying a
+                            grounding exercise, we emphasize progress, not perfection. Small steps still count.
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- BOTTOM IMAGE STRIP WITH EXTRA PLACEHOLDERS -->
+            <div class="about-ym-strip">
+                <img src="images/hallway.png" alt="School hallway - supportive environment">
+                <img src="images/workshop.png" alt="Yoga and wellness workshop">
+                <img src="images/communitycircle.png" alt="Community circle - hands together forming heart">
+            </div>
+
+            <!-- CTA BANNER -->
+            <div class="about-ym-cta">
+                <p>
+                    YouMatter is not a crisis service or a replacement for professional care, but it can be your first
+                    step toward understanding what you're feeling and reaching out for support when you're ready.
+                </p>
+                <a href="appointment.html">Explore support options</a>
+            </div>
+
+            <!-- OUR MISSION SECTION -->
+            <div id="mission" class="mission-section">
+                <div class="mission-header">
+                    <h2>Our Mission</h2>
+                    <p class="mission-subtitle">Making mental health accessible, compassionate, and free from stigma.</p>
+                </div>
+
+                <div class="mission-content">
+                    <!-- Mission Statement Box -->
+                    <div class="mission-statement-box">
+                        <div class="mission-statement-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="mission-statement-text">
+                            <h3>At the Heart of Everything</h3>
+                            <p>
+                                We believe that <strong>YOU MATTER</strong> — not because of your grades, your social media following, or how productive you are, but because you're human. Your mental health is worth protecting, understanding, and improving. Our mission is to ensure that every person has access to clear, honest information about mental health and the courage to seek support when needed.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Mission Pillars -->
+                    <div class="mission-pillars">
+                        <div class="mission-pillar">
+                            <div class="pillar-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h4>Educate</h4>
+                            <p>Break down complex mental health concepts into language that actually makes sense. We translate research into real talk that meets you where you are.</p>
+                        </div>
+
+                        <div class="mission-pillar">
+                            <div class="pillar-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h4>Empower</h4>
+                            <p>Give you practical tools, coping strategies, and actionable steps to support your own mental health and the mental health of those around you.</p>
+                        </div>
+
+                        <div class="mission-pillar">
+                            <div class="pillar-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>Connect</h4>
+                            <p>Build a supportive community where people feel comfortable sharing their stories, asking questions, and finding resources without fear of judgment.</p>
+                        </div>
+
+                        <div class="mission-pillar">
+                            <div class="pillar-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h4>Sustain</h4>
+                            <p>Create lasting change by working with schools, families, and organizations to embed mental health awareness and support into everyday life.</p>
+                        </div>
+                    </div>
+
+                    <!-- Values Section -->
+                    <div class="values-section">
+                        <h3>Our Core Values</h3>
+                        <div class="values-grid">
+                            <div class="value-card">
+                                <div class="value-number">1</div>
+                                <h4>Honesty</h4>
+                                <p>We don't sugarcoat. We share the hard truths about mental health, stigma, and recovery — because you deserve real talk.</p>
+                            </div>
+
+                            <div class="value-card">
+                                <div class="value-number">2</div>
+                                <h4>Accessibility</h4>
+                                <p>Mental health support shouldn't be locked behind paywalls or complicated language. We believe information should be free and understandable to everyone.</p>
+                            </div>
+
+                            <div class="value-card">
+                                <div class="value-number">3</div>
+                                <h4>Compassion</h4>
+                                <p>We approach every conversation with kindness. Your struggles are valid. Your feelings matter. You're not alone in this.</p>
+                            </div>
+
+                            <div class="value-card">
+                                <div class="value-number">4</div>
+                                <h4>Diversity</h4>
+                                <p>Mental health looks different for everyone. We celebrate the diversity of experiences, identities, and backgrounds that make up our community.</p>
+                            </div>
+
+                            <div class="value-card">
+                                <div class="value-number">5</div>
+                                <h4>Action</h4>
+                                <p>Knowledge without action is just noise. We focus on practical steps, doable tools, and real progress — not perfection.</p>
+                            </div>
+
+                            <div class="value-card">
+                                <div class="value-number">6</div>
+                                <h4>Hope</h4>
+                                <p>Recovery is possible. Change is possible. You are capable of more than you think right now. We're here to remind you of that every day.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="mission-cta">
+                        <h3>Join Us in This Mission</h3>
+                        <p>Whether you're looking for support, wanting to share your story, or ready to help break the stigma around mental health, there's a place for you here.</p>
+                        <div class="mission-cta-buttons">
+                            <a href="testimonials.html" class="mission-btn primary">Read Stories</a>
+                            <a href="check-in.html" class="mission-btn secondary">Take a Check-in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Shared footer -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>

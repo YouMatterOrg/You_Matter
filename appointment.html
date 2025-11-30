@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment | University Website Design</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome (for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    /* You can move all of this into style.css if you want */
+
+    .appointment-container{
+      max-width: 700px;
+      margin: 40px auto;
+      text-align: left;
+      background:#fff;
+      padding:30px 25px;
+      border-radius:12px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    }
+    .appointment-container h2{
+      margin-bottom:10px;
+    }
+    .appointment-container p.subtext{
+      color:#555;
+      margin-bottom:20px;
+    }
+    .form-row{
+      margin-bottom:18px;
+      display:flex;
+      flex-direction:column;
+    }
+    .form-row label{
+      font-weight:600;
+      margin-bottom:6px;
+    }
+    .form-row input{
+      padding:10px 12px;
+      border-radius:6px;
+      border:1px solid #ccc;
+      font-size:0.95rem;
+    }
+    .form-row select{
+      font-size:0.95rem;
+    }
+    .form-row small{
+      color:#777;
+      margin-top:4px;
+    }
+    .appointment-actions{
+      margin-top:10px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .hero-btn{
+      padding:10px 22px;
+      border:none;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .hero-btn.primary{
+      background:#f44336;
+      color:#fff;
+    }
+    .hero-btn.secondary{
+      background:#eee;
+      color:#333;
+    }
+    #confirmation-box{
+      margin-top:25px;
+      padding:18px 16px;
+      border-radius:10px;
+      background:#f4f7ff;
+      border:1px solid #d1dcff;
+      display:none;
+    }
+    .counselor-card{
+      display:flex;
+      flex-wrap:wrap;
+      gap:15px;
+      margin-top:12px;
+      align-items:flex-start;
+    }
+    .counselor-avatar{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      background:#dde4ff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:2.2rem;
+      font-weight:700;
+    }
+    .counselor-info h3{
+      margin:0 0 4px;
+    }
+    .counselor-info p{
+      margin:3px 0;
+      color:#444;
+    }
+    @media(max-width:600px){
+      .appointment-container{
+        margin:20px;
+        padding:20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt=""></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="About.html">ABOUT US</a></li>
+          <li class="has-dropdown">
+            <a href="course.html">COURSE
+              <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i>
+            </a>
+            <ul class="dropdown">
+              <li><a href="disorders.html">Disorders</a></li>
+              <li><a href="appointment.html">Appointment</a></li>
+              <li><a href="check-in.html">Check-in</a></li>
+            </ul>
+          </li>
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="testimonials.html">TESTIMONIALS</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <h1>Appointment</h1>
+  </section>
+
+  <main style="padding:40px 10px;">
+    <div class="appointment-container">
+      <h2>Book a Zoom Appointment</h2>
+      <p class="subtext">
+        Schedule a one-on-one Zoom counseling session with
+        <strong>Jake Mason</strong>. Choose any time between
+        <strong>8:00 am</strong> and <strong>6:00 pm</strong>.
+      </p>
+
+      <!-- FORM -->
+      <form id="appointment-form">
+        <div class="form-row">
+          <label for="student-name">Your Name</label>
+          <input type="text" id="student-name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-row">
+          <label for="date">Choose a Date</label>
+          <!-- Date must be after November 2025 (min = Dec 1, 2025) -->
+          <input type="date" id="date" min="2025-12-01" required>
+        </div>
+
+        <div class="form-row">
+          <label>Choose a Time</label>
+
+          <!-- Hour Dropdown -->
+          <div>
+            <select id="hour" required
+                    style="padding:10px;border-radius:6px;border:1px solid #ccc;">
+              <option value="">Hour</option>
+              <option value="08">8 AM</option>
+              <option value="09">9 AM</option>
+              <option value="10">10 AM</option>
+              <option value="11">11 AM</option>
+              <option value="12">12 PM</option>
+              <option value="13">1 PM</option>
+              <option value="14">2 PM</option>
+              <option value="15">3 PM</option>
+              <option value="16">4 PM</option>
+              <option value="17">5 PM</option>
+              <option value="18">6 PM</option>
+            </select>
+
+            <!-- Minute Dropdown -->
+            <select id="minute" required
+                    style="padding:10px;border-radius:6px;border:1px solid #ccc;margin-left:10px;">
+              <option value="">Min</option>
+              <option value="00">00</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+
+          <small>Select any time between 8:00 AM and 6:00 PM.</small>
+        </div>
+
+        <div class="appointment-actions">
+          <button type="submit" class="hero-btn primary">Book Appointment</button>
+          <span id="error-msg" style="color:#d32f2f;font-size:0.9rem;display:none;"></span>
+        </div>
+      </form>
+
+      <!-- CONFIRMATION AREA -->
+      <div id="confirmation-box"></div>
+    </div>
+  </main>
+
+  <script src="menu.js"></script>
+  <script>
+    // Helper: format date for Google Calendar (UTC)
+    function formatDateForCalendar(date){
+      const y = date.getUTCFullYear();
+      const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+      const d = String(date.getUTCDate()).padStart(2, '0');
+      const h = String(date.getUTCHours()).padStart(2, '0');
+      const min = String(date.getUTCMinutes()).padStart(2, '0');
+      const s = '00';
+      return `${y}${m}${d}T${h}${min}${s}Z`;
+    }
+
+    document.getElementById('appointment-form').addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const name = document.getElementById('student-name').value.trim();
+      const dateVal = document.getElementById('date').value;
+      const hour = document.getElementById('hour').value;
+      const minute = document.getElementById('minute').value;
+      const errorMsg = document.getElementById('error-msg');
+      const confirmation = document.getElementById('confirmation-box');
+
+      errorMsg.style.display = 'none';
+
+      if(!name || !dateVal || !hour || !minute){
+        errorMsg.textContent = 'Please fill out all fields.';
+        errorMsg.style.display = 'inline';
+        return;
+      }
+
+      // Restrict date: must be after Nov 2025 → min is Dec 1, 2025
+      const selectedDate = new Date(dateVal);
+      const minAllowedDate = new Date("2025-12-01");
+
+      if (selectedDate < minAllowedDate) {
+        errorMsg.textContent = "Please choose a date after November 2025.";
+        errorMsg.style.display = "inline";
+        return;
+      }
+
+      // Build a time string like "14:30"
+      const timeVal = `${hour}:${minute}`;
+
+      // Validate time range just in case
+      const hourNum = parseInt(hour, 10);
+      if(hourNum < 8 || hourNum > 18){
+        errorMsg.textContent = 'Time must be between 8 AM and 6 PM.';
+        errorMsg.style.display = 'inline';
+        return;
+      }
+
+      // Create local datetime object (30-minute session)
+      const startLocal = new Date(`${dateVal}T${timeVal}`);
+      const endLocal = new Date(startLocal.getTime() + 30*60*1000);
+
+      // Friendly display strings
+      const friendlyDate = startLocal.toLocaleDateString(undefined, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+      const friendlyTime = startLocal.toLocaleTimeString(undefined, {
+        hour:'numeric',
+        minute:'2-digit'
+      });
+
+      // Build Google Calendar link
+      const text = encodeURIComponent('Counseling Session with Jake Mason');
+      const details = encodeURIComponent(
+        'Zoom link: https://zoom.us/j/your-meeting-id\n' +
+        'Counselor: Jake Mason\n' +
+        'Student: ' + name + '\n\n' +
+        'Please join a few minutes early to test your audio and video.'
+      );
+      const dates = formatDateForCalendar(startLocal) + '/' + formatDateForCalendar(endLocal);
+      const location = encodeURIComponent('Zoom (Online Meeting)');
+      const calendarUrl =
+        `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}` +
+        `&details=${details}&dates=${dates}&location=${location}`;
+
+      // Show confirmation + counselor info
+      confirmation.innerHTML = `
+        <h3>Appointment Booked!</h3>
+        <p>${name}, your Zoom counseling session is scheduled for
+          <strong>${friendlyDate}</strong> at <strong>${friendlyTime}</strong>.
+        </p>
+
+        <div class="counselor-card">
+          <div class="counselor-avatar"><span>J</span></div>
+          <div class="counselor-info">
+            <h3>Jake Mason</h3>
+            <p><strong>Student Wellness Counselor</strong></p>
+            <p>Jake specializes in helping students manage stress, balance school and life,
+               and build healthy coping skills. He creates a safe, judgment-free space
+               to talk through anything that’s on your mind.</p>
+            <p><strong>Session Type:</strong> 1:1 Zoom video call<br>
+               <strong>Duration:</strong> 30 minutes</p>
+          </div>
+        </div>
+
+        <div style="margin-top:15px;">
+          <button class="hero-btn secondary" id="add-to-calendar-btn">
+            <i class="fa-solid fa-calendar-plus" style="margin-right:6px;"></i>
+            Add to Google Calendar
+          </button>
+        </div>
+      `;
+      confirmation.style.display = 'block';
+
+      // Open Google Calendar in a new tab on click
+      document.getElementById('add-to-calendar-btn').onclick = () => {
+        window.open(calendarUrl, '_blank');
+      };
+    });
+  </script>
+  
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noah's Story - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Page body section (same pattern as other content pages) */
+        .content-section {
+            width: 100%;
+            background: #ffffff;
+            padding: 60px 20px 70px;
+        }
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ---------- HERO PANEL (matches screenshot style) ---------- */
+        .story-hero-panel {
+            background: #2c4e83; /* deep blue */
+            border-radius: 32px;
+            padding: 40px 34px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle diagonal overlay on the right */
+        .story-hero-panel::after {
+            content: "";
+            position: absolute;
+            right: -120px;
+            top: -80px;
+            width: 60%;
+            height: 160%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(12,29,54,0.2));
+            transform: skewX(-6deg);
+        }
+
+        .story-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* circular image on the left */
+        .story-image-wrap {
+            flex: 0 0 260px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .story-image {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #f8e6d1;  /* light border ring */
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+            background: #d9d9d9; /* placeholder bg if image missing */
+        }
+
+        /* text on the right */
+        .story-intro {
+            flex: 1;
+            min-width: 260px;
+            color: #f7fafc;
+        }
+
+        .story-name {
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #e4edf9;
+        }
+
+        .story-intro h2 {
+            color: #ff9f3b;           /* warm orange headline */
+            font-size: 2.4rem;
+            margin: 0 0 18px 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .story-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin: 0;
+            color: #fdfdfd;
+        }
+
+        @media (max-width: 900px) {
+            .story-hero-panel {
+                padding: 32px 22px;
+            }
+            .story-intro h2 {
+                font-size: 2rem;
+            }
+            .story-quote {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ---------- BODY COPY ---------- */
+        .story-content p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff8c3a;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: gap 0.2s ease;
+        }
+        .back-link:hover {
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Noah's Story</h1>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container">
+            <a href="testimonials.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Back to Testimonials
+            </a>
+
+            <!-- New hero banner -->
+            <div class="story-hero-panel">
+                <div class="story-header">
+                    <div class="story-image-wrap">
+                        <!-- replace with Noah's real image -->
+                        <img src="images/noah.png" alt="Noah" class="story-image">
+                    </div>
+                    <div class="story-intro">
+                        <p class="story-name">Noah T.</p>
+                        <h2>Talking About My Panic Attacks Made Me Stronger</h2>
+                        <p class="story-quote">
+                            "Talking about my panic attacks made me stronger, not weaker."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full story body -->
+            <div class="story-content">
+                <p>
+                    As a varsity lacrosse player, I was supposed to be tough. We all were. We pushed through injuries, pain, and exhaustion. Mental health wasn't really talked about. So when I started having panic attacks, I kept it to myself. During practices, during games, during team dinners — I was hiding this massive part of my life, terrified that if anyone found out, I'd be seen as weak.
+                </p>
+                <p>
+                    The panic attacks started in my sophomore year. My heart would race unexpectedly, my hands would get shaky, and I'd convince myself that I was having a heart attack or dying. A couple times it happened during games, and I just pushed through it, thinking I could will it away. But as time went on, the anxiety started affecting my performance. I'd miss easy shots because I was thinking about the next attack. I'd sit out practices because I was too nervous to be there.
+                </p>
+                <p>
+                    I tried everything — breathing exercises I found online, avoiding caffeine, telling myself to toughen up. Nothing worked. By junior year, I was seriously considering quitting the team. I loved lacrosse, but the anxiety was taking away any joy I found in it. That's when something shifted. After a particularly bad week of panic attacks, my mom gently suggested that I talk to our team psychologist.
+                </p>
+                <p>
+                    I was terrified. What if my coach found out? What if my teammates saw me as a liability? But I was desperate. So I went to see the psychologist and opened up about what I'd been experiencing. She explained panic disorder to me, taught me real coping strategies, and helped me understand that this wasn't a character flaw — it was something I could actually manage.
+                </p>
+                <p>
+                    More importantly, she encouraged me to tell my coach. That was scarier than actually having the panic attacks. But when I told my coach, his response surprised me. He said he'd noticed I wasn't myself, and he was grateful I trusted him enough to share. He worked with me and the psychologist to create a plan for managing anxiety during games and practices. And then I told my team. I was shaking the whole time, expecting judgment, but instead I got support.
+                </p>
+                <p>
+                    What happened next was incredible. My teammates shared their own struggles — one had dealt with depression, another had anxiety too. We became closer than ever. My coach even started team conversations about mental health. And my panic attacks? I still have them sometimes, but now I have the tools and the support to manage them. My performance actually improved because I wasn't using all my energy to hide.
+                </p>
+                <p>
+                    If you're an athlete or high-performer struggling mentally, please know that asking for help isn't weak. It's actually the strongest thing you can do. Your team, your coach, your community — they want to support you. You're not alone in this.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>

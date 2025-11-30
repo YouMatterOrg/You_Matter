@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Check-in - YOU MATTER</title>
+
+  <!-- Same global assets as your other pages -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Page-scoped styles (prefixed with .asmt- to avoid clashes) -->
+  <style>
+    .asmt-wrap{max-width:900px;margin:16px auto;padding:20px;background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(13,43,87,0.1)}
+    .asmt-title{color:#0d2b57;text-align:center;margin:0 0 8px;font-size:28px;font-weight:700}
+    .asmt-lead{text-align:center;color:#4a5568;margin:0 0 20px;font-size:16px}
+    .asmt-progress{height:10px;background:#e4edf9;border-radius:999px;overflow:hidden;margin:12px 0 20px}
+    .asmt-progress>div{height:100%;width:0%;background:#ff8c3a;transition:width .25s ease}
+    .asmt-card{padding:20px;border-radius:12px;background:#f7fafc;border:1px solid #e4edf9}
+    .asmt-card h4{margin:0 0 16px;font-size:16px;color:#0d2b57;font-weight:600}
+    label.asmt-opt{display:inline-block;margin:8px 16px 0 0;cursor:pointer;color:#2d3748;font-weight:500}
+    label.asmt-opt input{margin-right:8px;cursor:pointer}
+    @media (max-width:640px){label.asmt-opt{display:block;margin-right:0}}
+    .asmt-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:20px}
+    .asmt-btn{background:#0d2b57;color:#fff;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:600;transition:background 0.3s ease}
+    .asmt-btn:hover{background:#0a1f3f}
+    .asmt-btn[disabled]{opacity:.5;cursor:not-allowed}
+    .asmt-ghost{background:#e4edf9;color:#0d2b57}
+    .asmt-ghost:hover{background:#d0ddf0}
+    .asmt-results{margin-top:20px;padding:20px;border-radius:12px;background:#f7fafc;border-left:6px solid #ff8c3a}
+    .asmt-results h3{margin:0 0 12px;color:#0d2b57;font-weight:700}
+    .asmt-results p{color:#4a5568;line-height:1.6}
+    .asmt-suggestions{margin:12px 0 0 18px;color:#2d3748;line-height:1.8}
+    .asmt-suggestions li{margin-bottom:8px}
+    .asmt-suggestions strong{color:#0d2b57}
+    .asmt-tagged{margin-top:16px;padding:16px;border-radius:8px;background:#fff3f0;border:1px solid #ffd6cc}
+    .asmt-hidden{display:none}
+    /* buttons match hero button style */
+    .asmt-btn.hero{border-radius:999px;padding:14px 28px;font-size:15px;box-shadow:0 8px 18px rgba(13,43,87,0.2)}
+    .asmt-btn.hero:hover{background:#0a1f3f;box-shadow:0 10px 24px rgba(13,43,87,0.3)}
+  </style>
+</head>
+<body>
+  <!-- Header / Nav (same structure as your other pages) -->
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt=""></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li class="has-dropdown">
+            <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+            <ul class="dropdown">
+              <li><a href="about-youmatter.html">About You Matter</a></li>
+              <li><a href="about-who-we-are.html">Who We Are</a></li>
+              <li><a href="about-why-we-started.html">Why We Started</a></li>
+              <li><a href="about-what-we-do.html">What We Do</a></li>
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+            <ul class="dropdown">
+              <li><a href="disorders.html">Disorders</a></li>
+              <li><a href="appointment.html">Appointment</a></li>
+              <li><a href="check-in.html">Check-in</a></li>
+            </ul>
+          </li>
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="testimonials.html">TESTIMONIALS</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <h1>Mental Health Check-in</h1>
+  </section>
+
+  <!-- Main assessment -->
+  <section class="asmt">
+    <div class="asmt-wrap">
+
+      <!-- Intro screen -->
+      <div id="asmtIntro">
+        <h1 class="asmt-title">How Are You Doing?</h1>
+        <p class="asmt-lead">Take a quick mental health check-in to understand how you're really feeling. This isn't a diagnosis — just a moment to check in with yourself and get practical suggestions.</p>
+        <div class="asmt-controls">
+          <button class="asmt-btn hero" id="asmtStart">Start Check-in</button>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div id="asmtProgress" class="asmt-progress asmt-hidden"><div id="asmtBar"></div></div>
+
+      <!-- Form (auto-advance, one question per screen) -->
+      <form id="asmtForm" class="asmt-hidden" novalidate>
+        <div id="asmtQContainer"></div>
+        <div class="asmt-controls">
+          <button type="button" class="asmt-btn asmt-ghost" id="asmtPrev">Back</button>
+          <button type="button" class="asmt-btn asmt-hidden" id="asmtNext">Next</button><!-- kept for safety, hidden -->
+          <button type="button" class="asmt-btn" id="asmtSubmit" class="asmt-hidden">See Results</button>
+        </div>
+      </form>
+
+      <!-- Results -->
+      <div id="asmtOutput" class="asmt-results asmt-hidden">
+        <h3 id="asmtScoreHeading"></h3>
+        <p id="asmtGeneralFeedback"></p>
+        <div id="asmtActionList"></div>
+        <div id="asmtTargeted" class="asmt-tagged asmt-hidden"></div>
+        <div class="asmt-controls">
+          <button class="asmt-btn asmt-ghost" id="asmtRetake">Retake</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <section class="footer">
+    <h4>About Us</h4>
+    <p>Built with purpose.</p>
+    <div class="icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+  </section>
+
+  <script src="menu.js"></script>
+
+  <!-- Assessment Logic -->
+  <script>
+    // ===== Data model (scores identical to your earlier version) =====
+    const qMax = { q1:5,q2:5,q3:5,q4:5,q5:5,q6:5,q7:5,q8:5,q9:5,q10:3,q11:3,q12:3,q13:3,q14:3,q15:3 };
+
+    const targetedSuggestions = {
+      q1:"Stress: Try short daily breathing breaks (4-4-4), schedule a 10–20 minute walk, and set one small achievable task per day.",
+      q2:"Low mood: Consider tracking mood in a journal, do one activity you enjoy daily, and speak to a friend about how you feel.",
+      q3:"Anxiety: Try grounding exercises, a 5–10 minute guided meditation, and limit afternoon caffeine.",
+      q4:"Irritability: Practice pause techniques, improve sleep, and identify triggers to plan coping steps.",
+      q5:"Loneliness: Reach out to one friend this week, join a group or hobby, or try volunteering.",
+      q6:"Sleep issues: Consistent schedule, avoid screens 1h before bed, and add a wind-down routine.",
+      q7:"Fatigue: Check sleep; add gentle exercise, short naps (<30 min), review nutrition/hydration.",
+      q8:"Loss of interest: Reintroduce a small hobby 10–15 min daily; treat it as practice, not performance.",
+      q9:"Concentration: Use 25-min focus blocks (Pomodoro), remove distractions, take short movement breaks.",
+      q10:"Major stressors: Share with someone you trust and consider professional support.",
+      q11:"Prior support: Re-engage or try a different provider if past help wasn't enough.",
+      q12:"If prior help helped: Keep the strategies; if N/A/No, explore options (therapy types, groups).",
+      q13:"Support system: If lacking, explore local groups, online communities, or school/work resources.",
+      q14:"Medication: Keep regular follow-ups with prescriber; don’t stop without consulting them.",
+      q15:"Self-care: Build a short daily routine (5–15 min) — stretching, reading, meditating, hobbies."
+    };
+
+    const questions = [
+      {name:"q1", text:"1. How often do you feel overwhelmed or stressed?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q2", text:"2. How often do you feel sad or depressed?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q3", text:"3. How often do you feel anxious or worried?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q4", text:"4. How often do you feel irritable or angry?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q5", text:"5. How often do you feel lonely or isolated?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q6", text:"6. How often do you have trouble sleeping?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q7", text:"7. How often do you feel tired or fatigued?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q8", text:"8. How often do you feel a lack of interest or pleasure in activities you used to enjoy?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q9", text:"9. How often do you have trouble concentrating or focusing?", scale:5, opts:["Never","Rarely","Sometimes","Often","Always"]},
+      {name:"q10", text:"10. Have you experienced any major life changes or stressors recently (e.g., job loss, relationship issues, health problems)?", scale:3, opts:["No","Yes"]},
+      {name:"q11", text:"11. Have you sought professional help for your mental health before?", scale:3, opts:["No","Yes"]},
+      {name:"q12", text:"12. If you answered yes to the previous question, did it help?", scale:3, opts:["No","N/A","Yes"]},
+      {name:"q13", text:"13. Do you have a support system (e.g., friends, family, therapist)?", scale:3, opts:["No","Yes"]},
+      {name:"q14", text:"14. Are you currently taking any medications for mental health issues?", scale:3, opts:["No","Yes"]},
+      {name:"q15", text:"15. Do you engage in any self-care activities (e.g., exercise, meditation, hobbies)?", scale:3, opts:["No","Yes"]}
+    ];
+
+    // ===== Rendering & Flow =====
+    const intro = document.getElementById('asmtIntro');
+    const progressWrap = document.getElementById('asmtProgress');
+    const bar = document.getElementById('asmtBar');
+    const form = document.getElementById('asmtForm');
+    const qContainer = document.getElementById('asmtQContainer');
+    const btnStart = document.getElementById('asmtStart');
+    const btnPrev = document.getElementById('asmtPrev');
+    const btnNext = document.getElementById('asmtNext'); // kept hidden
+    const btnSubmit = document.getElementById('asmtSubmit');
+    const output = document.getElementById('asmtOutput');
+    const scoreHeading = document.getElementById('asmtScoreHeading');
+    const generalFeedback = document.getElementById('asmtGeneralFeedback');
+    const actionList = document.getElementById('asmtActionList');
+    const targetedDiv = document.getElementById('asmtTargeted');
+    const btnRetake = document.getElementById('asmtRetake');
+
+    // state
+    let current = 0; // 0..questions.length-1
+    const answers = {}; // store as user selects
+
+    // build question cards
+    const nodes = questions.map((q, idx) => {
+      const card = document.createElement('div');
+      card.className = 'asmt-card asmt-hidden';
+
+      const h4 = document.createElement('h4');
+      h4.textContent = q.text;
+      card.appendChild(h4);
+
+      const makeRadio = (label, value) => {
+        const wrap = document.createElement('label');
+        wrap.className = 'asmt-opt';
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = q.name;
+        input.value = String(value);
+        // Auto-advance on selection
+        input.addEventListener('change', () => recordAndAdvance(q.name, input.value));
+        wrap.appendChild(input);
+        wrap.appendChild(document.createTextNode(label));
+        return wrap;
+      };
+
+      if (q.scale === 5){
+        const labs = ["Never","Rarely","Sometimes","Often","Always"];
+        labs.forEach((lab,i)=> card.appendChild(makeRadio(' '+lab, i+1)));
+      } else {
+        if (q.name === 'q12'){ // No(1) N/A(2) Yes(3)
+          ["No","N/A","Yes"].forEach((lab,i)=> card.appendChild(makeRadio(' '+lab, i+1)));
+        } else { // No(1) Yes(3)
+          card.appendChild(makeRadio(' No', 1));
+          card.appendChild(makeRadio(' Yes', 3));
+        }
+      }
+
+      const step = document.createElement('div');
+      step.style.marginTop = '10px';
+      step.style.fontSize = '12px';
+      step.style.color = '#6b7280';
+      step.textContent = `Question ${idx+1} of ${questions.length}`;
+      card.appendChild(step);
+
+      qContainer.appendChild(card);
+      return card;
+    });
+
+    function show(idx){
+      nodes.forEach(n => n.classList.add('asmt-hidden'));
+      nodes[idx].classList.remove('asmt-hidden');
+      btnPrev.disabled = (idx === 0);
+      // Next stays hidden; show Submit on last screen
+      btnNext.classList.add('asmt-hidden');
+      btnSubmit.classList.toggle('asmt-hidden', idx !== questions.length - 1);
+
+      // progress
+      const pct = Math.round((idx / questions.length) * 100);
+      bar.style.width = Math.max(4, pct) + '%';
+    }
+
+    function recordAndAdvance(name, value){
+      answers[name] = Number(value);
+      if (current < questions.length - 1){
+        current++;
+        show(current);
+      } else {
+        btnSubmit.classList.remove('asmt-hidden');
+        btnSubmit.focus();
+      }
+    }
+
+    function getAnswer(name){
+      // reflect DOM state (in case of Back edits)
+      const list = form.elements[name];
+      if (!list || list.length === undefined) return null;
+      for (let i=0;i<list.length;i++){
+        if (list[i].checked) return Number(list[i].value);
+      }
+      return null;
+    }
+
+    btnStart.addEventListener('click', ()=>{
+      intro.classList.add('asmt-hidden');
+      progressWrap.classList.remove('asmt-hidden');
+      form.classList.remove('asmt-hidden');
+      current = 0;
+      show(current);
+      btnNext.classList.add('asmt-hidden'); // enforce auto-advance mode
+    });
+
+    btnPrev.addEventListener('click', ()=>{
+      if (current > 0){ current--; show(current); }
+    });
+
+    btnSubmit.addEventListener('click', ()=>{
+      // ensure all questions answered (check DOM or answers map)
+      for (const q of questions){
+        const val = getAnswer(q.name);
+        if (val === null){
+          alert('Please answer all questions before submitting.');
+          return;
+        }
+        answers[q.name] = val; // sync to map
+      }
+
+      // compute totals
+      let total = 0, maxTotal = 0;
+      for (const [k,max] of Object.entries(qMax)){
+        total += answers[k];
+        maxTotal += max;
+      }
+      const perc = (total / maxTotal) * 100;
+
+      // overall feedback
+      let generalText = "", actionsHtml = "";
+      if (perc <= 33) {
+        generalText = "You're showing relatively low levels of frequent symptoms. Keep supporting your wellbeing.";
+        actionsHtml = `
+          <ul class="asmt-suggestions">
+            <li>Maintain healthy routines (sleep, movement, balanced meals).</li>
+            <li>Stay socially connected — check in with friends/family weekly.</li>
+            <li>Practice simple daily self-care: short walks, gratitude, or 5-min mindfulness.</li>
+          </ul>`;
+      } else if (perc <= 66) {
+        generalText = "You're experiencing some symptoms or stress at times. Small, consistent steps can help.";
+        actionsHtml = `
+          <ul class="asmt-suggestions">
+            <li>Try 5–10 minute guided meditations or daily breathing exercises.</li>
+            <li>Schedule at least one enjoyable activity this week.</li>
+            <li>Improve sleep hygiene: consistent bedtime and a wind-down routine.</li>
+          </ul>`;
+      } else {
+        generalText = "You're experiencing frequent symptoms and may benefit from stronger support.";
+        actionsHtml = `
+          <ul class="asmt-suggestions">
+            <li>Consider speaking with a mental health professional (counselor/therapist).</li>
+            <li>Share concerns with a trusted person and build a quick support plan.</li>
+            <li>If you’re in crisis or have thoughts of harming yourself, seek immediate help.</li>
+          </ul>`;
+      }
+
+      // targeted tips for "high" answers
+      const highQs = [];
+      for (const [k,v] of Object.entries(answers)){
+        const max = qMax[k];
+        if ((max === 5 && v >= 4) || (max === 3 && v === 3)) highQs.push(k);
+      }
+      let targetedHtml = "";
+      if (highQs.length){
+        targetedHtml += "<strong>Top areas to consider:</strong><ul class='asmt-suggestions'>";
+        highQs.forEach(k => targetedHtml += `<li><strong>Question ${k.slice(1)}:</strong> ${targetedSuggestions[k]}</li>`);
+        targetedHtml += "</ul>";
+      }
+
+      // show results
+      form.classList.add('asmt-hidden');
+      progressWrap.classList.add('asmt-hidden');
+      output.classList.remove('asmt-hidden');
+      scoreHeading.textContent = `Score: ${total} / ${maxTotal} (${perc.toFixed(1)}%)`;
+      generalFeedback.innerHTML = `<strong>Overall feedback:</strong> ${generalText}`;
+      actionList.innerHTML = `<div><strong>Recommended actions:</strong> ${actionsHtml}</div>`;
+      if (targetedHtml){
+        targetedDiv.classList.remove('asmt-hidden');
+        targetedDiv.innerHTML = targetedHtml;
+      } else {
+        targetedDiv.classList.add('asmt-hidden');
+        targetedDiv.innerHTML = "";
+      }
+      output.scrollIntoView({behavior:'smooth'});
+    });
+
+    btnRetake.addEventListener('click', ()=>{
+      // reset
+      form.reset();
+      for (const k in answers) delete answers[k];
+      output.classList.add('asmt-hidden');
+      form.classList.remove('asmt-hidden');
+      progressWrap.classList.remove('asmt-hidden');
+      current = 0; show(current);
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  </script>
+
+  <form> </form>
+</body> 
+</html>
+

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex's Story - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Page body section (same pattern as other content pages) */
+        .content-section {
+            width: 100%;
+            background: #ffffff;
+            padding: 60px 20px 70px;
+        }
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ---------- HERO PANEL (matches screenshot style) ---------- */
+        .story-hero-panel {
+            background: #2c4e83; /* deep blue */
+            border-radius: 32px;
+            padding: 40px 34px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle diagonal overlay on the right */
+        .story-hero-panel::after {
+            content: "";
+            position: absolute;
+            right: -120px;
+            top: -80px;
+            width: 60%;
+            height: 160%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(12,29,54,0.2));
+            transform: skewX(-6deg);
+        }
+
+        .story-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* circular image on the left */
+        .story-image-wrap {
+            flex: 0 0 260px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .story-image {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #f8e6d1;  /* light border ring */
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+            background: #d9d9d9; /* placeholder bg if image missing */
+        }
+
+        /* text on the right */
+        .story-intro {
+            flex: 1;
+            min-width: 260px;
+            color: #f7fafc;
+        }
+
+        .story-name {
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #e4edf9;
+        }
+
+        .story-intro h2 {
+            color: #ff9f3b;           /* warm orange headline */
+            font-size: 2.4rem;
+            margin: 0 0 18px 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .story-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin: 0;
+            color: #fdfdfd;
+        }
+
+        @media (max-width: 900px) {
+            .story-hero-panel {
+                padding: 32px 22px;
+            }
+            .story-intro h2 {
+                font-size: 2rem;
+            }
+            .story-quote {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ---------- BODY COPY ---------- */
+        .story-content p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff8c3a;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: gap 0.2s ease;
+        }
+        .back-link:hover {
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Alex's Story</h1>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container">
+            <a href="testimonials.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Back to Testimonials
+            </a>
+
+            <!-- New hero banner -->
+            <div class="story-hero-panel">
+                <div class="story-header">
+                    <div class="story-image-wrap">
+                        <!-- replace with Alex’s real image -->
+                        <img src="images/alex.png" alt="Alex" class="story-image">
+                    </div>
+                    <div class="story-intro">
+                        <p class="story-name">Alex M.</p>
+                        <h2>I Stopped Just Getting Through Life</h2>
+                        <p class="story-quote">
+                            “I stopped just getting through and started really living.”
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full story body -->
+            <div class="story-content">
+                <p>
+                    I remember my freshman year of college like I remember a black-and-white film. Everything happened, but I wasn't really there. I woke up tired, went to classes but didn't absorb anything, ate because I had to, and went to bed. Weekends were the same. My friends were having these amazing college experiences and I was just... existing.
+                </p>
+                <p>
+                    At first, I thought it was just adjustment. Everyone talks about how hard college is, right? But by second semester, I realized something was really wrong. Getting out of bed felt like moving through quicksand. I'd shower and it would take all my energy. Small things that should be easy became impossible. I missed classes. I stopped answering texts. I lost interest in everything — things I used to love now felt pointless.
+                </p>
+                <p>
+                    The worst part was that I felt like I was wasting this opportunity. My parents were so excited about me getting into my dream school, and here I was, unable to enjoy any of it. I felt guilty for not being grateful, ashamed that I couldn't just "snap out of it," and terrified that something was fundamentally wrong with me.
+                </p>
+                <p>
+                    One day, my RA noticed I hadn't come out of my room in days and talked to me about going to the campus counseling center. I almost didn't go. I thought therapy was for people who were "really sick," and I was just... tired. But the counselor recognized depression immediately and helped me see that what I was experiencing was real, it was treatable, and it wasn't my fault.
+                </p>
+                <p>
+                    Between therapy and medication, things started to shift slowly. The heaviness didn't disappear overnight, but gradually the world started to have color again. I could sit in class and actually listen. Food tasted good. I went to a friend's party and actually enjoyed it, not just tolerated it. I realized how much of my life I'd been missing.
+                </p>
+                <p>
+                    My junior year is nothing like my freshman year. Yes, I still have hard days, but the difference is that now I can feel present for the good ones. I can actually experience joy, not just read about it. If you're in college and struggling, please reach out to your campus health center. You don't have to get through this alone, and you deserve to actually enjoy this chapter of your life.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>

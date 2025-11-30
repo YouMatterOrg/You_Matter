@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What We Do</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        /* --- Shared content layout for About subpages --- */
+        .content-section {
+            width: 100%;
+            background: #f7fafc;
+            padding: 60px 20px;
+        }
+
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* --- GRID LAYOUT FOR WHAT WE DO --- */
+        .what-we-do-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 900px) {
+            .what-we-do-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- LEFT COLUMN: TEXT --- */
+        .what-we-do-text h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0d2b57;
+            margin-bottom: 10px;
+        }
+
+        .what-we-do-tagline {
+            color: #2d86ff;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .what-we-do-text p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        /* --- RIGHT COLUMN: FEATURE GRID --- */
+        .what-we-do-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .what-we-do-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- FEATURE CARDS --- */
+        .what-card {
+            background: #ffffff;
+            padding: 22px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 8px 20px rgba(13, 43, 87, 0.08);
+            transition: transform .25s ease, box-shadow .25s ease;
+            text-align: left;
+        }
+
+        .what-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 34px rgba(13, 43, 87, 0.14);
+        }
+
+        .what-card h3 {
+            color: #ff8c3a;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 10px 0 6px;
+        }
+
+        .what-card p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* --- FADE IN EFFECT (optional, used across sections) --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html" aria-current="page">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>What We Do</h1>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="content-container">
+
+            <div class="what-we-do-layout">
+
+                <!-- LEFT COLUMN: EXPLANATION -->
+                <div class="what-we-do-text fade-in">
+                    <h2>What We Do</h2>
+                    <p class="what-we-do-tagline">We turn mental health into something you can understand, talk about, and act on.</p>
+
+                    <p>
+                        YouMatter is built to make mental health education feel clear, kind, and practical.
+                        Instead of overwhelming medical language, we focus on explanations, stories, and
+                        tools that real students, families, and educators can use.
+                    </p>
+
+                    <p>
+                        Everything on the site is designed to help people recognize what they’re feeling,
+                        learn the vocabulary to talk about it, and find the next step — whether that’s a
+                        coping strategy, a conversation, or reaching out for support.
+                    </p>
+                </div>
+
+                <!-- RIGHT COLUMN: FEATURES GRID -->
+                <div class="what-we-do-grid fade-in">
+
+                    <div class="what-card">
+                        <h3>Mental Health Explanations</h3>
+                        <p>Plain-language breakdowns of common mental-health topics so visitors don't feel lost or judged.</p>
+                    </div>
+
+                    <div class="what-card">
+                        <h3>Blog Posts</h3>
+                        <p>Articles that mix education, real experiences, and practical guidance focused on students and teens.</p>
+                    </div>
+
+                    <div class="what-card">
+                        <h3>Coping Tools</h3>
+                        <p>Grounding exercises, reflection prompts, and simple strategies for handling tough moments.</p>
+                    </div>
+
+                    <div class="what-card">
+                        <h3>Self-Assessments</h3>
+                        <p>Educational check-ins that help people notice patterns in mood, stress, and daily habits.</p>
+                    </div>
+
+                    <div class="what-card">
+                        <h3>Appointment Resources</h3>
+                        <p>Support for finding help, preparing questions, and knowing what to expect from a first visit.</p>
+                    </div>
+
+                    <div class="what-card">
+                        <h3>School-Friendly Content</h3>
+                        <p>Classroom-ready explanations and materials that schools can use in lessons and workshops.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+    <script>
+        // Fade-in on scroll for elements with .fade-in
+        const fadeItems = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        fadeItems.forEach(item => observer.observe(item));
+    </script>
+</body>
+</html>

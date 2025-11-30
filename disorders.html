@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site assets -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mental Health Conditions</title>
+  <meta name="description" content="Browse mental health conditions. Click a card to read a clear, accessible overview with symptoms and treatment information." />
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Page-scoped styles (prefixed with .mha- to avoid collisions) -->
+  <style>
+    :root{
+      --mha-navy:#0d2b57;         /* headings */
+      --mha-ink:#0e1a2b;          /* body text */
+      --mha-muted:#6a7a8f;        /* muted text */
+      --mha-cream:#fff6ea;        /* banner bg */
+      --mha-bg:#f7fafc;           /* page bg */
+      --mha-card:#ffffff;         /* card base */
+      --mha-soft:#e8eff8;         /* card divider */
+      --mha-accent:#ff8c3a;       /* tiny underline accent */
+      --mha-radius:18px;
+      --mha-shadow:0 10px 28px rgba(15,40,80,.10);
+      --mha-maxw:1180px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --mha-bg:#0b1326; --mha-card:#0f1b33; --mha-soft:#192746;
+        --mha-cream:#1a2440; --mha-navy:#d8e6ff; --mha-ink:#e6edf6; --mha-muted:#9eb0c9;
+      }
+      .footer{background:#0f1b33;}
+    }
+
+    *{box-sizing:border-box}
+    body{background:var(--mha-bg);-webkit-font-smoothing:antialiased;margin:0}
+
+    .mha-wrap{max-width:var(--mha-maxw);margin:0 auto;padding:28px 20px}
+
+    /* ---------- HOME GRID ---------- */
+    #mhaHome{display:block}
+    .mha-grid{
+      display:grid;gap:22px;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+    @media (max-width:1100px){ .mha-grid{grid-template-columns:repeat(3,1fr)} }
+    @media (max-width:820px){ .mha-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:540px){ .mha-grid{grid-template-columns:1fr} }
+
+    .mha-card{
+      border-radius:26px;background:var(--mha-card);box-shadow:var(--mha-shadow);overflow:hidden;border:1px solid rgba(13,43,87,.06)
+    }
+    .mha-top{
+      height:180px;display:flex;align-items:center;justify-content:center;
+      color:#fff;font-size:42px;font-weight:800;
+      background:linear-gradient(140deg,#7898ff,#3f68ff);
+      background-size:cover;background-position:center;
+    }
+    /* Make the anxiety card image fill the header area and crop as needed so
+       only the image shows (no gradient/background visible). */
+    .mha-top--anxiety{background:none;background-color:transparent}
+    .mha-top img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* fill and crop to the header box */
+      display: block;
+    }
+
+    /* Swap these with real photos if you have them */
+    .mha-top--anxiety{background:linear-gradient(140deg,#5ac6ff,#2c86ff)}
+    .mha-top--ocd{background:linear-gradient(140deg,#34d399,#10b981)}
+    .mha-top--depression{background:linear-gradient(140deg,#2f3a52,#6b7a99)}
+    .mha-top--adhd{background:linear-gradient(140deg,#f97316,#fb7185)}
+    .mha-top--ptsd{background:linear-gradient(140deg,#60a5fa,#3b82f6)}
+    .mha-top--bipolar{background:linear-gradient(140deg,#ffad66,#ff6fb1)}
+    .mha-top--eating{background:linear-gradient(140deg,#ffb94d,#f772b0)}
+    .mha-top--suicide{background:linear-gradient(140deg,#2c4a86,#46659f)}
+    .mha-top--cooccurring{background:linear-gradient(140deg,#8652ff,#ff6fb1)}
+    .mha-top--mood{background:linear-gradient(140deg,#3a3f87,#db76ff)}
+
+    /* Override: for cards that should show a real photo, remove the gradient
+       so the image can sit edge-to-edge and fill the header. */
+    .mha-top--anxiety,
+    .mha-top--ocd,
+    .mha-top--depression,
+    .mha-top--adhd,
+    .mha-top--ptsd,
+    .mha-top--bipolar,
+    .mha-top--eating,
+    .mha-top--suicide,
+    .mha-top--cooccurring,
+    .mha-top--mood{
+      background: none;
+      background-color: transparent;
+    }
+
+    .mha-bottom{
+      padding:18px 18px 16px;background:linear-gradient(180deg,#f2f6ff, #eef3fb);
+      border-top:1px solid var(--mha-soft); min-height:168px;
+    }
+    .mha-title{font-size:1.15rem;margin:0 0 6px;color:var(--mha-navy);font-weight:800}
+    .mha-snippet{margin:0 0 16px;color:var(--mha-ink);opacity:.85;line-height:1.5}
+    .mha-more{display:inline-flex;align-items:center;gap:8px;color:var(--mha-navy);text-decoration:none;font-weight:700}
+    .mha-more::after{content:"";display:block;height:4px;width:42px;background:var(--mha-accent);border-radius:6px;margin-left:8px;opacity:.95}
+
+    .mha-card button.mha-open{appearance:none;background:none;border:0;padding:0;margin:0;width:100%;text-align:left;cursor:pointer}
+
+    /* ---------- DETAIL PAGE ---------- */
+    #mhaDetail{display:none}
+    .mha-banner{
+      border-radius:22px;background:var(--mha-cream);padding:18px 20px;margin-bottom:16px;border:1px solid rgba(13,43,87,.06)
+    }
+    .mha-breadcrumb{
+      font-size:.95rem;color:var(--mha-navy);opacity:.9;display:flex;gap:8px;align-items:center;flex-wrap:wrap
+    }
+    .mha-back{
+      display:inline-flex;align-items:center;gap:8px;margin-bottom:6px;color:var(--mha-navy);text-decoration:none;font-weight:700
+    }
+    .mha-title-lg{font-size:2.2rem;margin:6px 0 0;color:var(--mha-navy);font-weight:800}
+    .mha-content{
+      background:var(--mha-card);border-radius:22px;padding:22px;box-shadow:var(--mha-shadow);border:1px solid rgba(13,43,87,.06)
+    }
+    .mha-content h2, .mha-content h3{color:var(--mha-navy);margin:14px 0 8px}
+    .mha-content p{color:var(--mha-ink);line-height:1.9;margin:10px 0}
+    .mha-content ul{margin:10px 0 18px 22px}
+    .mha-content li{margin:6px 0;line-height:1.75}
+
+    /* Utilities */
+    .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+  </style>
+</head>
+<body>
+  <!-- Keep your site header/nav -->
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt="Site logo"></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="About.html">ABOUT US</a></li>
+          <li class="has-dropdown">
+            <a href="course.html">COURSE <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+            <ul class="dropdown">
+              <li><a href="disorders.html" aria-current="page">Disorders</a></li>
+              <li><a href="appointment.html">Appointment</a></li>
+              <li><a href="check-in.html">Check-in</a></li>
+            </ul>
+          </li>
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="testimonials.html">TESTIMONIALS</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <h1>Mental Health Conditions</h1>
+  </section>
+
+  <!-- Page body -->
+  <section class="course">
+    <div class="mha-wrap">
+
+      <!-- HOME: card grid (RE-ORDERED) -->
+      <div id="mhaHome" aria-labelledby="mhaHomeTitle">
+        <h2 id="mhaHomeTitle" class="sr-only">Browse conditions</h2>
+        <div class="mha-grid" role="list">
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="anxiety" aria-label="Open Anxiety Disorders">
+              <div class="mha-top mha-top--anxiety" aria-hidden="true"><img src="images/anxiety.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Anxiety Disorders</h3>
+                <p class="mha-snippet">When worry becomes constant and feels like it’s steering your day.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="ocd" aria-label="Open OCD">
+              <div class="mha-top mha-top--ocd" aria-hidden="true"><img src="images/ocd.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">OCD</h3>
+                <p class="mha-snippet">Intrusive thoughts and “must-do” rituals that crowd out daily life.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="depression" aria-label="Open Depression">
+              <div class="mha-top mha-top--depression" aria-hidden="true"><img src="images/Depression.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Depression</h3>
+                <p class="mha-snippet">More than sadness — it reshapes energy, sleep, and motivation.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="adhd" aria-label="Open ADHD">
+              <div class="mha-top mha-top--adhd" aria-hidden="true"><img src="images/adhd.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">ADHD</h3>
+                <p class="mha-snippet">Attention, impulse, and activity patterns that affect daily tasks.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="ptsd" aria-label="Open PTSD">
+              <div class="mha-top mha-top--ptsd" aria-hidden="true"><img src="images/ptsd.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">PTSD</h3>
+                <p class="mha-snippet">After trauma, reminders can feel like reliving it in the present.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="bipolar" aria-label="Open Bipolar Disorder">
+              <div class="mha-top mha-top--bipolar" aria-hidden="true"><img src="images/bipolar.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Bipolar Disorder</h3>
+                <p class="mha-snippet">Distinct mood shifts that change pace, energy, and judgment.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="eating" aria-label="Open Eating Disorders">
+              <div class="mha-top mha-top--eating" aria-hidden="true"><img src="images/eatingdisorders.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Eating Disorders</h3>
+                <p class="mha-snippet">Serious conditions that affect health, emotions, and relationships.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="suicide" aria-label="Open Suicide information">
+              <div class="mha-top mha-top--suicide" aria-hidden="true"><img src="images/suicide.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Suicide</h3>
+                <p class="mha-snippet">If you or someone you know is in crisis, help is available now.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="cooccurring" aria-label="Open Co-occurring: Mental Health and Substance Use">
+              <div class="mha-top mha-top--cooccurring" aria-hidden="true"><img src="images/conditions.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Co-occurring Conditions</h3>
+                <p class="mha-snippet">When substance use and mental health challenges happen together.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+
+          <article class="mha-card" role="listitem">
+            <button class="mha-open" data-key="mood" aria-label="Open Mood Disorders">
+              <div class="mha-top mha-top--mood" aria-hidden="true"><img src="images/mood.png" alt="" aria-hidden="true"></div>
+              <div class="mha-bottom">
+                <h3 class="mha-title">Mood Disorders</h3>
+                <p class="mha-snippet">A group of conditions where mood changes persist and impair life.</p>
+                <span class="mha-more">Learn more</span>
+              </div>
+            </button>
+          </article>
+        </div>
+      </div>
+
+      <!-- DETAIL: banner + big title + content -->
+      <div id="mhaDetail" aria-live="polite" aria-labelledby="mhaDetailTitle">
+        <div class="mha-banner">
+          <a href="#" id="mhaBack" class="mha-back"><i class="fa fa-angle-left"></i> Back to All</a>
+          <div class="mha-breadcrumb"><a href="index.html" style="text-decoration:none;color:inherit">Home</a> / <span>Mental Health Conditions</span> / <span id="mhaCrumb">Condition</span></div>
+          <h1 id="mhaDetailTitle" class="mha-title-lg">Condition</h1>
+        </div>
+
+        <article class="mha-content" id="mhaDetailBody">
+          <!-- JS injects the selected condition’s HTML here -->
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Site footer -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>  <!-- Keep your mobile menu script -->
+  <script src="menu.js"></script>
+
+  <!-- Page logic: cards -> detail page with breadcrumb + back; supports deep links -->
+  <script>
+    (function(){
+      const home   = document.getElementById('mhaHome');
+      const detail = document.getElementById('mhaDetail');
+      const crumb  = document.getElementById('mhaCrumb');
+      const title  = document.getElementById('mhaDetailTitle');
+      const body   = document.getElementById('mhaDetailBody');
+
+      // Long-form, paragraph-first content (minimal lists; generous spacing)
+      const PAGES = {
+        anxiety:{
+          title:"Anxiety Disorders",
+          html:`
+            <p>Everyone feels anxious at times, but anxiety disorders are different: worry becomes frequent, sticky, and hard to turn down even when nothing dangerous is happening. Many people describe a sense of being “on alert,” difficulty relaxing, and a racing mind that makes sleep and focus tough. Anxiety can show up as muscle tension, stomach discomfort, restlessness, trouble concentrating, and a tendency to avoid situations that feel threatening. Over time, avoidance shrinks daily life and reinforces the belief that fears can’t be handled.</p>
+            <p>Effective care is available. Psychological treatments—especially cognitive behavioral strategies and exposure-based approaches—teach practical skills to meet feared situations gradually and safely, so confidence grows and avoidance fades. Lifestyle supports such as consistent sleep, daily movement, and reducing caffeine help the nervous system settle. Medications like SSRIs or SNRIs can be useful when symptoms are persistent or severe and are often combined with therapy for best results.</p>
+          `
+        },
+        ocd:{
+          title:"Obsessive-Compulsive Disorder (OCD)",
+          html:`
+            <p>OCD is not simply about neatness or liking things a certain way. It involves intrusive, unwanted thoughts, images, or urges (obsessions) that feel alarming or wrong, and repetitive responses (compulsions) intended to reduce distress or prevent harm. A person may wash, check, arrange, repeat, seek reassurance, or review thoughts mentally. Relief after a ritual is typically short-lived, creating a cycle that consumes time and energy and interferes with school, work, and relationships.</p>
+            <p>The most effective treatment is Exposure and Response Prevention (a form of CBT), which helps people gently face triggers while learning to resist rituals so anxiety can rise and fall on its own. Many find that the fear loses its power when rituals are reduced consistently and with support. Medications—usually SSRIs at therapeutic doses—can also help reduce the intensity of obsessions and compulsions and are commonly used alongside therapy.</p>
+          `
+        },
+        depression:{
+          title:"Depression",
+          html:`
+            <p>Depression is more than a bad day. It often brings a deep, persistent change in mood, motivation, and thinking. People may feel empty or weighed down, lose interest in activities that used to matter, and struggle with energy, sleep, or appetite. Thoughts can turn self-critical, slow, or foggy, and ordinary tasks feel unusually effortful. Depression can affect anyone, and it is not a personal failing—it's a treatable health condition.</p>
+            <p>Recovery typically involves a combination of approaches. Psychotherapies such as cognitive behavioral or interpersonal therapy provide structure for understanding patterns that keep low mood going and for rebuilding routines, relationships, and meaning. Antidepressant medications may help reset brain pathways that influence mood and energy; benefits usually accumulate over several weeks. Gentle activity, daylight exposure, and connection with supportive people all contribute to healing. If thoughts of self-harm are present, urgent evaluation is essential and help is available right away.</p>
+          `
+        },
+        adhd:{
+          title:"Attention-Deficit/Hyperactivity Disorder (ADHD)",
+          html:`
+            <p>ADHD is a neurodevelopmental condition that changes how attention, activity, and impulse control are regulated. Many describe a brain that seeks stimulation: focusing can be hard on tasks that are routine or slow, while hyperfocus can appear on topics of high interest. People with ADHD may forget steps, miss details, interrupt unintentionally, or feel “always on the go,” which can be frustrating despite strong intentions and effort. These patterns are real and common in both children and adults.</p>
+            <p>Support starts with understanding. Practical tools—visual schedules, external reminders, breaking work into short sprints, and building consistent routines—lighten the load. Behavioral coaching and therapy can strengthen planning and self-management skills. Medications (stimulant or non-stimulant) are highly studied and, when appropriate, can improve focus and task completion. School and workplace accommodations such as structured deadlines and reduced distractions can turn strengths into dependable performance.</p>
+          `
+        },
+        ptsd:{
+          title:"Post-Traumatic Stress Disorder (PTSD)",
+          html:`
+            <p>After trauma, the nervous system can stay in survival mode. PTSD makes reminders of the event feel immediate and threatening, even when the danger has passed. Intrusive memories or nightmares appear without warning; people may avoid places, people, or conversations that stir up distress; and shifts in mood, beliefs, sleep, and startle responses are common. These reactions are the brain’s attempt to protect, yet they often keep healing out of reach.</p>
+            <p>Evidence-based therapies help the brain process what happened and reclaim a sense of safety. Treatments such as Cognitive Processing Therapy, Prolonged Exposure, and EMDR guide people to revisit memories in a planned, supported way so the intensity decreases over time. Medications—including certain antidepressants—can reduce symptoms like hyperarousal and improve sleep, while peer or group support reduces isolation and validates recovery.</p>
+          `
+        },
+        bipolar:{
+          title:"Bipolar Disorder",
+          html:`
+            <p>Bipolar disorder involves distinct shifts in mood, energy, and activity levels. During manic or hypomanic periods, people may feel unusually energized or euphoric, sleep much less, think and speak quickly, and take risks that are out of character. Depressive episodes bring lowered mood, interest, and drive. These cycles are medical in nature and can seriously impact judgment, finances, school, and relationships—but with the right plan, many people live stable, fulfilling lives.</p>
+            <p>Care focuses on preventing and smoothing mood swings. Mood stabilizing medications such as lithium and other options are the foundation for many, complemented by psychotherapy that builds routines, monitors early warning signs, and strengthens support systems. Regular sleep, substance-use reduction, and stress management are practical tools that protect stability and enhance treatment.</p>
+          `
+        },
+        eating:{
+          title:"Eating Disorders",
+          html:`
+            <p>Eating disorders are serious conditions—not choices—that affect health, emotions, and relationships. Thoughts about food, body shape, or weight can become relentless, while behaviors like restriction, binge eating, or purging provide short-term relief but deepen medical and psychological risks. People of every size, gender, age, and background can be affected, and many feel intense shame or secrecy that delays care.</p>
+            <p>Recovery is possible and usually involves a team. Medical monitoring ensures safety; nutrition therapy restores patterns that fuel the body and brain; and evidence-based psychotherapies (such as Family-Based Treatment, CBT, or DBT) address emotions, beliefs, and coping. Treatment may be outpatient or, when health is at risk, a higher level of care. Compassionate support from family and community is a powerful part of rebuilding a healthy relationship with food and with oneself.</p>
+          `
+        },
+        suicide:{
+          title:"Suicide",
+          html:`
+            <p><strong>If you or someone you know is struggling or in crisis, help is available now.</strong> Reach local emergency services or a crisis line. Suicidal thoughts often reflect overwhelming pain, isolation, or a belief that things will never improve. These experiences are common and treatable; with connection and care, people do get through.</p>
+            <p>Responding early matters. Professional evaluation can identify treatable conditions like depression, substance use, or trauma responses and create a safety plan that reduces access to lethal means, builds reasons for living, and adds 24/7 contacts. Supportive listening—staying with the person, validating their pain, and helping them reach help—saves lives.</p>
+          `
+        },
+        cooccurring:{
+          title:"Co-occurring Mental Health & Substance Use",
+          html:`
+            <p>Mental health conditions and substance use often intersect. Substances may seem to blunt anxiety, lift mood, or aid sleep at first, but over time they tend to worsen symptoms, increase health risks, and make recovery harder. Integrated treatment addresses both at the same time: the same team collaborates on therapy, medications, relapse prevention, and skill-building so progress in one area supports the other.</p>
+            <p>People do recover. Practical steps include safer-use education or abstinence plans, managing withdrawal or cravings with medical care when needed, trauma-informed therapy, peer support, and rebuilding daily routines that keep stress manageable and purpose visible.</p>
+          `
+        },
+        mood:{
+          title:"Mood Disorders",
+          html:`
+            <p>Mood disorders are conditions in which changes in mood—low, elevated, or a mix—last long enough and cut deep enough to interfere with daily life. They can alter sleep and appetite, concentration, energy, and relationships. Recognizing a mood pattern and its triggers opens the door to targeted help, whether symptoms fit major depression, bipolar spectrum conditions, or persistent depressive states.</p>
+            <p>Effective care typically blends psychotherapy, healthy routines, and, when indicated, medication. Many people benefit from tracking mood, sleep, and activity to spot early shifts and act quickly. With consistent support, mood becomes more predictable and goals become easier to pursue.</p>
+          `
+        }
+      };
+
+      function showHome(){
+        document.getElementById('mhaDetail').style.display = 'none';
+        document.getElementById('mhaHome').style.display = 'block';
+        try{ history.pushState(null,'', location.pathname); }catch(e){}
+      }
+
+      function showPage(key, focus){
+        const data = PAGES[key]; if(!data) return;
+        document.getElementById('mhaHome').style.display = 'none';
+        document.getElementById('mhaDetail').style.display = 'block';
+        document.getElementById('mhaCrumb').textContent = data.title;
+        document.getElementById('mhaDetailTitle').textContent = data.title;
+        document.getElementById('mhaDetailBody').innerHTML = data.html;
+        try{ history.pushState(null,'', '#'+key); }catch(e){ location.hash = key; }
+        if(focus){ document.getElementById('mhaDetailTitle').scrollIntoView({behavior:'smooth', block:'start'}); }
+      }
+
+      // Click cards
+      document.querySelectorAll('.mha-open').forEach(btn=>{
+        btn.addEventListener('click', ()=> showPage(btn.dataset.key, true));
+      });
+
+      // Back link
+      document.getElementById('mhaBack').addEventListener('click', (e)=>{
+        e.preventDefault(); showHome();
+      });
+
+      // Router on load / back-forward
+      function route(){
+        const key = (location.hash||'').replace('#','');
+        if(key && PAGES[key]) showPage(key, false);
+        else showHome();
+      }
+      window.addEventListener('popstate', route);
+      document.addEventListener('DOMContentLoaded', route);
+    })();
+  </script>
+</body>
+</html>

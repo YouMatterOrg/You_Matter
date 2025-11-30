@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understand & Support - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Page Container */
+        .content-section {
+            width: 100%;
+            background: #f7fafc;
+            padding: 60px 20px 70px;
+        }
+
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Section Heading */
+        .section-heading {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-heading h2 {
+            font-size: 2.2rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            font-size: 1.05rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Three Column Section */
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-bottom: 80px;
+        }
+
+        .three-col-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(13, 43, 87, 0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .three-col-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(13, 43, 87, 0.15);
+        }
+
+        .three-col-icon {
+            font-size: 48px;
+            color: #ff8c3a;
+            margin-bottom: 20px;
+        }
+
+        .three-col-card h3 {
+            font-size: 1.5rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .three-col-card p {
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        .three-col-btn {
+            display: inline-block;
+            background: #ff8c3a;
+            color: #ffffff;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .three-col-btn:hover {
+            background: #e67e2f;
+        }
+
+        /* Disorders Section */
+        .disorders-section {
+            background: #ffffff;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+
+        .disorders-heading {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .disorders-heading h2 {
+            font-size: 2.2rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .disorders-heading p {
+            font-size: 1.05rem;
+            color: #4a5568;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Disorders Grid */
+        .disorders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .disorder-card {
+            background: #f7fafc;
+            border: 2px solid #e4edf9;
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .disorder-card:hover {
+            border-color: #ff8c3a;
+            box-shadow: 0 10px 28px rgba(255, 140, 58, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .disorder-icon {
+            font-size: 36px;
+            color: #ff8c3a;
+            margin-bottom: 12px;
+        }
+
+        .disorder-card h4 {
+            font-size: 1.3rem;
+            color: #0d2b57;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .disorder-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .disorder-card a {
+            color: #ff8c3a;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .disorder-card a:hover {
+            color: #e67e2f;
+        }
+
+        /* CTA Section */
+        .cta-banner {
+            background: linear-gradient(135deg, #0d2b57 0%, #1a3a6e 100%);
+            padding: 50px 30px;
+            border-radius: 16px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .cta-banner h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .cta-banner p {
+            font-size: 1rem;
+            margin-bottom: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-banner a {
+            display: inline-block;
+            background: #ff8c3a;
+            color: #ffffff;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .cta-banner a:hover {
+            background: #e67e2f;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .section-heading h2,
+            .disorders-heading h2 {
+                font-size: 1.8rem;
+            }
+
+            .three-col-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .disorders-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Understand & Support</h1>
+    </section>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="content-container">
+            <!-- Intro Section with Three Columns -->
+            <div class="section-heading">
+                <h2>Get the Support You Need</h2>
+                <p>Explore resources to understand your mental health, take a check-in assessment, or connect with a professional counselor.</p>
+            </div>
+
+            <div class="three-col-grid">
+                <!-- Column 1: Understand -->
+                <div class="three-col-card">
+                    <div class="three-col-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Understand Conditions</h3>
+                    <p>Learn about common mental health conditions, their symptoms, and treatment options. Knowledge is the first step toward healing.</p>
+                    <a href="disorders.html" class="three-col-btn">Explore Disorders</a>
+                </div>
+
+                <!-- Column 2: Check-In -->
+                <div class="three-col-card">
+                    <div class="three-col-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h3>Mental Health Check-in</h3>
+                    <p>Take a quick self-assessment to understand how you're really feeling right now. Get personalized suggestions based on your responses.</p>
+                    <a href="check-in.html" class="three-col-btn">Start Check-in</a>
+                </div>
+
+                <!-- Column 3: Professional Support -->
+                <div class="three-col-card">
+                    <div class="three-col-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Professional Support</h3>
+                    <p>Connect with qualified mental health professionals who are here to listen and support your journey.</p>
+                    <a href="appointment.html" class="three-col-btn">Book Appointment</a>
+                </div>
+            </div>
+
+            <!-- Disorders Section -->
+            <div class="disorders-section">
+                <div class="disorders-heading">
+                    <h2>Common Mental Health Conditions</h2>
+                    <p>Understanding these conditions is an important first step. Each card provides an overview and links to more detailed information.</p>
+                </div>
+
+                <div class="disorders-grid">
+                    <!-- Anxiety Disorders -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <h4>Anxiety Disorders</h4>
+                        <p>When worry becomes constant and affects daily life. Includes generalized anxiety, social anxiety, and panic disorder.</p>
+                        <a href="disorders.html#anxiety">Learn More →</a>
+                    </div>
+
+                    <!-- Depression -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-cloud-rain"></i>
+                        </div>
+                        <h4>Depression</h4>
+                        <p>More than sadness — it affects energy, sleep, appetite, and motivation. Major depression and persistent depressive disorder.</p>
+                        <a href="disorders.html#depression">Learn More →</a>
+                    </div>
+
+                    <!-- ADHD -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>ADHD</h4>
+                        <p>Attention challenges, impulse control, and activity levels that affect work, school, and relationships.</p>
+                        <a href="disorders.html#adhd">Learn More →</a>
+                    </div>
+
+                    <!-- OCD -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h4>OCD</h4>
+                        <p>Obsessive-compulsive disorder involves unwanted thoughts and repetitive behaviors that interfere with daily life.</p>
+                        <a href="disorders.html#ocd">Learn More →</a>
+                    </div>
+
+                    <!-- PTSD -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <h4>PTSD</h4>
+                        <p>Post-traumatic stress disorder develops after experiencing or witnessing traumatic events.</p>
+                        <a href="disorders.html#ptsd">Learn More →</a>
+                    </div>
+
+                    <!-- Eating Disorders -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h4>Eating Disorders</h4>
+                        <p>Includes anorexia, bulimia, and binge eating disorder. Serious conditions requiring professional support.</p>
+                        <a href="disorders.html#eating">Learn More →</a>
+                    </div>
+
+                    <!-- Bipolar Disorder -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h4>Bipolar Disorder</h4>
+                        <p>Characterized by extreme mood swings — from depressive lows to manic highs. Manageable with proper support.</p>
+                        <a href="disorders.html#bipolar">Learn More →</a>
+                    </div>
+
+                    <!-- Substance Use -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-prescription-bottle"></i>
+                        </div>
+                        <h4>Substance Use Disorder</h4>
+                        <p>Addiction and substance abuse affect mental health and physical wellbeing. Recovery is possible with support.</p>
+                        <a href="disorders.html#substance">Learn More →</a>
+                    </div>
+
+                    <!-- Co-occurring Disorders -->
+                    <div class="disorder-card">
+                        <div class="disorder-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h4>Co-occurring Disorders</h4>
+                        <p>Multiple mental health conditions that often occur together. Integrated treatment addresses all conditions.</p>
+                        <a href="disorders.html#cooccurring">Learn More →</a>
+                    </div>
+                </div>
+
+                <!-- CTA Banner -->
+                <div class="cta-banner">
+                    <h3>Want to Learn More?</h3>
+                    <p>Explore detailed information about each condition, including symptoms, causes, and treatment options.</p>
+                    <a href="disorders.html">View All Disorders</a>
+                    <a href="appointment.html">Talk to a Professional</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>

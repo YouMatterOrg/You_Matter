@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leah's Story - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Page body section (same pattern as other content pages) */
+        .content-section {
+            width: 100%;
+            background: #ffffff;
+            padding: 60px 20px 70px;
+        }
+        .content-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ---------- HERO PANEL (matches screenshot style) ---------- */
+        .story-hero-panel {
+            background: #2c4e83; /* deep blue */
+            border-radius: 32px;
+            padding: 40px 34px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* subtle diagonal overlay on the right */
+        .story-hero-panel::after {
+            content: "";
+            position: absolute;
+            right: -120px;
+            top: -80px;
+            width: 60%;
+            height: 160%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(12,29,54,0.2));
+            transform: skewX(-6deg);
+        }
+
+        .story-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* circular image on the left */
+        .story-image-wrap {
+            flex: 0 0 260px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .story-image {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid #f8e6d1;  /* light border ring */
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+            background: #d9d9d9; /* placeholder bg if image missing */
+        }
+
+        /* text on the right */
+        .story-intro {
+            flex: 1;
+            min-width: 260px;
+            color: #f7fafc;
+        }
+
+        .story-name {
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #e4edf9;
+        }
+
+        .story-intro h2 {
+            color: #ff9f3b;           /* warm orange headline */
+            font-size: 2.4rem;
+            margin: 0 0 18px 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .story-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin: 0;
+            color: #fdfdfd;
+        }
+
+        @media (max-width: 900px) {
+            .story-hero-panel {
+                padding: 32px 22px;
+            }
+            .story-intro h2 {
+                font-size: 2rem;
+            }
+            .story-quote {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ---------- BODY COPY ---------- */
+        .story-content p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff8c3a;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: gap 0.2s ease;
+        }
+        .back-link:hover {
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">COURSE <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Leah's Story</h1>
+    </section>
+
+    <section class="content-section">
+        <div class="content-container">
+            <a href="testimonials.html" class="back-link">
+                <i class="fa-solid fa-arrow-left"></i> Back to Testimonials
+            </a>
+
+            <!-- New hero banner -->
+            <div class="story-hero-panel">
+                <div class="story-header">
+                    <div class="story-image-wrap">
+                        <!-- replace with Leah's real image -->
+                        <img src="images/leah.png" alt="Leah" class="story-image">
+                    </div>
+                    <div class="story-intro">
+                        <p class="story-name">Leah R.</p>
+                        <h2>Supporting My Brother Taught Me</h2>
+                        <p class="story-quote">
+                            "Supporting my brother taught me that families don't have to suffer alone."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full story body -->
+            <div class="story-content">
+                <p>
+                    My brother and I were always close. Growing up, I felt like it was my job to protect him, to make sure he was okay. So when I noticed him withdrawing — skipping family dinners, staying in his room constantly, not showing up to things he loved — my first instinct was to try to fix it myself. I'd ask him to go out with me, try to cheer him up, attempt to reason with him about why he seemed so sad. Nothing worked, and I felt like I was failing.
+                </p>
+                <p>
+                    He finally told me he had depression. My heart broke for him, but it also brought up something else — guilt that I hadn't noticed sooner, guilt that I couldn't fix it, and this desperate wish that I could take it away. I started spending all my time trying to help. I'd text him motivational quotes, I'd invite him to things constantly, I'd worry constantly about whether he was okay. It was exhausting, and honestly, I think I was making things worse.
+                </p>
+                <p>
+                    One night, I broke down crying in front of my parents. I told them I didn't know how to help my brother anymore, that I was scared I was doing it wrong, and that I couldn't carry this alone. That's when my mom said something that changed everything: "Leah, you can't save him by yourself. He needs professional help, and you need support too."
+                </p>
+                <p>
+                    We went to family therapy together. A therapist helped me understand that depression isn't something a sibling's love can cure — he needed professional treatment. She also helped me understand healthy boundaries. I couldn't fix my brother, but I could support him while taking care of myself. I could listen without trying to solve everything. I could let him know I'm here without making his mental health my responsibility.
+                </p>
+                <p>
+                    My brother started therapy and took medication. I started therapy too — not because I was depressed, but because being close to someone with depression had affected me deeply. In family sessions, I learned that my brother actually felt terrible about his depression affecting me, and that trying so hard to fix him was putting pressure on him to get better for my sake, rather than for himself.
+                </p>
+                <p>
+                    Now our relationship is actually stronger. I'm still his sister and I still care deeply, but I'm not trying to be his therapist or his savior. When he has a hard day, I listen. When I have a hard day, I feel comfortable talking to him about it — something I never did before because I thought I had to be strong for him. We've learned that families heal together, not by one person sacrificing themselves.
+                </p>
+                <p>
+                    If your family is going through mental health struggles, please know that getting professional help isn't a failure — it's one of the smartest things you can do. And it's okay to ask for support for yourself too. Your loved one's mental health is not your responsibility to fix alone.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
+
+    <script src="menu.js"></script>
+</body>
+</html>
