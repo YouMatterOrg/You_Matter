@@ -12,23 +12,24 @@
 
     <!-- Minimal hero overrides: image + diagonal grey panel -->
     <style>
-      /* hero uses your background.jpg + a grey diagonal overlay */
-      .header.hero-header {
-        position: relative;
-        background: url("background.jpg") center / cover no-repeat;
-        color: #ffffff;
-        overflow: hidden;
-      }
-
-      /* right-side grey diagonal panel */
+      /* right-side light orange diagonal panel */
       .header.hero-header::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: #6f7787; /* same grey you already use */
+        background: #FFA500; /* light orange */
         clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%);
         opacity: 0.96;
         z-index: 0;
+      }
+
+      /* Reduce background image opacity */
+      .header.hero-header {
+        position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/background.jpg") center / cover no-repeat;
+        background-blend-mode: darken;
+        color: #ffffff;
+        overflow: hidden;
       }
 
       /* make sure nav + hero text appear on top of the overlay */
@@ -50,13 +51,74 @@
 
       .hero-header .nav-links ul li a[aria-current="page"] {
         font-weight: 600;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.8);
         padding-bottom: 2px;
       }
 
-      /* this doesn’t change layout, just helps readability if needed */
+      /* Move hero text to the RIGHT side, under navigation */
       .hero-header .text-box {
+        max-width: 520px;
+        text-align: center;
+        margin-top: 25vh;
+        margin-right: 37%;
+        margin-left: auto;
+        margin-bottom: 8vh;
         color: #ffffff;
+      }
+
+      .hero-header .text-box h1 {
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: clamp(2.6rem, 6vw, 3.6rem);
+        margin-bottom: 20px;
+        margin-top: 15vh;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .hero-header .text-box p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        max-width: 480px;
+        margin-bottom: 32px;
+        font-weight: 300;
+      }
+
+      .hero-header .hero-btn {
+        display: inline-block;
+        padding: 14px 36px;
+        border-radius: 2px;
+        border: 1.5px solid rgba(255, 255, 255, 0.95);
+        background: transparent;
+        color: #ffffff;
+        font-size: 0.9rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-weight: 600;
+        text-decoration: none;
+        transition:
+          background 0.3s ease,
+          color 0.3s ease,
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .hero-header .hero-btn:hover {
+        background: rgba(255, 255, 255, 0.9);
+        color: #111827;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.55);
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        .header.hero-header {
+          min-height: 80vh;
+        }
+
+        .header.hero-header .text-box {
+          padding: 18vh 1.2rem 4rem;
+        }
       }
     </style>
 </head>
@@ -84,7 +146,7 @@
                             <li><a href="disorders.html">Disorders</a></li>
                             <li><a href="appointment.html">Appointment</a></li>
                             <li><a href="check-in.html">Check-in</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="index.html">Contact Us</a></li>
                         </ul>
                     </li>
                     <li><a href="blog.html">BLOG</a></li>
@@ -96,7 +158,7 @@
         <div class="text-box">
             <h1>YOU MATTER</h1>
             <p>Your mental health deserves care, support, and resources. We're here to help you take that first step.</p>
-            <a href="#main-tabs" class="hero-btn">Explore Resources</a>
+            <a href="#main-tabs" class="hero-btn">Explore</a>
         </div>
     </header>
 

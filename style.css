@@ -706,6 +706,7 @@ p{
 /* Hidden by default: styled as a translucent layered panel with blur. */
 .nav-links ul li .dropdown {
     display: none;
+    visibility: hidden;
     position: absolute;
     top: 100%;
     left: 0;
@@ -747,13 +748,15 @@ p{
     display: block;
     opacity: 1;
     transform: translateY(6px);
+    visibility: visible;
 }
 
 /* Show when toggled via JS (click) */
 .nav-links ul li.has-dropdown.open > .dropdown {
-        display: block;
-        opacity: 1;
-        transform: translateY(6px);
+    display: block;
+    opacity: 1;
+    transform: translateY(6px);
+    visibility: visible;
 }
 
 /* If dropdown is near the right edge (last one or last two items), anchor to the right so it opens leftwards */

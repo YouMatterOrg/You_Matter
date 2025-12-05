@@ -12,16 +12,18 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   var ddParents = document.querySelectorAll('.nav-links ul li.has-dropdown');
+  console.log('Found dropdown parents:', ddParents.length);
+  
   ddParents.forEach(function (li) {
     var a = li.querySelector(':scope > a');
     if (!a) return;
     a.addEventListener('click', function (e) {
-  // x
       e.preventDefault();
       ddParents.forEach(function (other) {
         if (other !== li) other.classList.remove('open');
       });
       li.classList.toggle('open');
+      console.log('Dropdown toggled, has open class:', li.classList.contains('open'));
     });
   });
 
