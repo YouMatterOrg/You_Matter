@@ -2,13 +2,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stan's Story - YOU MATTER</title>
+    <title>Riley's Story - YOU MATTER</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
+        /* Page body section (same pattern as other content pages) */
         .content-section {
             width: 100%;
             background: #ffffff;
@@ -18,14 +19,18 @@
             max-width: 1100px;
             margin: 0 auto;
         }
+
+        /* ---------- HERO PANEL (matches screenshot style) ---------- */
         .story-hero-panel {
-            background: #2c4e83; 
+            background: #2c4e83; /* deep blue */
             border-radius: 32px;
             padding: 40px 34px;
             margin-bottom: 40px;
             position: relative;
             overflow: hidden;
         }
+
+        /* subtle diagonal overlay on the right */
         .story-hero-panel::after {
             content: "";
             position: absolute;
@@ -36,6 +41,7 @@
             background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(12,29,54,0.2));
             transform: skewX(-6deg);
         }
+
         .story-header {
             position: relative;
             z-index: 1;
@@ -44,11 +50,14 @@
             align-items: center;
             flex-wrap: wrap;
         }
+
+        /* circular image on the left */
         .story-image-wrap {
             flex: 0 0 260px;
             display: flex;
             justify-content: center;
         }
+
         .story-image {
             width: 260px;
             height: 260px;
@@ -58,6 +67,8 @@
             box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
             background: #d9d9d9; /* placeholder bg if image missing */
         }
+
+        /* text on the right */
         .story-intro {
             flex: 1;
             min-width: 260px;
@@ -74,7 +85,7 @@
         }
 
         .story-intro h2 {
-            color: #ff9f3b;         
+            color: #ff9f3b;           /* warm orange headline */
             font-size: 2.4rem;
             margin: 0 0 18px 0;
             font-weight: 700;
@@ -89,10 +100,19 @@
             color: #fdfdfd;
         }
 
+        @media (max-width: 900px) {
+            .story-hero-panel {
+                padding: 32px 22px;
+            }
+            .story-intro h2 {
+                font-size: 2rem;
+            }
+            .story-quote {
+                font-size: 1.2rem;
+            }
+        }
 
-    
-
-    /* Styling for page but rishi complete the other text part by wed evening */
+        /* ---------- BODY COPY ---------- */
         .story-content p {
             color: #4a5568;
             font-size: 1rem;
@@ -101,7 +121,7 @@
             text-align: justify;
         }
 
-
+        /* Back link */
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -150,7 +170,7 @@
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1>Stan's Story</h1>
+        <h1>Lisa's Story</h1>
     </section>
 
     <section class="content-section">
@@ -158,41 +178,40 @@
             <a href="testimonials.html" class="back-link">
                 <i class="fa-solid fa-arrow-left"></i> Back to Testimonials
             </a>
+
+            <!-- New hero banner -->
             <div class="story-hero-panel">
                 <div class="story-header">
                     <div class="story-image-wrap">
-                        
-                        <img src="images/stan.png" alt="Stan" class="story-image">
+                        <!-- replace with Riley's real image -->
+                        <img src="images/lisa.png" alt="Lisa" class="story-image">
                     </div>
                     <div class="story-intro">
-                        <p class="story-name">Stan T.</p>
-                        <h2>Finding Light In The Darkness</h2>
+                        <p class="story-name">Lisa McLeod</p>
+                        <h2>Workplace Mental Health Training Expert</h2>
                         <p class="story-quote">
-                            "Being here helped me rediscover hope."
+                            "Mental ill-health affects everyone, regardless of their role or industry."
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Stan's Story -->
+            <!-- Full story body -->
             <div class="story-content">
                 <p>
-                    When I first started thinking about this series, I knew I wanted the opening story to be one I understood deeply, something that showed how hope can grow even in the darkest situations. I wanted a story about finding light again. Eventually, I realized the best story to begin with was my own.
+                    Lisa McLeod is a psychologist, executive coach, and work trainer with more than 20 years of experience working within private, government and not-for-profit sectors. She trains individuals to provide practical application of neuroscience and psychology in order to support human flourishing and happiness in the workplace. Since 2018, she has been facilitating workplace mental health training programs for the Black Dog Institute.
                 </p>
                 <p>
-                    I've struggled with depression for most of my life. Now in my early 40s, and having worked at MHAEM for almost three years, I finally feel like I'm doing work that matters. After spending most of my adult life in IT, miserable and unfulfilled, this job has given me direction and purpose. I used to roll my eyes when people said, "If you love what you do, you'll never work a day in your life," but now I truly understand what they meant. My belief that people are capable of goodness, and that helping each other is what makes us human, has always guided me.
+                    In the course of her work with people seeking assistance for mental health issues, Lisa has frequently encountered individuals who have not developed basic psychological skills through school or in their job. There are essential skills needed to cope with the daily challenges of life. Therefore, it was essential to develop mental health training for workplaces where most people are spending most of their waking hours.
                 </p>
                 <p>
-                    But about a year and a half ago, something happened that made those beliefs feel like they were falling apart. I went into a deep depressive spiral, what I call my "valley days." Everything felt heavy, dull, and hopeless. I dragged myself to work feeling angry, bitter, and disconnected from the world around me.
+                    Lisa's workplace mental health training programs have been developed to meet the needs of people in a diverse range of industries and work environments, from mining communities to law firms. Mental ill-health affects everyone, regardless of their role in an organization or their industry.
                 </p>
                 <p>
-                    Then, in the middle of one of those dark days, I remembered where I worked. Part of my job is answering calls and giving referrals. One day, a woman called crying, not because she was upset, but because she was grateful. Our PATH team had found her a warm bed after she'd been living out of her car. Her gratitude over something so basic reminded me how life-changing small acts of kindness can be.
+                    Lisa also focuses on teaching people how to identify signs of distress in themselves and their coworkers and how they can provide support to each other as an employee assistance program, which can help people successfully re-establish their normal work routines after experiencing mental ill-health. Examples of how mental ill-health may present at work include presenteeism, where an employee physically attends work but is unable to achieve his/her full potential, to withdrawal from work completely by the employee, which can significantly impact productivity and ultimately create a negative culture for the entire team.
                 </p>
-                <p>
-                    More stories kept coming. I heard about colleagues who intervened in a suicidal crisis and got someone the help they desperately needed. I heard people describe our teams as "life savers." I saw how our programs helped clients find stability. It felt like the universe was sending me reminder after reminder of the quiet, powerful good that happens here every day.
-                </p>
-                <p>
-                    These acts of compassion, big and small, began to pull me out of my darkness. My coworkers and mentors didn't just help others; without even knowing it, they were helping me too. Their kindness slowly rebuilt me, piece by piece, and reignited the sense of purpose I had lost. I'm still healing, but I'm no longer drowning in bitterness or anger. Climbing out of a valley takes time, but I'm moving forward day by day, guided by the hope this organization creates. And really, that's the heart of it: being here helped me rediscover hope.
+            </div>
+        </div>
     </section>
 
     <section class="footer">
