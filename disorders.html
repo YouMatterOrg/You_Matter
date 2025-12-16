@@ -568,24 +568,46 @@
         if(focus){ document.getElementById('mhaDetailTitle').scrollIntoView({behavior:'smooth', block:'start'}); }
       }
 
-      // Click cards
-      document.querySelectorAll('.mha-open').forEach(btn=>{
-        btn.addEventListener('click', ()=> showPage(btn.dataset.key, true));
-      });
-
-      // Back link
-      document.getElementById('mhaBack').addEventListener('click', (e)=>{
-        e.preventDefault(); showHome();
-      });
-
       // Router on load / back-forward
       function route(){
         const key = (location.hash||'').replace('#','');
         if(key && PAGES[key]) showPage(key, false);
         else showHome();
       }
+
+      // Initialize when DOM is ready
+      function initializeEventListeners(){
+        // Click cards - use event delegation
+        document.addEventListener('click', function(e){
+          if(e.target.closest('.mha-open')){
+            const btn = e.target.closest('.mha-open');
+            showPage(btn.dataset.key, true);
+          }
+        });
+
+        // Back link
+        const backLink = document.getElementById('mhaBack');
+        if(backLink){
+          backLink.addEventListener('click', (e)=>{
+            e.preventDefault(); 
+            showHome();
+          });
+        }
+      }
+
       window.addEventListener('popstate', route);
-      document.addEventListener('DOMContentLoaded', route);
+      
+      // Check if DOM is already loaded
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', ()=>{
+          route();
+          initializeEventListeners();
+        });
+      } else {
+        // DOM is already loaded
+        route();
+        initializeEventListeners();
+      }
     })();
   </script>
 </body>

@@ -47,19 +47,9 @@
       gap: 28px;
     }
 
-    @media (max-width: 960px) {
-      #blog-list {
-        grid-template-columns: repeat(2, minmax(220px, 1fr));
-      }
-    }
+    
 
-    @media (max-width: 640px) {
-      #blog-list {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ===== BLOG CARDS – MATCHING LOOK ===== */
+    /* ===== BLOG CARDS ===== */
     .post-card {
       position: relative;
       display: flex;
@@ -86,7 +76,7 @@
       background: #edf3ff;
     }
 
-    /* subtle tint per category (very light) */
+    
     .post-anxiety   { background: #f3f6ff; }
     .post-sleep     { background: #f5f7ff; }
     .post-academic  { background: #f3f9ff; }
@@ -130,7 +120,7 @@
       padding-bottom: 3px;
     }
 
-    /* ===== DETAIL VIEW ===== */
+    
     #blog-detail {
       display: none;
       margin-top: 40px;
@@ -192,16 +182,6 @@
       background: #e5edff;
       border-color: #2563eb;
       transform: translateY(-1px);
-    }
-
-    @media (max-width: 650px) {
-      .detail-card {
-        padding: 20px 18px;
-        border-radius: 20px;
-      }
-      .detail-title {
-        font-size: 1.6rem;
-      }
     }
   </style>
 </head>
