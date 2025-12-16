@@ -329,7 +329,15 @@
                 script.src = "https://www.chatbase.co/embed.min.js";
                 script.id = "PxS_isP6KhnrGlfTtWa_L";
                 script.domain = "www.chatbase.co";
+                script.setAttribute("chatbaseId", "PxS_isP6KhnrGlfTtWa_L");
                 document.body.appendChild(script);
+                
+                // Initialize Chatbase after script loads
+                script.onload = function() {
+                    if (window.chatbase) {
+                        window.chatbase("init");
+                    }
+                };
             };
 
             if (document.readyState === "complete") {
