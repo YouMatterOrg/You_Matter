@@ -577,14 +577,17 @@
 
       // Initialize when DOM is ready
       function initializeEventListeners(){
-        // Click cards - redirect to course.html with anchor link
-        document.addEventListener('click', function(e){
-          if(e.target.closest('.mha-open')){
-            const btn = e.target.closest('.mha-open');
-            const key = btn.dataset.key;
-            // Redirect to course.html with the disorder as an anchor
+        console.log('initializeEventListeners called');
+        // Attach click handlers to all .mha-open buttons
+        const buttons = document.querySelectorAll('.mha-open');
+        console.log('Found ' + buttons.length + ' .mha-open buttons');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const key = this.dataset.key;
+            console.log('Button clicked! Key:', key, 'Navigating to course.html#' + key);
             window.location.href = 'course.html#' + key;
-          }
+          });
         });
 
         // Back link
