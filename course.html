@@ -695,13 +695,10 @@
     <script>
         function scrollToDisorder() {
             const anchor = window.location.hash.substring(1);
-            console.log('scrollToDisorder called, anchor:', anchor);
             if (anchor) {
                 const element = document.getElementById(anchor);
-                console.log('Element found:', !!element, 'Element:', element);
                 if (element) {
                     setTimeout(() => {
-                        console.log('Scrolling to:', anchor);
                         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }, 100);
                 }
