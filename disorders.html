@@ -577,11 +577,13 @@
 
       // Initialize when DOM is ready
       function initializeEventListeners(){
-        // Click cards - use event delegation
+        // Click cards - redirect to course.html with anchor link
         document.addEventListener('click', function(e){
           if(e.target.closest('.mha-open')){
             const btn = e.target.closest('.mha-open');
-            showPage(btn.dataset.key, true);
+            const key = btn.dataset.key;
+            // Redirect to course.html with the disorder as an anchor
+            window.location.href = 'course.html#' + key;
           }
         });
 

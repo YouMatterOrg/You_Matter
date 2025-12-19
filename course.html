@@ -690,5 +690,30 @@
     </section>
 
     <script src="menu.js"></script>
+
+    <!-- Scroll to disorder section if anchor is provided -->
+    <script>
+        function scrollToDisorder() {
+            const anchor = window.location.hash.substring(1);
+            if (anchor) {
+                const element = document.getElementById(anchor);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+            }
+        }
+
+        // Scroll to disorder on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', scrollToDisorder);
+        } else {
+            scrollToDisorder();
+        }
+
+        // Also handle when hash changes
+        window.addEventListener('hashchange', scrollToDisorder);
+    </script>
 </body>
 </html>
