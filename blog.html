@@ -1,171 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Awareness</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        nav {
-            background: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        .blog {
-            background: white;
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-        }
-        h2 {
-            color: #333;
-        }
-        ul {
-            padding-left: 20px;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | YOU MATTER - Mental Health Support & Resources</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+body {
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f6fa;
+    color: #0b2345;
+}
+/* ===== MAIN WRAPPER ===== */
+.blog-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 16px 60px;
+}
+.blog-intro {
+    text-align: left;
+    margin-bottom: 28px;
+}
+.blog-intro h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0b2345;
+    margin-bottom: 8px;
+}
+.blog-intro p {
+    font-size: 0.98rem;
+    color: #6b7280;
+}
+/* ===== GRID: 3 COLUMNS ===== */
+#blog-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: 28px;
+}
+/* ===== BLOG CARDS ===== */
+.post-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+    background: #f4f7ff;
+    border-radius: 32px;
+    padding: 28px 26px 24px;
+    border: 1px solid #e0e7ff;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 70px rgba(15, 23, 42, 0.18);
+    background: #edf3ff;
+}
+.post-anxiety { background: #f3f6ff; }
+.post-sleep { background: #f5f7ff; }
+.post-academic { background: #f3f9ff; }
+.post-depression{ background: #f7f4ff; }
+.post-social { background: #f5f8ff; }
+.post-mindfulness{background:#f3fbff; }
+.post-talking { background: #f4f7ff; }
+.post-balance { background: #f7f8ff; }
+.post-confidence{ background: #f6f4ff; }
+.post-support { background: #f7f3ff; }
+.post-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.03em;
+    color: #425577;
+    margin-bottom: 16px;
+}
+.post-title {
+    font-size: 1.4rem;
+    line-height: 1.3;
+    font-weight: 700;
+    color: #0b2345;
+    margin: 0;
+}
+.post-learn {
+    margin-top: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0b2345;
+    display: inline-flex;
+    align-items: center;
+}
+.post-learn span { border-bottom: 3px solid #ff8c3a; padding-bottom: 3px; }
+#blog-detail { display: none; margin-top: 40px; }
+.detail-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #e5e7eb;
+    padding: 26px 26px 24px;
+    box-shadow: 0 16px 50px rgba(15, 23, 42, 0.10);
+}
+.detail-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #0b2345;
+}
+.detail-meta {
+    font-size: 0.86rem;
+    color: #6b7280;
+    margin-bottom: 22px;
+}
+.detail-body p {
+    line-height: 1.7;
+    margin-bottom: 14px;
+    font-size: 0.98rem;
+    color: #1f2933;
+}
+.btn-row { margin-top: 20px; }
+.btn-back {
+    appearance: none;
+    border-radius: 999px;
+    padding: 9px 18px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: #0b2345;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.btn-back i { font-size: 0.85rem; }
+.btn-back:hover { background: #e5edff; border-color: #2563eb; transform: translateY(-1px); }
+</style>
 </head>
 <body>
-
-<header>
-    <h1>Mental Health Awareness</h1>
+<!-- NAV / SUB-HEADER -->
+<header class="sub-header">
+<nav>
+    <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
+    <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li class="has-dropdown">
+                <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                <ul class="dropdown">
+                    <li><a href="about-youmatter.html">About You Matter</a></li>
+                    <li><a href="about-who-we-are.html">Who We Are</a></li>
+                    <li><a href="about-why-we-started.html">Why We Started</a></li>
+                    <li><a href="about-what-we-do.html">What We Do</a></li>
+                </ul>
+            </li>
+            <li class="has-dropdown">
+                <a href="course.html">SERVICES <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                <ul class="dropdown">
+                    <li><a href="disorders.html">Disorders</a></li>
+                    <li><a href="appointment.html">Appointment</a></li>
+                    <li><a href="check-in.html">Check-in</a></li>
+                    <li><a href="gethelp.html">Get Help</a></li>
+                </ul>
+            </li>
+            <li><a href="blog.html" aria-current="page">BLOG</a></li>
+            <li><a href="testimonials.html">TESTIMONIALS</a></li>
+            <li><a href="forums.html">FORUMS</a></li>
+        </ul>
+    </div>
+    <i class="fa fa-bars" onclick="showMenu()"></i>
+</nav>
+<h1>Blog</h1>
 </header>
 
-<nav>
-    <a href="#intro">Intro Blog</a>
-    <a href="#features">Website Features</a>
-    <a href="#healthy-steps">Healthy Steps</a>
-    <a href="#academic-stress">Academic Stress</a>
-    <a href="#social-media">Social Media</a>
-    <a href="#trust">Talking to Someone</a>
-    <a href="#rest">Balancing Activities</a>
-    <a href="#expectations">Realistic Expectations</a>
-    <a href="#harvard-study">Harvard Study</a>
-</nav>
+<!-- MAIN BLOG -->
+<main class="blog-wrapper">
+<section class="blog-intro">
+<h2>Mental Health Blog Posts & Resources</h2>
+<p>Click any post below to read the full article and gain insights into managing your mental health. You can always return to all posts using the back button.</p>
+</section>
+<section id="blog-list"></section>
 
-<div class="container">
-
-    <!-- Blog 1 -->
-    <div class="blog" id="intro">
-        <h2>Intro Blog</h2>
-        <p>Welcome to our website about mental health awareness made by Rishit Lalchandani and Dhairya Mehta. In this blog, we will talk about the features we have on our website, like the home screen, the disorders section, the blogs section, and the about us section.</p>
-        <p>Anyway, to help you get started, let’s quickly walk through each one of these sections I just mentioned above.</p>
-        <p>Firstly, the home screen is the main page you see when you first open the website, and is designed for easy navigation so users can easily find the important information they are looking for. Now, let's dive into some of the features on the home screen:</p>
-        <ul>
-            <li>Our latest blog posts (like this one!) on various topics like mental health awareness and real-life people who have gone through this experience</li>
-            <li>Quick links to key resources and support hotlines.</li>
-            <li>Important statistics to help showcase the importance of mental health awareness</li>
-        </ul>
-        <p>Secondly, the disorders section, a tab you can find after clicking the button in the top right corner named “disorders.” This section introduces various types of disorders and their effects. Some disabilities in this section include:</p>
-        <ul>
-            <li>Anxiety Disorders</li>
-            <li>OCD (Obsessive-Compulsive Disorder)</li>
-            <li>Depression</li>
-            <li>ADHD (Attention-Deficit/Hyperactivity Disorder)</li>
-            <li>PTSD (Post-Traumatic Stress Disorder)</li>
-            <li>Bipolar Disorder</li>
-            <li>Eating Disorders</li>
-            <li>Suicide/Crisis Help (MHA)</li>
-        </ul>
-        <p>Thirdly, we have the Blogs Section, this is where we share in-depth articles, personal stories, mental health awareness, and how-to about such disorders effectively.</p>
-        <p>Fourthly, the About Us Section... Here you can learn more about us, Rishit Lalchandani and Dhairya Mehta, and our mission statement, which defines our goals and what we are trying to achieve with this website.</p>
-        <p>Finally, we have the Forums section, where you can interact with others who might be going through a similar situation or disorder as you. This forum helps connect like-minded individuals together to just talk about life and other issues they might have on a day-to-day basis.</p>
+<!-- Detail View -->
+<section id="blog-detail">
+<div class="detail-card">
+    <h2 class="detail-title"></h2>
+    <div class="detail-meta"></div>
+    <article class="detail-body"></article>
+    <div class="btn-row">
+        <button class="btn-back" id="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Back to all posts
+        </button>
     </div>
+</div>
+</section>
+</main>
 
-    <!-- Blog 2 -->
-    <div class="blog" id="features">
-        <h2>Some cool features of our website and how we coded it</h2>
-        <p>First of all, I would like to talk about a quick feature found all through our website, which is regarding buttons. When you hover over the buttons, the color changes or a shadow gets added to it, due to a pseudo-class called hover.</p>
-        <p>Next, we used the HTML <code>input</code> tag (specifically type="text", type="email", type="password", etc.) for single-line inputs like your name for the book and appointment section. These text boxes are like areas where you can type in information needed for our code to perform. We also had a required tag to help give an error message if you tried to submit the form with nothing in the text box for the appointment section.</p>
-        <p>Now for the Mental Health Check In, the user has to answer questions using a rating scale (1–5), and the system provides custom advice based on their scores. This was done by using if and else statements. Based on the number you selected, there will be custom feedback provided to help improve your mental health.</p>
-        <p>Lastly, for the Forums section, we used a variable to store the input you type in the text box. This variable is in a class that is then displayed in the forum, so you can see what you and other people typed. This forum page allows people of all ages and genders to connect in a safe environment.</p>
-    </div>
+<!-- FOOTER -->
+<footer class="footer">
+<h4>About Us</h4>
+<p>Built with purpose.</p>
+<div class="icons">
+    <i class="fab fa-facebook-f" aria-label="Facebook"></i>
+    <i class="fab fa-twitter" aria-label="Twitter"></i>
+    <i class="fab fa-instagram" aria-label="Instagram"></i>
+    <i class="fab fa-linkedin-in" aria-label="LinkedIn"></i>
+</div>
+<p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+</footer>
 
-    <!-- Blog 3 -->
-    <div class="blog" id="healthy-steps">
-        <h2>Healthy steps to improve your mental health</h2>
-        <p>Mental health is a really important thing that we all need to focus on in our daily lives. Even though this may be hard to do, due to school and work, it is key to living a healthy life. So here are some small healthy habits you can take to improve your mental health:</p>
-        <p>Firstly, make sure you get enough sleep, which is around 7-8 hours daily. This allows your brain to rest and process emotions better. This helps reduce stress and anxiety. Try to also sleep by 9-ish every night and not stay awake till 11 pm, as it can be very detrimental to your body if done constantly.</p>
-        <p>Second, maintaining an active lifestyle is crucial. Playing sports, exercising, walking, and stretching are examples of activities that can improve mental clarity and energy levels. Try to do this for at least 1 hour a day to keep your mental health good.</p>
-        <p>Thirdly, diet is crucial. To sustain consistent energy levels and enhance brain function, try to eat fruits, vegetables, and protein. Alongside this, try to consume 1.5 litres of water per day. If you occasionally eat fast food, that's okay, but try not to make it a habit, and create an equal balance with the amount of unhealthy and healthy food you consume.</p>
-    </div>
+<!-- NAV TOGGLE SCRIPT -->
+<script>
+var navLinks = document.getElementById("navLinks");
+function showMenu() { navLinks.style.right = "0"; }
+function hideMenu() { navLinks.style.right = "-200px"; }
+</script>
 
-    <!-- Blog 4 -->
-    <div class="blog" id="academic-stress">
-        <h2>Coping with Academic Stress</h2>
-        <p>Academic Stress is a thing all students have, whether you are taking all of the hardest or easiest classes. This stress can come from many different things, like homework, exams, deadlines, and expectations from parents and teachers to do well. But sometimes this stress can get too much and can be detrimental to your mental health. So here are some ways to manage this stress:</p>
-        <p>Firstly, being organized can help with academic stress. Being organized can include little things such as creating a task list, planner, calendar, and/or to-do sheet. These techniques can help break up seemingly large tasks into much simpler and smaller tasks, reducing the overall amount of stress.</p>
-        <p>Secondly, Time management is another important skill that can help reduce stress by decreasing the amount of procrastination students have. Procrastination is basically the act of putting stuff off to the side and telling yourself you will do it later; this causes tasks to be incomplete. Also, you can set realistic goals for yourself and allow time for breaks (try the Pomodoro Technique, for example). The Pomodoro Technique includes 25 minutes of working and 5-minute breaks after each work session.</p>
-        <p>Lastly, taking care of your physical health is another key aspect in managing academic stress in teens and college students. Try to get enough sleep of 7-8 hours daily. Also, try to eat healthy food like veggies and fruits, while drinking plenty of water to keep your body in its peak condition. Working out or playing sports daily can also help by boosting your mood and reducing stress levels.</p>
-    </div>
+<!-- BLOG LOGIC -->
+<script>
+const posts = [
+    { id: 1, title: "Healthy Steps to Improve Your Mental Health", date: "Updated Dec 2025", tag: "Health", categoryClass: "post-anxiety", body: `<p>Mental health is a really important thing that we all need to focus on in our daily lives...</p>`},
+    { id: 2, title: "Coping with Academic Stress", date: "Updated Dec 2025", tag: "Academic", categoryClass: "post-academic", body: `<p>Academic Stress is a thing all students have, whether you are taking all of the hardest or easiest classes...</p>`},
+    { id: 3, title: "Social Media’s Effect on Mental Health", date: "Updated Dec 2025", tag: "Social Media", categoryClass: "post-social", body: `<p>Social media has become a major part of everyone’s life, whether you are a teen, adult, or student...</p>`},
+    { id: 4, title: "The Importance of Talking to Someone You Trust", date: "Updated Dec 2025", tag: "Support", categoryClass: "post-talking", body: `<p>Everyone, including you and me, experiences stress or worries at some point in our lives...</p>`},
+    { id: 5, title: "Balancing Activities and Rest", date: "Updated Dec 2025", tag: "Balance", categoryClass: "post-balance", body: `<p>Many people nowadays feel pressured to stay busy and not take any breaks...</p>`},
+    { id: 6, title: "The Importance of Setting Realistic Expectations for Yourself", date: "Updated Dec 2025", tag: "Self-Improvement", categoryClass: "post-confidence", body: `<p>Everyone, including me and you, feels lots of pressure to succeed at times...</p>`},
+    { id: 7, title: "What a Harvard Study Says About Social Connections and Mental Health", date: "Updated Dec 2025", tag: "Research", categoryClass: "post-support", body: `<p>Everyone, including you and me, experiences stressful times and moments, during these moments it is easy to forget...</p>`}
+];
 
-    <!-- Blog 5 -->
-    <div class="blog" id="social-media">
-        <h2>Social Media’s Effect on Mental Health</h2>
-        <p>Social media has become a major part of everyone’s life, whether you are a teen, adult, or student. Social Media consists of many different platforms, like TikTok, Snapchat, X, and Instagram, that allow users to communicate with others who may be thousands and thousands of miles away. But Social media also has detrimental effects on your mental health if not used properly. So here are some ways to use social media properly:</p>
-        <p>Firstly, social media can cause people to compare themselves with others. Most people post their best and happiest moments on social media, creating unrealistic expectations that people compare themselves to. This comparison can make people easily depressed and have low self-esteem. Moreover, it can make people feel like they are “not good enough” in comparison to others.</p>
-        <p>Secondly, social media can also increase stress and pressure all over a person. Many people crave likes and reposts and stuff like that just to seek some validation online. But when people don’t get this validation, it can negatively affect their mood and make them think of themselves as lower than others. Moreover, the constant notification about other posts from people can easily distract you from work or school.</p>
-        <p>Thirdly, social media can negatively affect your sleep and concentration levels. Most people, including me, like to watch reels or YouTube shorts before sleep, which can interfere with sleep patterns and lead to fatigue. To be honest, I have felt this many times, and I believe it would be best if you and I limit our screen time to obtain better sleep. Moreover, a lack of sleep can increase stress and make you easily irritable. Also, the constant scrolling can lead to procrastination.</p>
-    </div>
+const blogListEl = document.getElementById("blog-list");
+const blogDetailEl = document.getElementById("blog-detail");
+const detailTitleEl = document.querySelector(".detail-title");
+const detailMetaEl = document.querySelector(".detail-meta");
+const detailBodyEl = document.querySelector(".detail-body");
+const btnBack = document.getElementById("btn-back");
 
-    <!-- Blog 6 -->
-    <div class="blog" id="trust">
-        <h2>The Importance of Talking to Someone You Trust</h2>
-        <p>Everyone, including you and me, experiences stress or worries at some point in our lives. But when these feelings start to build up, it can become detrimental to your mental health. One of the easiest ways to fix this is to talk with someone you trust. A person you trust could be many people, like your parents, siblings, friends or even teachers at your school. This act of talking to a trusted adult or friend can help provide a sense of relief. So here are some reasons you should talk to someone you trust:</p>
-        <p>Firstly, talking to someone you love can help release emotions that might be bottled up deep within. By keeping these feelings trapped inside, you can increase stress and anxiety levels, making you feel uneasy and/or unsafe. Simply talking to a trusted adult allows you to express yourself freely without any judgment. Moreover, just speaking out loud about your troubles can sometimes help.</p>
-        <p>Secondly, talking to someone you trust can help you gain a different perspective. With another person’s perspective, you can clearly see the situation and understand why you might be feeling stressed out, and solve it together. Furthermore, your problems will be easier to solve when there are 2 people helping you instead of you trying to solo it. A trusted person can also give you reassurance on whether the decision you are making is okay.</p>
-        <p>Thirdly, talking to someone you trust strengthens relationships. As you are freely able to talk to someone shows that open communication builds trust and empathy. Moreover, when people support each other during hard or difficult times, it can often strengthen relationships. This sense of connection can reduce feelings of loneliness or feelings of not belonging in society.</p>
-    </div>
+function renderList() {
+    blogListEl.innerHTML = "";
+    posts.forEach(post => {
+        const card = document.createElement("article");
+        card.className = `post-card ${post.categoryClass}`;
+        card.dataset.id = post.id;
+        card.innerHTML = `<div>
+            <div class="post-label">Blog Post</div>
+            <h3 class="post-title">${post.title}</h3>
+        </div>
+        <div class="post-learn"><span>Learn More</span></div>`;
+        card.addEventListener("click", () => openPost(post.id));
+        blogListEl.appendChild(card);
+    });
+}
 
-    <!-- Blog 7 -->
-    <div class="blog" id="rest">
-        <h2>Balancing Activities and Rest</h2>
-        <p>Many people nowadays feel pressured to stay busy and not take any breaks. Whether it is managing your work life with your home life or school work with extracurricular activities, all this stuff can be very overwhelming and take up a lot of your time. When these things take up so much time, you often have little to no time to yourself to simply relax, but this rest is essential for maintaining mental health. So here are some ways to balance activities and rest:</p>
-        <p>Many people, including you and me, feel the pressure to stay busy and be productive, and we simply think that taking breaks might be a waste of time. But this assumption is simply false. Balancing work and rest can become very overwhelming, as over time the amount of work keeps increasing while the amount of time you have to rest simply decreases. But taking out time to rest is key to letting your body function properly.</p>
-        <p>Even if activities take up too much time, rest is important. Rest plays a crucial role in maintaining mental health. Without time to recharge, it becomes hard to focus, manage emotions, and can cause one to be easily irritable. Even though pushing yourself to do work is important, pushing yourself too much can be very detrimental. That’s why it is important to take time to relax and let your mind and body relax.</p>
-        <p>Balancing activities and rest requires self-awareness to realize you might be spending too much time doing one thing over the other. Learning time management is key to fully balancing out everything in your life. Making room for breaks is important, whether it is through relaxing hobbies or time to read and enjoy. By valuing rest as much as work, individuals can create healthy routines.</p>
-    </div>
+function openPost(id) {
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+    detailTitleEl.textContent = post.title;
+    detailMetaEl.textContent = `${post.date} · ${post.tag}`;
+    detailBodyEl.innerHTML = post.body;
+    blogListEl.style.display = "none";
+    blogDetailEl.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-    <!-- Blog 8 -->
-    <div class="blog" id="expectations">
-        <h2>The Importance of Setting Realistic Expectations for Yourself</h2>
-        <p>Everyone, including me and you, feels lots of pressure to succeed at times, whether it is from our parents or teachers. While these high expectations might be good at times to help you strive to be a better version of yourself, they can sometimes be too much, leading to constant stress and disappointment. That’s why setting unrealistic goals can be detrimental to your mental health. Learning to set realistic goals is key. So here are some ideas as to why you should set realistic expectations:</p>
-        <p>Firstly, setting realistic goals helps reduce unnecessary stress. When we expect perfection from ourselves, small mistakes can feel like the end of the world. This constant pressure can cause lots of anxiety and make even simple everyday tasks feel overwhelming. That’s why setting realistic goals is important, as it can help reduce all these things, allowing you to work without constantly feeling like you are failing at everything you do.</p>
-        <p>Secondly, realistic expectations help improve motivation and confidence. When goals are more obtainable and realistic, it can be motivating. Moreover, when you are making a goal, you should check if it is SMART: Specific, Measurable, Achievable, Relevant, and Time-Bound. This handy acronym can help you make goals that are realistic so that you don't set expectations that might be too high, making you feel discouraged and unmotivated.</p>
-        <p>Thirdly, setting realistic expectations teaches self-acceptance. Everyone makes mistakes, including you and me, and this is a normal part of life. But accepting that you can not do everything perfectly helps you be kinder to yourself and not make you depressed if you don’t obtain the goal you set.</p>
-    </div>
+function goBack() {
+    blogDetailEl.style.display = "none";
+    blogListEl.style.display = "grid";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-    <!-- Blog 9 -->
-    <div class="blog" id="harvard-study">
-        <h2>What a Harvard Study Says About Social Connections and Mental Health</h2>
-        <p>Everyone, including you and me, experiences stressful times and moments, during these moments it is easy to forget how important our relationships are to our mental health and well-being. According to research from Harvard, having strong social connections, such as family, friends, or people you trust, is beneficial to your mental health. So here are some ways connections are useful:</p>
-        <p>Firstly, strong relationships can help reduce stress. When we spend more and more time with the people we love, our brains respond in ways that calm stress and make us truly feel safer. Studies have shown that people with close social ties tend to be happier and have fewer health problems in general like heart issues and all that. In fact, a lack of meaningful connections can lead to higher chances of depression in everyone, no matter their age, race or gender.</p>
-        <p>Secondly, being connected to others helps us feel understood and valued. Moreover, loved ones can act as a safety net when we need emotional support. This type of reassurance can help us handle everyday challenges more easily because we know we don’t have to face them alone. Even simple activities like talking with family over the phone when you might be away from home can help boost our mood and sense of belonging to a society bigger than just yourself. Moreover, I strongly encourage things like family outings or even board game night or something very simple that helps bring you closer to your family as they are the ones that will stay with you throughout your life.</p>
-        <p>Thirdly, research shows that social connection is linked not just to emotional wellness but physical too. People who are socially connected tend to have lower chances of chronic illnesses and premature death in comparison to those that may be isolated, this is due to the fact that people who have a support group overall just feel better making their body also be better. Being around others encourages healthier habits like staying active and sleeping better
+btnBack.addEventListener("click", goBack);
+renderList();
+</script>
+
+</body>
+</html>
