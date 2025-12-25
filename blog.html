@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
   <style>
     body {
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -16,7 +17,6 @@
       color: #0b2345;
     }
 
-    /* ===== MAIN WRAPPER ===== */
     .blog-wrapper {
       max-width: 1100px;
       margin: 0 auto;
@@ -24,95 +24,52 @@
     }
 
     .blog-intro {
-      text-align: left;
       margin-bottom: 28px;
     }
 
-    .blog-intro h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #0b2345;
-      margin-bottom: 8px;
-    }
-
-    .blog-intro p {
-      font-size: 0.98rem;
-      color: #6b7280;
-    }
-
-    /* ===== GRID: 3 COLUMNS LIKE REFERENCE ===== */
     #blog-list {
       display: grid;
       grid-template-columns: repeat(3, minmax(260px, 1fr));
       gap: 28px;
     }
 
-    
-
-    /* ===== BLOG CARDS ===== */
     .post-card {
-      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-height: 240px;
-
       background: #f4f7ff;
       border-radius: 32px;
       padding: 28px 26px 24px;
       border: 1px solid #e0e7ff;
       box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
-
       cursor: pointer;
-      transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        background 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
 
     .post-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 26px 70px rgba(15, 23, 42, 0.18);
-      background: #edf3ff;
     }
 
-    
-    .post-anxiety   { background: #f3f6ff; }
-    .post-sleep     { background: #f5f7ff; }
-    .post-academic  { background: #f3f9ff; }
-    .post-depression{ background: #f7f4ff; }
-    .post-social    { background: #f5f8ff; }
-    .post-mindfulness{background:#f3fbff; }
-    .post-talking   { background: #f4f7ff; }
-    .post-balance   { background: #f7f8ff; }
-    .post-confidence{ background: #f6f4ff; }
-    .post-support   { background: #f7f3ff; }
+    .post-anxiety { background:#f3f6ff; }
+    .post-sleep { background:#f5f7ff; }
+    .post-academic { background:#f3f9ff; }
+    .post-social { background:#f5f8ff; }
+    .post-talking { background:#f4f7ff; }
+    .post-balance { background:#f7f8ff; }
+    .post-confidence { background:#f6f4ff; }
+    .post-support { background:#f7f3ff; }
 
     .post-label {
-      font-size: 0.9rem;
       font-weight: 600;
-      text-transform: none;
-      letter-spacing: 0.03em;
-      color: #425577;
       margin-bottom: 16px;
     }
 
     .post-title {
       font-size: 1.4rem;
-      line-height: 1.3;
       font-weight: 700;
-      color: #0b2345;
       margin: 0;
-    }
-
-    /* bottom "Learn More" line */
-    .post-learn {
-      margin-top: 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #0b2345;
-      display: inline-flex;
-      align-items: center;
     }
 
     .post-learn span {
@@ -120,7 +77,6 @@
       padding-bottom: 3px;
     }
 
-    
     #blog-detail {
       display: none;
       margin-top: 40px;
@@ -130,313 +86,221 @@
       background: #ffffff;
       border-radius: 24px;
       border: 1px solid #e5e7eb;
-      padding: 26px 26px 24px;
+      padding: 26px;
       box-shadow: 0 16px 50px rgba(15, 23, 42, 0.10);
     }
 
     .detail-title {
       font-size: 1.9rem;
       font-weight: 700;
-      margin-bottom: 8px;
-      color: #0b2345;
-    }
-
-    .detail-meta {
-      font-size: 0.86rem;
-      color: #6b7280;
-      margin-bottom: 22px;
     }
 
     .detail-body p {
       line-height: 1.7;
       margin-bottom: 14px;
-      font-size: 0.98rem;
-      color: #1f2933;
-    }
-
-    .btn-row {
-      margin-top: 20px;
     }
 
     .btn-back {
-      appearance: none;
+      margin-top: 20px;
       border-radius: 999px;
       padding: 9px 18px;
       border: 1px solid #cbd5e1;
-      background: #ffffff;
-      font-size: 0.9rem;
+      background: #fff;
       cursor: pointer;
-      font-weight: 500;
-      color: #0b2345;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-    }
-
-    .btn-back i {
-      font-size: 0.85rem;
-    }
-
-    .btn-back:hover {
-      background: #e5edff;
-      border-color: #2563eb;
-      transform: translateY(-1px);
     }
   </style>
 </head>
+
 <body>
-  <!-- NAV / SUB-HEADER -->
-  <header class="sub-header">
-    <nav>
-      <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
-      <div class="nav-links" id="navLinks">
-        <i class="fa fa-times" onclick="hideMenu()"></i>
-        <ul>
-          <li><a href="index.html">HOME</a></li>
-          <li class="has-dropdown">
-            <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-            <ul class="dropdown">
-              <li><a href="about-youmatter.html">About You Matter</a></li>
-              <li><a href="about-who-we-are.html">Who We Are</a></li>
-              <li><a href="about-why-we-started.html">Why We Started</a></li>
-              <li><a href="about-what-we-do.html">What We Do</a></li>
-            </ul>
-          </li>
-          <li class="has-dropdown">
-            <a href="course.html">SERVICES <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-            <ul class="dropdown">
-              <li><a href="disorders.html">Disorders</a></li>
-              <li><a href="appointment.html">Appointment</a></li>
-              <li><a href="check-in.html">Check-in</a></li>
-              <li><a href="gethelp.html">Get Help</a></li>
-            </ul>
-          </li>
-          <li><a href="blog.html" aria-current="page">BLOG</a></li>
-          <li><a href="testimonials.html">TESTIMONIALS</a></li>
-          <li><a href="forums.html">FORUMS</a></li>
-        </ul>
-      </div>
-      <i class="fa fa-bars" onclick="showMenu()"></i>
-    </nav>
-    <h1>Blog</h1>
-  </header>
 
-  <!-- MAIN BLOG -->
-  <main class="blog-wrapper">
-    <section class="blog-intro">
-      <h2>Mental Health Blog Posts & Resources</h2>
-      <p>Click any post below to read the full article and gain insights into managing your mental health. You can always return to all posts using the back button.</p>
-    </section>
-    <section id="blog-list"></section>
-
-    <!-- Detail View -->
-    <section id="blog-detail">
-      <div class="detail-card">
-        <h2 class="detail-title"></h2>
-        <div class="detail-meta"></div>
-        <article class="detail-body"></article>
-        <div class="btn-row">
-          <button class="btn-back" id="btn-back">
-            <i class="fa-solid fa-arrow-left"></i>
-            Back to all posts
-          </button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <h4>About Us</h4>
-    <p>Built with purpose.</p>
-    <div class="icons">
-      <i class="fab fa-facebook-f" aria-label="Facebook"></i>
-      <i class="fab fa-twitter" aria-label="Twitter"></i>
-      <i class="fab fa-instagram" aria-label="Instagram"></i>
-      <i class="fab fa-linkedin-in" aria-label="LinkedIn"></i>
+<header class="sub-header">
+  <nav>
+    <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
+    <div class="nav-links" id="navLinks">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="about-youmatter.html">ABOUT US</a></li>
+        <li><a href="course.html">SERVICES</a></li>
+        <li><a href="blog.html" aria-current="page">BLOG</a></li>
+        <li><a href="forums.html">FORUMS</a></li>
+      </ul>
     </div>
-    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
-  </footer>  <!-- NAV TOGGLE SCRIPT -->
-  <script>
-    var navLinks = document.getElementById("navLinks");
-    function showMenu() { navLinks.style.right = "0"; }
-    function hideMenu() { navLinks.style.right = "-200px"; }
-  </script>
+  </nav>
+  <h1>Blog</h1>
+</header>
 
-  <!-- BLOG LOGIC -->
-  <script>
-    const posts = [
-      {
-        id: 1,
-        title: "Anxiety: When Your Mind Feels Too Loud",
-        date: "Updated November 2025",
-        tag: "Anxiety",
-        categoryClass: "post-anxiety",
-        body: `
-          <p>Have you ever felt like your mind is racing even though you are sitting still? Anxiety can feel like your brain is on high alert, even when there is no immediate danger. It is more common than many people realize, especially among teens balancing school, activities, and social pressure.</p>
-          <p>Anxiety happens when the brain's alarm system reacts too strongly. You might worry about outcomes you cannot fully control or imagine the worst-case scenario. This does not mean something is wrong with you; it reflects how your body is trying to protect you, sometimes more than necessary.</p>
-          <p>Recognizing these patterns is an important first step. Techniques such as grounding exercises, slow breathing, writing down your thoughts, and talking with someone you trust can create space between you and your worries. With time and support, anxiety can become more manageable.</p>
-        `
-      },
-      {
-        id: 2,
-        title: "Building Healthy Sleep Habits",
-        date: "Updated November 2025",
-        tag: "Sleep",
-        categoryClass: "post-sleep",
-        body: `
-          <p>Sleep is one of the strongest foundations for mental health, learning, and memory. When sleep is irregular or consistently cut short, it can affect mood, attention, and decision-making throughout the day.</p>
-          <p>Creating a regular bedtime, limiting screen time before bed, and keeping your room as dark and quiet as possible are simple but effective steps. Even small changes, such as going to bed 20-30 minutes earlier, can have a noticeable impact after a few weeks.</p>
-          <p>If you find that sleep problems continue despite healthy habits, it may be helpful to talk with a parent, guardian, or healthcare professional. Persistent sleep difficulties can be linked to anxiety, depression, or other conditions that are treatable with the right support.</p>
-        `
-      },
-      {
-        id: 3,
-        title: "Coping With Academic Stress",
-        date: "Updated November 2025",
-        tag: "School",
-        categoryClass: "post-academic",
-        body: `
-          <p>Academic expectations can come from many directions: yourself, your family, your teachers, and your peers. When these pressures stack up, they can create ongoing stress that affects motivation, confidence, and mental health.</p>
-          <p>Breaking large assignments into smaller steps, planning your week in advance, and asking for clarification early can reduce last-minute panic. It also helps to schedule non-academic time, such as exercise, hobbies, and rest, to keep your life balanced.</p>
-          <p>Grades are an important feedback tool, but they are not a complete measure of your ability or potential. Learning how to manage academic stress is a long-term skill that will serve you far beyond any single test or course.</p>
-        `
-      },
-      {
-        id: 4,
-        title: "Understanding Depression in Teens",
-        date: "Updated November 2025",
-        tag: "Depression",
-        categoryClass: "post-depression",
-        body: `
-          <p>Depression is more than feeling sad for a short period. It can involve ongoing low mood, loss of interest in activities, changes in sleep and appetite, and difficulty concentrating. Some teens may blame themselves and assume they are simply not trying hard enough.</p>
-          <p>Noticing patterns that last for weeks is important: persistent sadness, withdrawing from friends, and losing interest in things you used to enjoy are signals that deserve attention. These are not signs of failure; they are signs that you may need support.</p>
-          <p>Depression is treatable. Talking with a trusted adult, counselor, or mental health professional can help you understand what you are experiencing and explore options like therapy, lifestyle changes, and, in some cases, medication.</p>
-        `
-      },
-      {
-        id: 5,
-        title: "Social Media and Mental Health",
-        date: "Updated November 2025",
-        tag: "Digital Life",
-        categoryClass: "post-social",
-        body: `
-          <p>Social media connects people across distances, but it also creates constant opportunities for comparison. It is easy to feel as if everyone else is happier, more successful, or more confident when you only see their highlights.</p>
-          <p>Pay attention to how you feel before and after scrolling. If certain accounts consistently leave you feeling worse, consider muting or unfollowing them. Setting time limits or device-free periods can also create healthier boundaries.</p>
-          <p>What you see online is rarely the full story. Remember that many people share their best moments and edit out their struggles. Your well-being is more important than any number of likes or views.</p>
-        `
-      },
-      {
-        id: 6,
-        title: "Mindfulness as a Daily Practice",
-        date: "Updated November 2025",
-        tag: "Mindfulness",
-        categoryClass: "post-mindfulness",
-        body: `
-          <p>Mindfulness means paying attention to the present moment with curiosity rather than criticism. It does not require special equipment or a long period of silence; it can be practiced in very small moments throughout the day.</p>
-          <p>Examples include focusing on your breathing for one minute, noticing the sensations while you walk between classes, or taking a brief pause before responding in a stressful situation. These small pauses help you respond thoughtfully instead of reacting automatically.</p>
-          <p>Over time, regular mindfulness practice can make it easier to recognize your emotions, reduce stress, and feel more grounded even when life is busy.</p>
-        `
-      },
-      {
-        id: 7,
-        title: "Talking to Someone You Trust",
-        date: "Updated November 2025",
-        tag: "Support",
-        categoryClass: "post-talking",
-        body: `
-          <p>Sharing what you are going through can feel risky, especially if you worry about being judged. However, talking to a trusted person is often a turning point in getting the help you need.</p>
-          <p>You do not need a perfect script. You might begin with a simple statement such as, “I have been feeling really overwhelmed lately and I do not know what to do.” Trusted adults can listen, normalize your experience, and help you explore next steps.</p>
-          <p>Reaching out is an act of courage. It shows that you are taking your mental health seriously and that you understand you do not have to manage everything alone.</p>
-        `
-      },
-      {
-        id: 8,
-        title: "Balancing Activities and Rest",
-        date: "Updated November 2025",
-        tag: "Balance",
-        categoryClass: "post-balance",
-        body: `
-          <p>Being involved in sports, clubs, jobs, and community activities can be positive and rewarding. The challenge comes when your schedule becomes so full that there is little time for recovery.</p>
-          <p>Looking at your week honestly and ranking your commitments can help. You may find that some activities can be paused, reduced, or shared with others. Creating open blocks of time for rest is not “wasted time”; it is essential maintenance.</p>
-          <p>Learning to set boundaries around your time is a key life skill. It allows you to bring more energy and focus to the activities that truly matter to you.</p>
-        `
-      },
-      {
-        id: 9,
-        title: "Building Confidence Over Time",
-        date: "Updated November 2025",
-        tag: "Confidence",
-        categoryClass: "post-confidence",
-        body: `
-          <p>Confidence rarely appears all at once. It tends to grow through experience, practice, and reflection. Everyone doubts themselves at times, especially when doing something unfamiliar or challenging.</p>
-          <p>Break big goals into smaller steps and notice your progress at each stage. Instead of only asking, “Did I win?” or “Did I get an A?”, also ask, “What did I learn?” and “Where did I improve?” This shifts your focus from perfection to growth.</p>
-          <p>Confidence is built from evidence: moments when you showed up, tried, and learned. Over time, those moments add up.</p>
-        `
-      },
-      {
-        id: 10,
-        title: "When to Seek Professional Support",
-        date: "Updated November 2025",
-        tag: "Getting Help",
-        categoryClass: "post-support",
-        body: `
-          <p>Everyone has difficult days, but when sadness, anxiety, or stress last for weeks and begin to interfere with sleep, school, or relationships, it may be time to involve a professional.</p>
-          <p>School counselors, psychologists, social workers, and licensed therapists are trained to listen, understand patterns, and recommend strategies or treatment options. You do not need to wait until things feel unbearable before asking for this kind of help.</p>
-          <p>Seeking professional support is a responsible decision. It reflects self-awareness and a commitment to your own health, not a failure to handle things on your own.</p>
-        `
-      }
-    ];
+<main class="blog-wrapper">
+  <section class="blog-intro">
+    <h2>Mental Health Blog Posts & Resources</h2>
+    <p>Click any post below to read the full article.</p>
+  </section>
 
-    const blogListEl = document.getElementById("blog-list");
-    const blogDetailEl = document.getElementById("blog-detail");
-    const detailTitleEl = document.querySelector(".detail-title");
-    const detailMetaEl = document.querySelector(".detail-meta");
-    const detailBodyEl = document.querySelector(".detail-body");
-    const btnBack = document.getElementById("btn-back");
+  <section id="blog-list"></section>
 
-    function renderList() {
-      blogListEl.innerHTML = "";
-      posts.forEach(post => {
-        const card = document.createElement("article");
-        card.className = `post-card ${post.categoryClass}`;
-        card.dataset.id = post.id;
-        card.innerHTML = `
-          <div>
-            <div class="post-label">Blog Post</div>
-            <h3 class="post-title">${post.title}</h3>
-          </div>
-          <div class="post-learn"><span>Learn More</span></div>
-        `;
-        card.addEventListener("click", () => openPost(post.id));
-        blogListEl.appendChild(card);
-      });
-    }
+  <section id="blog-detail">
+    <div class="detail-card">
+      <h2 class="detail-title"></h2>
+      <div class="detail-meta"></div>
+      <article class="detail-body"></article>
+      <button class="btn-back" id="btn-back">
+        <i class="fa-solid fa-arrow-left"></i> Back to all posts
+      </button>
+    </div>
+  </section>
+</main>
 
-    function openPost(id) {
-      const post = posts.find(p => p.id === id);
-      if (!post) return;
+<script>
+const posts = [
+{
+id:1,
+title:"Intro Blog",
+date:"Updated 2025",
+tag:"Introduction",
+categoryClass:"post-anxiety",
+body:`
+<p>Welcome to our website about mental health awareness made by Rishit Lalchandani and Dhairya Mehta. In this blog, we will talk about the features we have on our website, like the home screen, the disorders section, the blogs section, and the about us section.</p>
 
-      detailTitleEl.textContent = post.title;
-      detailMetaEl.textContent = `${post.date} · ${post.tag}`;
-      detailBodyEl.innerHTML = post.body;
+<p>Anyway, to help you get started, let’s quickly walk through each one of these sections I just mentioned above.</p>
 
-      blogListEl.style.display = "none";
-      blogDetailEl.style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+<p>Firstly, the home screen is the main page you see when you first open the website, and is designed for easy navigation so users can easily find the important information they are looking for.</p>
 
-    function goBack() {
-      blogDetailEl.style.display = "none";
-      blogListEl.style.display = "grid";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+<p>Secondly, the disorders section introduces various types of disorders and their effects.</p>
 
-    btnBack.addEventListener("click", goBack);
+<p>Thirdly, we have the Blogs Section.</p>
 
-    // init
-    renderList();
-  </script>
+<p>Fourthly, the About Us Section.</p>
+
+<p>Finally, we have the Forums section.</p>
+`
+},
+{
+id:2,
+title:"Healthy Steps to Improve Your Mental Health",
+date:"Updated 2025",
+tag:"Wellness",
+categoryClass:"post-sleep",
+body:`
+<p>Mental health is a really important thing that we all need to focus on in our daily lives.</p>
+<p>Firstly, make sure you get enough sleep.</p>
+<p>Second, maintaining an active lifestyle is crucial.</p>
+<p>Thirdly, diet is crucial.</p>
+`
+},
+{
+id:3,
+title:"Coping with Academic Stress",
+date:"Updated 2025",
+tag:"School",
+categoryClass:"post-academic",
+body:`
+<p>Academic Stress is a thing all students have.</p>
+<p>Firstly, being organized can help.</p>
+<p>Secondly, Time management is important.</p>
+<p>Lastly, taking care of your physical health helps.</p>
+`
+},
+{
+id:4,
+title:"Social Media’s Effect on Mental Health",
+date:"Updated 2025",
+tag:"Social Media",
+categoryClass:"post-social",
+body:`
+<p>Social media has become a major part of everyone’s life.</p>
+<p>Firstly, social media can cause comparison.</p>
+<p>Secondly, social media can increase stress.</p>
+<p>Thirdly, it can affect sleep and concentration.</p>
+`
+},
+{
+id:5,
+title:"The Importance of Talking to Someone You Trust",
+date:"Updated 2025",
+tag:"Support",
+categoryClass:"post-talking",
+body:`
+<p>Everyone experiences stress.</p>
+<p>Firstly, talking releases emotions.</p>
+<p>Secondly, it gives perspective.</p>
+<p>Thirdly, it strengthens relationships.</p>
+`
+},
+{
+id:6,
+title:"Balancing Activities and Rest",
+date:"Updated 2025",
+tag:"Balance",
+categoryClass:"post-balance",
+body:`
+<p>Many people feel pressured to stay busy.</p>
+<p>Rest is important.</p>
+<p>Balancing requires self-awareness.</p>
+`
+},
+{
+id:7,
+title:"The Importance of Setting Realistic Expectations for Yourself",
+date:"Updated 2025",
+tag:"Goals",
+categoryClass:"post-confidence",
+body:`
+<p>Everyone feels pressure to succeed.</p>
+<p>Setting realistic goals reduces stress.</p>
+<p>It improves motivation.</p>
+<p>It teaches self-acceptance.</p>
+<p>https://www.forbes.com/advisor/business/smart-goals/</p>
+`
+},
+{
+id:8,
+title:"What a Harvard Study Says About Social Connections and Mental Health",
+date:"Updated 2025",
+tag:"Research",
+categoryClass:"post-support",
+body:`
+<p>https://www.health.harvard.edu/staying-healthy/the-health-benefits-of-strong-relationships?utm_source=chatgpt.com</p>
+<p>Strong relationships reduce stress.</p>
+<p>They help people feel valued.</p>
+<p>They improve physical and mental health.</p>
+`
+}
+];
+
+const blogListEl = document.getElementById("blog-list");
+const blogDetailEl = document.getElementById("blog-detail");
+const detailTitleEl = document.querySelector(".detail-title");
+const detailMetaEl = document.querySelector(".detail-meta");
+const detailBodyEl = document.querySelector(".detail-body");
+const btnBack = document.getElementById("btn-back");
+
+function renderList(){
+  blogListEl.innerHTML="";
+  posts.forEach(p=>{
+    const c=document.createElement("article");
+    c.className=`post-card ${p.categoryClass}`;
+    c.innerHTML=`<h3 class="post-title">${p.title}</h3><div class="post-learn"><span>Learn More</span></div>`;
+    c.onclick=()=>openPost(p.id);
+    blogListEl.appendChild(c);
+  });
+}
+
+function openPost(id){
+  const p=posts.find(x=>x.id===id);
+  detailTitleEl.textContent=p.title;
+  detailMetaEl.textContent=`${p.date} · ${p.tag}`;
+  detailBodyEl.innerHTML=p.body;
+  blogListEl.style.display="none";
+  blogDetailEl.style.display="block";
+  window.scrollTo(0,0);
+}
+
+btnBack.onclick=()=>{
+  blogDetailEl.style.display="none";
+  blogListEl.style.display="grid";
+};
+
+renderList();
+</script>
+
 </body>
 </html>
