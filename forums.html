@@ -951,7 +951,10 @@
     collection,
     query,
     getDocs,
-    orderBy
+    orderBy,
+    addDoc,
+    serverTimestamp,
+    onSnapshot
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -965,6 +968,16 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
+  // HTML escape helper
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
   async function loadForumPosts() {
     const forumPostsDiv = document.getElementById("forum-posts");
@@ -1053,28 +1066,87 @@
 
   loadForumPosts();
 
-  // Reply button handlers (event delegation)
-  document.getElementById("forum-posts").addEventListener("click", (e) => {
-    if (e.target.classList.contains("reply-btn")) {
-      const postId = e.target.getAttribute("data-postid");
-      const replyBox = document.querySelector(`.reply-box[data-postid="${postId}"]`);
-      if (replyBox) {
-        replyBox.style.display = replyBox.style.display === "none" ? "block" : "none";
-        if (replyBox.style.display === "block") {
-          replyBox.querySelector(".reply-text").focus();
-        }
-      }
-    }
+  // Wire up reply functionality
+  function wireReplies() {
+    // Toggle reply box
+    document.querySelectorAll(".reply-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.postid;
+        const box = document.querySelector(`.reply-box[data-postid="${id}"]`);
+        box.style.display = (box.style.display === "none") ? "block" : "none";
+      });
+    });
 
-    if (e.target.classList.contains("reply-cancel")) {
-      const postId = e.target.getAttribute("data-postid");
-      const replyBox = document.querySelector(`.reply-box[data-postid="${postId}"]`);
-      if (replyBox) {
-        replyBox.style.display = "none";
-        replyBox.querySelector(".reply-text").value = "";
-      }
-    }
-  });
+    // Cancel
+    document.querySelectorAll(".reply-cancel").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.postid;
+        const box = document.querySelector(`.reply-box[data-postid="${id}"]`);
+        box.style.display = "none";
+        box.querySelector(".reply-text").value = "";
+      });
+    });
+
+    // Submit reply
+    document.querySelectorAll(".reply-submit").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const postId = btn.dataset.postid;
+        const box = document.querySelector(`.reply-box[data-postid="${postId}"]`);
+        const ta = box.querySelector(".reply-text");
+        const text = ta.value.trim();
+
+        const status = document.querySelector(`.reply-status[data-postid="${postId}"]`);
+        status.textContent = "";
+
+        if (!text) {
+          status.textContent = "Reply cannot be empty.";
+          return;
+        }
+
+        try {
+          await addDoc(collection(db, "forum_posts", postId, "replies"), {
+            text,
+            createdAt: serverTimestamp()
+          });
+
+          ta.value = "";
+          box.style.display = "none";
+          status.textContent = "Reply posted.";
+        } catch (e) {
+          console.error("Reply write failed:", e);
+          status.textContent = "Failed to post reply. Check console.";
+        }
+      });
+    });
+
+    // Live load replies for each post
+    document.querySelectorAll(".replies").forEach(div => {
+      const postId = div.dataset.postid;
+
+      const q = query(
+        collection(db, "forum_posts", postId, "replies"),
+        orderBy("createdAt", "asc")
+      );
+
+      onSnapshot(q, (snap) => {
+        div.innerHTML = "";
+        snap.forEach(r => {
+          const rep = r.data();
+          const p = document.createElement("div");
+          p.style.padding = "8px 0";
+          p.style.borderTop = "1px solid rgba(255,255,255,.08)";
+          p.innerHTML = `<div style="white-space:pre-wrap;">${escapeHtml(rep.text ?? "")}</div>`;
+          div.appendChild(p);
+        });
+
+        if (snap.empty) {
+          div.innerHTML = `<div style="opacity:.6;">No replies yet.</div>`;
+        }
+      });
+    });
+  }
+
+  wireReplies();
 </script>
 
 </body>
