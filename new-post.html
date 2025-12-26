@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start a Post | YouMatter Forums</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    :root {
+      --ink: #0b1220;
+      --muted: #475569;
+      --border: #e5e7eb;
+      --card: #ffffff;
+      --shell: #f8fafc;
+      --brand: #0d2b57;
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background: var(--shell);
+    }
+    a { color: inherit; }
+
+    .content-section {
+      width: 100%;
+      background: #ffffff;
+      padding: 46px 20px 80px;
+    }
+    .content-container {
+      max-width: 800px;
+      margin: 0 auto;
+      color: var(--ink);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 24px;
+      transition: transform 0.2s ease;
+    }
+    .back-link:hover {
+      transform: translateX(-4px);
+    }
+
+    .form-header {
+      margin-bottom: 32px;
+    }
+    .form-header h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      color: var(--ink);
+    }
+    .form-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px rgba(13, 43, 87, 0.1);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 200px;
+    }
+
+    .help-text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-primary {
+      background: var(--brand);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #0a1f42;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .btn-secondary {
+      background: var(--shell);
+      color: var(--brand);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: #f0f4f8;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .content-section {
+        padding: 32px 16px 60px;
+      }
+      .form-header h1 {
+        font-size: 1.6rem;
+      }
+      .form-actions {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / NAV (kept from your layout) -->
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt=""></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="forums.html">FORUMS</a></li>
+          <li><a href="course.html">COURSE</a></li>
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="about-youmatter.html">ABOUT</a></li>
+          <li><a href="appointment.html">APPOINTMENT</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+  </section>
+
+  <section class="content-section">
+    <div class="content-container">
+
+      <a href="forums.html" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i> Back to Forums
+      </a>
+
+      <div class="form-header">
+        <h1>Start a Post</h1>
+        <p>Share your story, ask a question, or start a discussion. Be authentic and kind.</p>
+      </div>
+
+      <form id="postForm">
+
+        <div class="form-group">
+          <label for="author">Your Name or Nickname</label>
+          <input 
+            type="text" 
+            id="author" 
+            placeholder="Enter a name or leave blank for 'Anonymous'"
+          >
+          <div class="help-text">You can use a nickname to protect your privacy</div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" required>
+            <option value="">-- Select a category --</option>
+            <option value="Introduce Yourself">Introduce Yourself</option>
+            <option value="Anxiety & Stress">Anxiety & Stress</option>
+            <option value="Depression">Depression</option>
+            <option value="Self-Care & Coping Tools">Self-Care & Coping Tools</option>
+            <option value="Encouragement & Wins">Encouragement & Wins</option>
+          </select>
+          <div class="help-text">Pick the category that best fits your post</div>
+        </div>
+
+        <div class="form-group">
+          <label for="title">Post Title</label>
+          <input 
+            type="text" 
+            id="title" 
+            placeholder="Keep it brief and clear (e.g., 'Struggling with sleep anxiety')"
+            required
+          >
+          <div class="help-text">A clear title helps others know what your post is about</div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea 
+            id="description" 
+            placeholder="Describe your forum topic or share what's on your mind. Be authentic and kind."
+            required
+          ></textarea>
+          <div class="help-text">Be authentic, be kind, and remember that others are reading with care</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="submitPost" class="btn btn-primary">
+            <i class="fa-solid fa-paper-plane"></i> Post
+          </button>
+          <button type="reset" class="btn btn-secondary">
+            <i class="fa-solid fa-undo"></i> Clear
+          </button>
+        </div>
+
+      </form>
+
+      <div id="postsList" style="margin-top: 40px;"></div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER (kept from your layout) -->
+  <section class="footer">
+    <h4>About Us</h4>
+    <p>Built with purpose.</p>
+    <div class="icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+  </section>
+
+  <script src="menu.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
+      authDomain: "youmatter-46c43.firebaseapp.com",
+      projectId: "youmatter-46c43",
+      storageBucket: "youmatter-46c43.firebasestorage.app",
+      messagingSenderId: "971089399934",
+      appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("submitPost").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const category = document.getElementById("category").value.trim();
+
+      if (!title) {
+        alert("Title required");
+        return;
+      }
+
+      if (!description) {
+        alert("Description required");
+        return;
+      }
+
+      if (!category) {
+        alert("Please select a category");
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "forum_posts"), {
+          title,
+          description,
+          category,
+          threads: 0,
+          messages: 0,
+          createdAt: serverTimestamp()
+        });
+
+        // go back to forums page
+        window.location.href = "forums.html";
+      } catch (err) {
+        console.error("Error adding post:", err);
+        alert("Could not save post. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
