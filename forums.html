@@ -976,12 +976,20 @@
     );
     const snapshot = await getDocs(q);
 
+    // Helper function to escape HTML
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     snapshot.forEach((docSnap) => {
+      const postId = docSnap.id;
       const p = docSnap.data();
 
-      // Basic fallback values so it never breaks
       const title = p.title ?? "Untitled";
-      const description = p.description ?? "";
+      const body = p.body ?? p.content ?? p.text ?? "";
+      const preview = body.length > 120 ? body.slice(0, 120) + "…" : body;
       const category = p.category ?? "";
       const threads = p.threads ?? 0;
       const messages = p.messages ?? 0;
@@ -993,9 +1001,25 @@
         <div class="topic-main">
           <div class="topic-ico"><i class="fa-regular fa-comments"></i></div>
           <div class="topic-text">
-            <h2><a href="post.html?id=${docSnap.id}">${title}</a></h2>
-            <p>${description}</p>
-            <div class="tags">
+            <h2><a href="post.html?id=${postId}">${escapeHtml(title)}</a></h2>
+            <p>${escapeHtml(preview)}</p>
+
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+              <button class="reply-btn" data-postid="${postId}" style="padding:6px 12px; background:#0d2b57; color:white; border:none; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:500;">Reply</button>
+              <span class="reply-status" data-postid="${postId}" style="opacity:.7; font-size:0.85rem;"></span>
+            </div>
+
+            <div class="reply-box" data-postid="${postId}" style="display:none; margin-top:10px; padding:10px; background:#f9fafb; border-radius:8px; border:1px solid #e5e7eb;">
+              <textarea class="reply-text" data-postid="${postId}" rows="3" style="width:100%; padding:8px; border:1px solid #d1d5db; border-radius:6px; font-family:inherit; font-size:0.9rem; resize:vertical;"></textarea>
+              <div style="margin-top:8px; display:flex; gap:8px;">
+                <button class="reply-submit" data-postid="${postId}" style="padding:6px 12px; background:#0d2b57; color:white; border:none; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:500;">Post Reply</button>
+                <button class="reply-cancel" data-postid="${postId}" style="padding:6px 12px; background:#e5e7eb; color:#1f2937; border:none; border-radius:6px; cursor:pointer; font-size:0.85rem; font-weight:500;">Cancel</button>
+              </div>
+            </div>
+
+            <div class="replies" data-postid="${postId}" style="margin-top:12px;"></div>
+
+            <div class="tags" style="margin-top:12px;">
               ${category ? `<span class="tag soft">${category}</span>` : ""}
             </div>
           </div>
@@ -1012,11 +1036,11 @@
           </div>
         </div>
 
-        <a class="latest-link" href="post.html?id=${docSnap.id}">
+        <a class="latest-link" href="post.html?id=${postId}">
           <div class="latest">
             <div class="avatar">${title.charAt(0)}</div>
             <div class="latest-text">
-              <p class="latest-title">${title}</p>
+              <p class="latest-title">${escapeHtml(title)}</p>
               <p class="latest-meta">Just now · YouMatter</p>
             </div>
           </div>
@@ -1028,6 +1052,29 @@
   }
 
   loadForumPosts();
+
+  // Reply button handlers (event delegation)
+  document.getElementById("forum-posts").addEventListener("click", (e) => {
+    if (e.target.classList.contains("reply-btn")) {
+      const postId = e.target.getAttribute("data-postid");
+      const replyBox = document.querySelector(`.reply-box[data-postid="${postId}"]`);
+      if (replyBox) {
+        replyBox.style.display = replyBox.style.display === "none" ? "block" : "none";
+        if (replyBox.style.display === "block") {
+          replyBox.querySelector(".reply-text").focus();
+        }
+      }
+    }
+
+    if (e.target.classList.contains("reply-cancel")) {
+      const postId = e.target.getAttribute("data-postid");
+      const replyBox = document.querySelector(`.reply-box[data-postid="${postId}"]`);
+      if (replyBox) {
+        replyBox.style.display = "none";
+        replyBox.querySelector(".reply-text").value = "";
+      }
+    }
+  });
 </script>
 
 </body>
