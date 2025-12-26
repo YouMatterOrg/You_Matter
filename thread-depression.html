@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Depression | YouMatter</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+  <!-- HEADER / NAV -->
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt=""></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="forums.html">FORUMS</a></li>
+          <li><a href="course.html">COURSE</a></li>
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="about-youmatter.html">ABOUT</a></li>
+          <li><a href="appointment.html">APPOINTMENT</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+  </section>
+
+  <section class="content-section">
+    <div class="content-container">
+      <a href="forums.html" style="display:inline-flex; align-items:center; gap:6px; color:#0d2b57; font-weight:600; margin-bottom:16px; text-decoration:none;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Forums
+      </a>
+      
+      <h1>Depression</h1>
+      <p>Share your experiences with depression, coping strategies, and support resources.</p>
+
+      <div id="messages" style="margin-top:16px; padding:16px; background:#f9fafb; border-radius:10px; border:1px solid #e5e7eb; min-height:200px;"></div>
+
+      <div style="margin-top:16px;">
+        <label style="display:block; margin-bottom:8px; font-weight:600; color:#1f2937;">Share your thoughts:</label>
+        <textarea id="msg" rows="4" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px; font-family:inherit;"></textarea>
+        <button id="send" style="margin-top:8px; padding:10px 20px; background:#0d2b57; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer;">Post</button>
+        <div id="status" style="margin-top:8px; opacity:.8; color:#6b7280; font-size:0.9rem;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section class="footer">
+    <h4>About Us</h4>
+    <p>Built with purpose.</p>
+    <div class="icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+  </section>
+
+  <script src="menu.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, serverTimestamp,
+      query, orderBy, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
+      authDomain: "youmatter-46c43.firebaseapp.com",
+      projectId: "youmatter-46c43",
+      storageBucket: "youmatter-46c43.firebasestorage.app",
+      messagingSenderId: "971089399934",
+      appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
+    };
+
+    const THREAD_ID = "depression";
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const messagesDiv = document.getElementById("messages");
+    const statusDiv = document.getElementById("status");
+    const msgEl = document.getElementById("msg");
+    const sendBtn = document.getElementById("send");
+
+    function esc(s){
+      return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    }
+
+    // Live load
+    const q = query(
+      collection(db, "threads", THREAD_ID, "messages"),
+      orderBy("createdAt", "asc")
+    );
+
+    onSnapshot(q, (snap) => {
+      if (snap.empty) {
+        messagesDiv.innerHTML = `<div style="opacity:.7;">No messages yet. Be the first to share.</div>`;
+        return;
+      }
+      messagesDiv.innerHTML = "";
+      snap.forEach(d => {
+        const m = d.data();
+        const div = document.createElement("div");
+        div.style.padding = "10px 0";
+        div.style.borderBottom = "1px solid rgba(0,0,0,.08)";
+        div.innerHTML = `<div style="white-space:pre-wrap;">${esc(m.text ?? "")}</div>`;
+        messagesDiv.appendChild(div);
+      });
+    });
+
+    // Post
+    sendBtn.addEventListener("click", async () => {
+      const text = msgEl.value.trim();
+      statusDiv.textContent = "";
+      if (!text) { statusDiv.textContent = "Message cannot be empty."; return; }
+
+      try {
+        await addDoc(collection(db, "threads", THREAD_ID, "messages"), {
+          text,
+          createdAt: serverTimestamp()
+        });
+        msgEl.value = "";
+        statusDiv.textContent = "Posted.";
+      } catch (e) {
+        console.error(e);
+        statusDiv.textContent = "Failed to post. Check Console.";
+      }
+    });
+  </script>
+</body>
+</html>
