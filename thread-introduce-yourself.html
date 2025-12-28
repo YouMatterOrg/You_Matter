@@ -227,14 +227,17 @@
             </div>
 
             <div class="thread-shell">
-                <label for="post-text" class="post-form-label">Write your message:</label>
+                <label for="author-name" class="post-form-label">Your name (optional):</label>
+                <input id="author-name" type="text" placeholder="e.g., EchoShade" style="width:100%; padding:10px 12px; border:1px solid #d1d5db; border-radius:10px; font-family:inherit; font-size:0.9rem; margin-bottom:8px;" />
+
+                <label for="post-text" class="post-form-label">Write a post:</label>
                 <textarea id="post-text" placeholder="Type a few sentences about yourself..."></textarea>
                 <div class="post-actions">
-                    <button id="post-btn" type="button">Post Message</button>
+                    <button id="post-btn" type="button">Post</button>
                 </div>
 
-                <div id="messages" class="messages-list">
-                    <p class="message-empty">No messages yet. Your introduction will appear here after you post.</p>
+                <div id="posts" class="messages-list">
+                    <p class="message-empty">No posts yet. Your introduction will appear here after you post.</p>
                 </div>
             </div>
         </div>
@@ -278,92 +281,184 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      const THREAD_ID = "introduce_yourself";
+            const threadId = "introduce-yourself";
+            const postBtn = document.getElementById('post-btn');
+            const postText = document.getElementById('post-text');
+            const authorNameEl = document.getElementById('author-name');
+            const postsDiv = document.getElementById('posts');
 
-      const postBtn = document.getElementById('post-btn');
-      const postText = document.getElementById('post-text');
-      const messagesDiv = document.getElementById('messages');
-
-      // A) Save message to Firestore
-      async function postMessage(text) {
-        await addDoc(collection(db, "threads", THREAD_ID, "messages"), {
-          text,
-          createdAt: serverTimestamp()
-        });
-      }
-
-      // B) Load messages from Firestore and keep them in sync with onSnapshot
-      function listenForMessages() {
-        const q = query(
-          collection(db, "threads", THREAD_ID, "messages"),
-          orderBy("createdAt", "asc")
-        );
-
-        onSnapshot(q, (snap) => {
-          messagesDiv.innerHTML = "";
-
-          if (snap.empty) {
-            messagesDiv.innerHTML = '<p class="message-empty">No messages yet. Your introduction will appear here after you post.</p>';
-            return;
-          }
-
-          snap.forEach((docSnap) => {
-            const m = docSnap.data();
-            const text = m.text ?? "";
-
-            const wrapper = document.createElement('div');
-            wrapper.className = 'message-card';
-
-            const avatar = document.createElement('div');
-            avatar.className = 'message-avatar';
-            avatar.textContent = 'Y'; // for "You"
-
-            const body = document.createElement('div');
-            body.className = 'message-body';
-
-            const meta = document.createElement('div');
-            meta.className = 'message-meta';
-            
-            // Format timestamp if available
-            let timeStr = "Just now";
-            if (m.createdAt) {
-              const timestamp = m.createdAt.toDate ? m.createdAt.toDate() : new Date(m.createdAt);
-              timeStr = timestamp.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            function escapeHtml(str) {
+                return String(str)
+                    .replaceAll("&", "&amp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
+                    .replaceAll('"', "&quot;")
+                    .replaceAll("'", "&#039;");
             }
-            meta.textContent = `You · ${timeStr}`;
 
-            const msgText = document.createElement('div');
-            msgText.className = 'message-text';
-            msgText.textContent = text;
+            // Create a post
+            async function createPost(text, displayName) {
+                await addDoc(collection(db, "threads", threadId, "posts"), {
+                    text,
+                    authorName: displayName,
+                    createdAt: serverTimestamp()
+                });
+            }
 
-            body.appendChild(meta);
-            body.appendChild(msgText);
+            // Render a single post document with reply UI
+            function renderPost(postDoc) {
+                const d = postDoc.data();
+                const text = d.text ?? "";
+                const name = d.authorName || "Anonymous";
 
-            wrapper.appendChild(avatar);
-            wrapper.appendChild(body);
+                const postEl = document.createElement('div');
+                postEl.className = 'message-card';
 
-            messagesDiv.appendChild(wrapper);
-          });
-        });
-      }
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = (name || 'A').charAt(0).toUpperCase();
 
-      // C) Wire it up
-      postBtn.addEventListener('click', async () => {
-        const val = postText.value.trim();
-        if (!val) return;
-        
-        try {
-          await postMessage(val);
-          postText.value = ''; // Clear textbox only after successful save
-          postText.focus();
-        } catch (err) {
-          console.error("Error posting message:", err);
-          alert("Could not post message. Please try again.");
-        }
-      });
+                const body = document.createElement('div');
+                body.className = 'message-body';
 
-      // Load messages on page load
-      listenForMessages();
+                const meta = document.createElement('div');
+                meta.className = 'message-meta';
+                let timeStr = 'Just now';
+                if (d.createdAt && d.createdAt.toDate) {
+                    timeStr = d.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+                meta.textContent = `${name} · ${timeStr}`;
+
+                const msgText = document.createElement('div');
+                msgText.className = 'message-text';
+                msgText.textContent = text;
+
+                // Actions + reply box + replies list
+                const actions = document.createElement('div');
+                actions.className = 'post-actions';
+                const replyToggle = document.createElement('button');
+                replyToggle.className = 'reply-toggle';
+                replyToggle.textContent = 'Reply';
+                replyToggle.style.cssText = 'padding:6px 12px; border-radius:999px; border:1px solid #d1d5db; background:#fff; cursor:pointer;';
+                actions.appendChild(replyToggle);
+
+                const replyBox = document.createElement('div');
+                replyBox.className = 'reply-box';
+                replyBox.style.display = 'none';
+                replyBox.style.cssText = 'margin-top:10px; padding:10px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px;';
+                const replyInput = document.createElement('textarea');
+                replyInput.className = 'reply-input';
+                replyInput.rows = 3;
+                replyInput.placeholder = 'Write a reply...';
+                replyInput.style.cssText = 'width:100%; padding:8px; border:1px solid #d1d5db; border-radius:8px; font-family:inherit;';
+                const replySend = document.createElement('button');
+                replySend.className = 'reply-send';
+                replySend.textContent = 'Post Reply';
+                replySend.style.cssText = 'margin-top:8px; padding:6px 12px; background:#0d2b57; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;';
+                replyBox.appendChild(replyInput);
+                replyBox.appendChild(replySend);
+
+                const repliesList = document.createElement('div');
+                repliesList.className = 'replies-list';
+                repliesList.style.cssText = 'margin-top:10px; display:flex; flex-direction:column; gap:8px;';
+
+                body.appendChild(meta);
+                body.appendChild(msgText);
+                body.appendChild(actions);
+                body.appendChild(replyBox);
+                body.appendChild(repliesList);
+
+                postEl.appendChild(avatar);
+                postEl.appendChild(body);
+
+                postsDiv.appendChild(postEl);
+
+                const postId = postDoc.id;
+
+                // Toggle reply box
+                replyToggle.addEventListener('click', () => {
+                    replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Send reply
+                replySend.addEventListener('click', async () => {
+                    const replyText = replyInput.value.trim();
+                    if (!replyText) return;
+                    const displayName = authorNameEl.value.trim() || 'Anonymous';
+
+                    await addDoc(collection(db, 'threads', threadId, 'posts', postId, 'replies'), {
+                        text: replyText,
+                        authorName: displayName,
+                        createdAt: serverTimestamp(),
+                    });
+
+                    replyInput.value = '';
+                    replyBox.style.display = 'none';
+                });
+
+                // Load replies (live)
+                const repliesQ = query(
+                    collection(db, 'threads', threadId, 'posts', postId, 'replies'),
+                    orderBy('createdAt', 'asc')
+                );
+
+                onSnapshot(repliesQ, (snap) => {
+                    repliesList.innerHTML = '';
+                    if (snap.empty) {
+                        repliesList.innerHTML = '<div style="opacity:.6;">No replies yet.</div>';
+                        return;
+                    }
+                    snap.forEach((r) => {
+                        const rd = r.data();
+                        const item = document.createElement('div');
+                        item.className = 'reply';
+                        const nameEl = document.createElement('div');
+                        nameEl.style.fontWeight = '700';
+                        nameEl.textContent = rd.authorName || 'Anonymous';
+                        const textEl = document.createElement('div');
+                        textEl.textContent = rd.text || '';
+                        item.appendChild(nameEl);
+                        item.appendChild(textEl);
+                        repliesList.appendChild(item);
+                    });
+                });
+            }
+
+            // Live load posts
+            function listenForPosts() {
+                const q = query(
+                    collection(db, 'threads', threadId, 'posts'),
+                    orderBy('createdAt', 'asc')
+                );
+                onSnapshot(q, (snap) => {
+                    postsDiv.innerHTML = '';
+                    if (snap.empty) {
+                        postsDiv.innerHTML = '<p class="message-empty">No posts yet. Your introduction will appear here after you post.</p>';
+                        return;
+                    }
+                    snap.forEach((docSnap) => {
+                        renderPost(docSnap);
+                    });
+                });
+            }
+
+            // Post button
+            postBtn.addEventListener('click', async () => {
+                const val = postText.value.trim();
+                if (!val) return;
+                const displayName = authorNameEl.value.trim() || 'Anonymous';
+                try {
+                    await createPost(val, displayName);
+                    postText.value = '';
+                    postText.focus();
+                } catch (err) {
+                    console.error('Error creating post:', err);
+                    alert('Could not create post. Please try again.');
+                }
+            });
+
+            // Load posts on page load
+            listenForPosts();
     </script>
 </body>
 </html>

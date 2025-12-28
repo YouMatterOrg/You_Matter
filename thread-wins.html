@@ -1,141 +1,468 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Encouragement & Wins | YouMatter</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encouragement &amp; Wins | YouMatter Forum</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        .content-section {
+            width: 100%;
+            background: #ffffff;
+            padding: 60px 20px 80px;
+        }
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1f2937;
+        }
+
+        .thread-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #1f2937;
+        }
+
+        .thread-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .thread-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: #0d2b57;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ffffff;
+        }
+        .thread-title-row h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0d2b57;
+        }
+        .thread-sub {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .thread-shell {
+            background: #f9fafb;
+            border-radius: 14px;
+            padding: 20px 20px 24px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* form */
+        .post-form-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #1f2937;
+        }
+        #post-text {
+            width: 100%;
+            min-height: 110px;
+            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            padding: 10px 12px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #1f2937;
+        }
+        #post-text:focus {
+            outline: 2px solid #0d2b57;
+            outline-offset: 1px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+        #post-btn {
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            background: #0d2b57;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #post-btn:hover {
+            filter: brightness(1.05);
+        }
+
+        /* messages list */
+        .messages-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message-empty {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            font-style: italic;
+        }
+        .message-card {
+            display: flex;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+        }
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            background: #0d2b57;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .message-body {
+            flex: 1;
+        }
+        .message-meta {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .message-text {
+            font-size: 0.9rem;
+            color: #1f2937;
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
+
 <body>
-  <!-- HEADER / NAV -->
-  <section class="sub-header">
-    <nav>
-      <a href="index.html"><img src="images/logo.png" alt=""></a>
-      <div class="nav-links" id="navLinks">
-        <i class="fa fa-times" onclick="hideMenu()"></i>
-        <ul>
-          <li><a href="index.html">HOME</a></li>
-          <li><a href="forums.html">FORUMS</a></li>
-          <li><a href="course.html">COURSE</a></li>
-          <li><a href="blog.html">BLOG</a></li>
-          <li><a href="about-youmatter.html">ABOUT</a></li>
-          <li><a href="appointment.html">APPOINTMENT</a></li>
-        </ul>
-      </div>
-      <i class="fa fa-bars" onclick="showMenu()"></i>
-    </nav>
-  </section>
+    <!-- HEADER / NAV -->
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
 
-  <section class="content-section">
-    <div class="content-container">
-      <a href="forums.html" style="display:inline-flex; align-items:center; gap:6px; color:#0d2b57; font-weight:600; margin-bottom:16px; text-decoration:none;">
-        <i class="fa-solid fa-arrow-left"></i> Back to Forums
-      </a>
-      
-      <h1>Encouragement & Wins</h1>
-      <p>Celebrate your progress, big or small. Share your wins and encourage others.</p>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
 
-      <div id="messages" style="margin-top:16px; padding:16px; background:#f9fafb; border-radius:10px; border:1px solid #e5e7eb; min-height:200px;"></div>
+                    <li class="has-dropdown">
+                        <a href="course.html">SERVICES <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                            <li><a href="get-help.html">Get Help</a></li>
+                        </ul>
+                    </li>
 
-      <div style="margin-top:16px;">
-        <label style="display:block; margin-bottom:8px; font-weight:600; color:#1f2937;">Share your thoughts:</label>
-        <textarea id="msg" rows="4" style="width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px; font-family:inherit;"></textarea>
-        <button id="send" style="margin-top:8px; padding:10px 20px; background:#0d2b57; color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer;">Post</button>
-        <div id="status" style="margin-top:8px; opacity:.8; color:#6b7280; font-size:0.9rem;"></div>
-      </div>
-    </div>
-  </section>
+                    <li><a href="blog.html">BLOG</a></li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                    <li><a href="forums.html">FORUMS</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Encouragement &amp; Wins</h1>
+    </section>
 
-  <!-- FOOTER -->
-  <section class="footer">
-    <h4>About Us</h4>
-    <p>Built with purpose.</p>
-    <div class="icons">
-      <i class="fab fa-facebook-f"></i>
-      <i class="fab fa-twitter"></i>
-      <i class="fab fa-instagram"></i>
-      <i class="fab fa-linkedin-in"></i>
-    </div>
-    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
-  </section>
+    <!-- MAIN CONTENT -->
+    <section class="content-section">
+        <div class="content-container">
+            <div class="thread-header">
+                <a href="forums.html" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to Forums</span>
+                </a>
 
-  <script src="menu.js"></script>
+                <div class="thread-title-row">
+                    <div class="thread-badge">W</div>
+                    <h1>I asked for help today (and I'm proud)</h1>
+                </div>
+                <p class="thread-sub">
+                    Celebrate progress - big or tiny. This space is for hope, gratitude, and uplifting stories.
+                </p>
+            </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import {
-      getFirestore, collection, addDoc, serverTimestamp,
-      query, orderBy, onSnapshot
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            <div class="thread-shell">
+                <label for="author-name" class="post-form-label">Your name (optional):</label>
+                <input id="author-name" type="text" placeholder="e.g., AuroraA" style="width:100%; padding:10px 12px; border:1px solid #d1d5db; border-radius:10px; font-family:inherit; font-size:0.9rem; margin-bottom:8px;" />
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
-      authDomain: "youmatter-46c43.firebaseapp.com",
-      projectId: "youmatter-46c43",
-      storageBucket: "youmatter-46c43.firebasestorage.app",
-      messagingSenderId: "971089399934",
-      appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
-    };
+                <label for="post-text" class="post-form-label">Write a post:</label>
+                <textarea id="post-text" placeholder="Share a win or something you're proud of today..."></textarea>
+                <div class="post-actions">
+                    <button id="post-btn" type="button">Post</button>
+                </div>
 
-    const THREAD_ID = "wins";
+                <div id="posts" class="messages-list">
+                    <p class="message-empty">No posts yet. Your post will appear here after you share.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    <!-- FOOTER -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </section>
 
-    const messagesDiv = document.getElementById("messages");
-    const statusDiv = document.getElementById("status");
-    const msgEl = document.getElementById("msg");
-    const sendBtn = document.getElementById("send");
+    <script src="menu.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        onSnapshot,
+        serverTimestamp
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    function esc(s){
-      return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-    }
+      const firebaseConfig = {
+        apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
+        authDomain: "youmatter-46c43.firebaseapp.com",
+        projectId: "youmatter-46c43",
+        storageBucket: "youmatter-46c43.firebasestorage.app",
+        messagingSenderId: "971089399934",
+        appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
+      };
 
-    // Live load
-    const q = query(
-      collection(db, "threads", THREAD_ID, "messages"),
-      orderBy("createdAt", "asc")
-    );
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
 
-    onSnapshot(q, (snap) => {
-      if (snap.empty) {
-        messagesDiv.innerHTML = `<div style="opacity:.7;">No messages yet. Be the first to share.</div>`;
-        return;
-      }
-      messagesDiv.innerHTML = "";
-      snap.forEach(d => {
-        const m = d.data();
-        const div = document.createElement("div");
-        div.style.padding = "10px 0";
-        div.style.borderBottom = "1px solid rgba(0,0,0,.08)";
-        div.innerHTML = `<div style="white-space:pre-wrap;">${esc(m.text ?? "")}</div>`;
-        messagesDiv.appendChild(div);
-      });
-    });
+            const threadId = "wins";
+            const postBtn = document.getElementById('post-btn');
+            const postText = document.getElementById('post-text');
+            const authorNameEl = document.getElementById('author-name');
+            const postsDiv = document.getElementById('posts');
 
-    // Post
-    sendBtn.addEventListener("click", async () => {
-      const text = msgEl.value.trim();
-      statusDiv.textContent = "";
-      if (!text) { statusDiv.textContent = "Message cannot be empty."; return; }
+            async function createPost(text, displayName) {
+                await addDoc(collection(db, "threads", threadId, "posts"), {
+                    text,
+                    authorName: displayName,
+                    createdAt: serverTimestamp()
+                });
+            }
 
-      try {
-        await addDoc(collection(db, "threads", THREAD_ID, "messages"), {
-          text,
-          createdAt: serverTimestamp()
+            function renderPost(postDoc) {
+                const d = postDoc.data();
+                const text = d.text ?? "";
+                const name = d.authorName || "Anonymous";
+
+                const postEl = document.createElement('div');
+                postEl.className = 'message-card';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = (name || 'A').charAt(0).toUpperCase();
+
+                const body = document.createElement('div');
+                body.className = 'message-body';
+
+                const meta = document.createElement('div');
+                meta.className = 'message-meta';
+                let timeStr = 'Just now';
+                if (d.createdAt && d.createdAt.toDate) {
+                    timeStr = d.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+                meta.textContent = `${name} · ${timeStr}`;
+
+                const msgText = document.createElement('div');
+                msgText.className = 'message-text';
+                msgText.textContent = text;
+
+                const actions = document.createElement('div');
+                actions.className = 'post-actions';
+                const replyToggle = document.createElement('button');
+                replyToggle.className = 'reply-toggle';
+                replyToggle.textContent = 'Reply';
+                replyToggle.style.cssText = 'padding:6px 12px; border-radius:999px; border:1px solid #d1d5db; background:#fff; cursor:pointer;';
+                actions.appendChild(replyToggle);
+
+                const replyBox = document.createElement('div');
+                replyBox.className = 'reply-box';
+                replyBox.style.display = 'none';
+                replyBox.style.cssText = 'margin-top:10px; padding:10px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px;';
+                const replyInput = document.createElement('textarea');
+                replyInput.className = 'reply-input';
+                replyInput.rows = 3;
+                replyInput.placeholder = 'Write a reply...';
+                replyInput.style.cssText = 'width:100%; padding:8px; border:1px solid #d1d5db; border-radius:8px; font-family:inherit;';
+                const replySend = document.createElement('button');
+                replySend.className = 'reply-send';
+                replySend.textContent = 'Post Reply';
+                replySend.style.cssText = 'margin-top:8px; padding:6px 12px; background:#0d2b57; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600;';
+                replyBox.appendChild(replyInput);
+                replyBox.appendChild(replySend);
+
+                const repliesList = document.createElement('div');
+                repliesList.className = 'replies-list';
+                repliesList.style.cssText = 'margin-top:10px; display:flex; flex-direction:column; gap:8px;';
+
+                body.appendChild(meta);
+                body.appendChild(msgText);
+                body.appendChild(actions);
+                body.appendChild(replyBox);
+                body.appendChild(repliesList);
+
+                postEl.appendChild(avatar);
+                postEl.appendChild(body);
+
+                postsDiv.appendChild(postEl);
+
+                const postId = postDoc.id;
+                replyToggle.addEventListener('click', () => {
+                    replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+                });
+                replySend.addEventListener('click', async () => {
+                    const replyText = replyInput.value.trim();
+                    if (!replyText) return;
+                    const displayName = authorNameEl.value.trim() || 'Anonymous';
+                    await addDoc(collection(db, 'threads', threadId, 'posts', postId, 'replies'), {
+                        text: replyText,
+                        authorName: displayName,
+                        createdAt: serverTimestamp(),
+                    });
+                    replyInput.value = '';
+                    replyBox.style.display = 'none';
+                });
+
+                const repliesQ = query(
+                    collection(db, 'threads', threadId, 'posts', postId, 'replies'),
+                    orderBy('createdAt', 'asc')
+                );
+                onSnapshot(repliesQ, (snap) => {
+                    repliesList.innerHTML = '';
+                    if (snap.empty) {
+                        repliesList.innerHTML = '<div style="opacity:.6;">No replies yet.</div>';
+                        return;
+                    }
+                    snap.forEach((r) => {
+                        const rd = r.data();
+                        const item = document.createElement('div');
+                        item.className = 'reply';
+                        const nameEl = document.createElement('div');
+                        nameEl.style.fontWeight = '700';
+                        nameEl.textContent = rd.authorName || 'Anonymous';
+                        const textEl = document.createElement('div');
+                        textEl.textContent = rd.text || '';
+                        item.appendChild(nameEl);
+                        item.appendChild(textEl);
+                        repliesList.appendChild(item);
+                    });
+                });
+            }
+
+            function listenForPosts() {
+                const q = query(
+                    collection(db, 'threads', threadId, 'posts'),
+                    orderBy('createdAt', 'asc')
+                );
+                onSnapshot(q, (snap) => {
+                    postsDiv.innerHTML = '';
+                    if (snap.empty) {
+                        postsDiv.innerHTML = '<p class="message-empty">No posts yet. Your post will appear here after you share.</p>';
+                        return;
+                    }
+                    snap.forEach((docSnap) => {
+                        renderPost(docSnap);
+                    });
+                });
+            }
+
+            postBtn.addEventListener('click', async () => {
+                const val = postText.value.trim();
+                if (!val) return;
+                const displayName = authorNameEl.value.trim() || 'Anonymous';
+                try {
+                    await createPost(val, displayName);
+                    postText.value = '';
+                    postText.focus();
+                } catch (err) {
+                    console.error('Error creating post:', err);
+                    alert('Could not create post. Please try again.');
+                }
+            });
+
+            listenForPosts();
+            msgText.textContent = text;
+
+            body.appendChild(meta);
+            body.appendChild(msgText);
+
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(body);
+
+            messagesDiv.appendChild(wrapper);
+          });
         });
-        msgEl.value = "";
-        statusDiv.textContent = "Posted.";
-      } catch (e) {
-        console.error(e);
-        statusDiv.textContent = "Failed to post. Check Console.";
       }
-    });
-  </script>
+
+      postBtn.addEventListener('click', async () => {
+        const val = postText.value.trim();
+        if (!val) return;
+        try {
+          await postMessage(val);
+          postText.value = '';
+          postText.focus();
+        } catch (err) {
+          console.error("Error posting message:", err);
+          alert("Could not post message. Please try again.");
+        }
+      });
+
+      listenForMessages();
+    </script>
 </body>
 </html>
