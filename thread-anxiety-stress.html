@@ -278,6 +278,9 @@
                 statusEl.style.color = ok ? "#166534" : "#b91c1c";
             }
 
+            // Script loaded indicator
+            setStatus("Forum ready.", true);
+
             async function createPost(text, displayName) {
                 await addDoc(collection(db, "threads", threadId, "posts"), {
                     text,
@@ -414,7 +417,7 @@
 
             postBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
-                setStatus("");
+                setStatus("Posting...", true);
                 const val = postText.value.trim();
                 if (!val) {
                     setStatus("Please write something before posting.");
