@@ -236,6 +236,8 @@
                     <button id="post-btn" type="button">Post</button>
                 </div>
 
+                <div id="postStatus" style="margin-top:10px; font-weight:600;"></div>
+
                 <div id="posts" class="messages-list">
                     <p class="message-empty">No posts yet. Your post will appear here after you share.</p>
                 </div>
@@ -257,42 +259,24 @@
     </section>
 
     <script src="menu.js"></script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        addDoc,
-        query,
-        orderBy,
-        onSnapshot,
-        serverTimestamp
-      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-            import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        <script type="module">
+            import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
+            import { collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
-        authDomain: "youmatter-46c43.firebaseapp.com",
-        projectId: "youmatter-46c43",
-        storageBucket: "youmatter-46c43.firebasestorage.app",
-        messagingSenderId: "971089399934",
-        appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
-      };
-
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
-                        const auth = getAuth(app);
-                        signInAnonymously(auth).catch(e => {
-                            console.error("Anonymous auth failed:", e);
-                            const statusDiv = document.getElementById("status");
-                            if (statusDiv) statusDiv.textContent = "Auth error. Check Firestore rules or console.";
-                        });
+      
 
             const threadId = "wins";
             const postBtn = document.getElementById('post-btn');
             const postText = document.getElementById('post-text');
             const authorNameEl = document.getElementById('author-name');
             const postsDiv = document.getElementById('posts');
+            const statusEl = document.getElementById('postStatus');
+
+            function setStatus(text, ok=false) {
+                if (!statusEl) return;
+                statusEl.textContent = text;
+                statusEl.style.color = ok ? "#166534" : "#b91c1c";
+            }
 
             async function createPost(text, displayName) {
                 await addDoc(collection(db, "threads", threadId, "posts"), {
@@ -428,50 +412,31 @@
                 });
             }
 
-            postBtn.addEventListener('click', async () => {
+            postBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                setStatus("");
                 const val = postText.value.trim();
-                if (!val) return;
+                if (!val) {
+                    setStatus("Please write something before posting.");
+                    return;
+                }
                 const displayName = authorNameEl.value.trim() || 'Anonymous';
+                postBtn.disabled = true;
                 try {
+                    await ensureAnonAuth();
                     await createPost(val, displayName);
                     postText.value = '';
                     postText.focus();
+                    setStatus("Posted!", true);
                 } catch (err) {
                     console.error('Error creating post:', err);
-                        statusDiv.textContent = (err && err.code === "permission-denied")
-                          ? "Permission denied. Update Firestore rules or enable auth."
-                          : "Failed to post. Check Console.";
+                    setStatus(friendlyFirebaseError(err));
+                } finally {
+                    postBtn.disabled = false;
                 }
             });
 
-            listenForPosts();
-            msgText.textContent = text;
-
-            body.appendChild(meta);
-            body.appendChild(msgText);
-
-            wrapper.appendChild(avatar);
-            wrapper.appendChild(body);
-
-            messagesDiv.appendChild(wrapper);
-          });
-        });
-      }
-
-      postBtn.addEventListener('click', async () => {
-        const val = postText.value.trim();
-        if (!val) return;
-        try {
-          await postMessage(val);
-          postText.value = '';
-          postText.focus();
-        } catch (err) {
-          console.error("Error posting message:", err);
-          alert("Could not post message. Please try again.");
-        }
-      });
-
-      listenForMessages();
+                        listenForPosts();
     </script>
 </body>
 </html>

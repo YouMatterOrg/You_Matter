@@ -236,6 +236,8 @@
                     <button id="post-btn" type="button">Post</button>
                 </div>
 
+                <div id="postStatus" style="margin-top:10px; font-weight:600;"></div>
+
                 <div id="posts" class="messages-list">
                     <p class="message-empty">No posts yet. Your post will appear here after you share.</p>
                 </div>
@@ -258,34 +260,23 @@
 
     <script src="menu.js"></script>
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import {
-        getFirestore,
-        collection,
-        addDoc,
-        query,
-        orderBy,
-        onSnapshot,
-        serverTimestamp
-      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
+            import { collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
-        authDomain: "youmatter-46c43.firebaseapp.com",
-        projectId: "youmatter-46c43",
-        storageBucket: "youmatter-46c43.firebasestorage.app",
-        messagingSenderId: "971089399934",
-        appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
-      };
-
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
+      
 
             const threadId = "anxiety-stress";
             const postBtn = document.getElementById('post-btn');
             const postText = document.getElementById('post-text');
             const authorNameEl = document.getElementById('author-name');
             const postsDiv = document.getElementById('posts');
+            const statusEl = document.getElementById('postStatus');
+
+            function setStatus(text, ok=false) {
+                if (!statusEl) return;
+                statusEl.textContent = text;
+                statusEl.style.color = ok ? "#166534" : "#b91c1c";
+            }
 
             async function createPost(text, displayName) {
                 await addDoc(collection(db, "threads", threadId, "posts"), {
@@ -421,17 +412,27 @@
                 });
             }
 
-            postBtn.addEventListener('click', async () => {
+            postBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                setStatus("");
                 const val = postText.value.trim();
-                if (!val) return;
+                if (!val) {
+                    setStatus("Please write something before posting.");
+                    return;
+                }
                 const displayName = authorNameEl.value.trim() || 'Anonymous';
+                postBtn.disabled = true;
                 try {
+                    await ensureAnonAuth();
                     await createPost(val, displayName);
                     postText.value = '';
                     postText.focus();
+                    setStatus("Posted!", true);
                 } catch (err) {
                     console.error('Error creating post:', err);
-                    alert('Could not create post. Please try again.');
+                    setStatus(friendlyFirebaseError(err));
+                } finally {
+                    postBtn.disabled = false;
                 }
             });
 
