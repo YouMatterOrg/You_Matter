@@ -268,6 +268,7 @@
         onSnapshot,
         serverTimestamp
       } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
@@ -280,6 +281,12 @@
 
             const app = initializeApp(firebaseConfig);
             const db = getFirestore(app);
+                        const auth = getAuth(app);
+                        signInAnonymously(auth).catch(e => {
+                            console.error("Anonymous auth failed:", e);
+                            const statusDiv = document.getElementById("status");
+                            if (statusDiv) statusDiv.textContent = "Auth error. Check Firestore rules or console.";
+                        });
 
             const threadId = "wins";
             const postBtn = document.getElementById('post-btn');
@@ -431,7 +438,9 @@
                     postText.focus();
                 } catch (err) {
                     console.error('Error creating post:', err);
-                    alert('Could not create post. Please try again.');
+                        statusDiv.textContent = (err && err.code === "permission-denied")
+                          ? "Permission denied. Update Firestore rules or enable auth."
+                          : "Failed to post. Check Console.";
                 }
             });
 
