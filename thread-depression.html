@@ -323,6 +323,11 @@
                 replyToggle.textContent = 'Reply';
                 replyToggle.style.cssText = 'padding:6px 12px; border-radius:999px; border:1px solid #d1d5db; background:#fff; cursor:pointer;';
                 actions.appendChild(replyToggle);
+                const repliesCount = document.createElement('span');
+                repliesCount.className = 'replies-count';
+                repliesCount.style.cssText = 'margin-left:8px; font-size:.85rem; color:#6b7280;';
+                repliesCount.textContent = 'Replies: 0';
+                actions.appendChild(repliesCount);
 
                 const replyBox = document.createElement('div');
                 replyBox.className = 'reply-box';
@@ -377,6 +382,7 @@
                     orderBy('createdAt', 'asc')
                 );
                 onSnapshot(repliesQ, (snap) => {
+                    repliesCount.textContent = `Replies: ${snap.size}`;
                     repliesList.innerHTML = '';
                     if (snap.empty) {
                         repliesList.innerHTML = '<div style="opacity:.6;">No replies yet.</div>';
