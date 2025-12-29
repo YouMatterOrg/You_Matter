@@ -652,7 +652,7 @@
     <!-- Scripts -->
     <script type="module">
       import { db, serverTimestamp, ensureAnonAuth, friendlyFirebaseError } from "./firebase-client.js";
-      import { collection, doc, getCountFromServer, getDocs, query, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      import { collection, doc, getDocs, query, orderBy, limit, addDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
       const forumsCol = collection(db, "forums");
       const els = {
         list: document.getElementById("topicList"),
@@ -666,10 +666,18 @@
         createForumBtn: document.getElementById("createForumBtn"),
       };
       function esc(s){ return String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-      function openModal(){ document.body.classList.add("wpNoScroll"); els.addModal.classList.add("open"); els.addModal.setAttribute("aria-hidden","false"); }
+      function openModal(){ document.body.classList.add("wpNoScroll"); els.addModal.classList.add("open"); els.addModal.setAttribute("aria-hidden","false"); els.createForumBtn.disabled = false; creating = false; }
       function closeModal(){ els.addModal.classList.remove("open"); els.addModal.setAttribute("aria-hidden","true"); document.body.classList.remove("wpNoScroll"); }
       document.addEventListener("click", (e) => { if (e.target?.getAttribute?.("data-close")==="add") closeModal(); });
       let forumsCache = [];
+      let creating = false;
+      function slugifyTitle(t){
+        return (t || "").toLowerCase().trim()
+          .replace(/[^a-z0-9\s-]/g,"")
+          .replace(/\s+/g,"-")
+          .replace(/-+/g,"-")
+          .slice(0,60) || (`forum-${Date.now()}`);
+      }
       function render(){
         const qText = (els.search.value || "").trim().toLowerCase();
         const filtered = forumsCache.filter(f => {
@@ -708,17 +716,31 @@
       els.search.addEventListener("input", render);
       els.addBtn.addEventListener("click", () => { els.addStatus.textContent = ""; els.newTitle.value = ""; els.newDesc.value = ""; openModal(); });
       els.createForumBtn.addEventListener("click", async () => {
+        if (creating) return; // prevent double-click duplicates
+        creating = true;
+        els.createForumBtn.disabled = true;
         els.addStatus.textContent = "";
         const title = els.newTitle.value.trim();
         const description = els.newDesc.value.trim();
-        if (!title || title.length < 3) { els.addStatus.textContent = "Title is too short."; return; }
-        if (!description || description.length < 10) { els.addStatus.textContent = "Description is too short."; return; }
+        if (!title || title.length < 3) { els.addStatus.textContent = "Title is too short."; creating=false; els.createForumBtn.disabled=false; return; }
+        if (!description || description.length < 10) { els.addStatus.textContent = "Description is too short."; creating=false; els.createForumBtn.disabled=false; return; }
         try{
           await ensureAnonAuth();
-          await addDoc(forumsCol, { title, description, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
+          const slug = slugifyTitle(title);
+          const forumRef = doc(forumsCol, slug);
+          const exists = await getDoc(forumRef);
+          if (exists.exists()){
+            els.addStatus.textContent = "A forum with this title already exists.";
+            creating=false; els.createForumBtn.disabled=false; return;
+          }
+          await setDoc(forumRef, { title, description, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
           closeModal();
           await loadForums();
         }catch(err){ console.error(err); els.addStatus.textContent = friendlyFirebaseError(err); }
+        finally{
+          creating = false;
+          els.createForumBtn.disabled = false;
+        }
       });
       (async function(){ await ensureAnonAuth(); await loadForums(); })();
     </script>
