@@ -1,5 +1,5 @@
 /* Hide legacy content section when new WP markup is present */
-.content-section{ display:none; }
+/* Removed global hide to allow thread page content to show */
 .wpShell{ display:none; }
 /* ===== WordPress-style override skin (append only) ===== */
 
