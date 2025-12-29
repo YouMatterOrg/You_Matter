@@ -395,6 +395,15 @@ body{ font-family:"Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-
 }
 
 /* ===== Thread Page Styles ===== */
+.sub-header{ position: relative; }
+.sub-header nav{
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+  background: rgba(4,9,30,0.65);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
 .thread-header{
   max-width: 1040px;
   margin: 18px auto 10px;
