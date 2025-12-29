@@ -652,7 +652,7 @@
     <!-- Scripts -->
     <script type="module">
       import { db, serverTimestamp, ensureAnonAuth, friendlyFirebaseError } from "./firebase-client.js";
-      import { collection, doc, getDocs, query, orderBy, limit, addDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      import { collection, doc, getDocs, query, orderBy, limit, addDoc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
       const forumsCol = collection(db, "forums");
       const els = {
         list: document.getElementById("topicList"),
@@ -708,10 +708,18 @@
           els.list.appendChild(row);
         });
       }
-      async function loadForums(){
-        const snap = await getDocs(query(forumsCol, orderBy("lastActivityAt","desc"), limit(100)));
-        forumsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        render();
+      function wireForumsLive(){
+        els.noResults.textContent = "Loading…";
+        els.noResults.style.display = "block";
+        const q = query(forumsCol, orderBy("lastActivityAt","desc"), limit(100));
+        onSnapshot(q, (snap) => {
+          forumsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+          render();
+        }, (err) => {
+          console.error("Failed to load forums:", err);
+          els.noResults.textContent = "Failed to load forums.";
+          els.noResults.style.display = "block";
+        });
       }
       els.search.addEventListener("input", render);
       els.addBtn.addEventListener("click", () => { els.addStatus.textContent = ""; els.newTitle.value = ""; els.newDesc.value = ""; openModal(); });
@@ -735,14 +743,13 @@
           }
           await setDoc(forumRef, { title, description, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
           closeModal();
-          await loadForums();
         }catch(err){ console.error(err); els.addStatus.textContent = friendlyFirebaseError(err); }
         finally{
           creating = false;
           els.createForumBtn.disabled = false;
         }
       });
-      (async function(){ await ensureAnonAuth(); await loadForums(); })();
+      (async function(){ await ensureAnonAuth(); wireForumsLive(); })();
     </script>
 
   </main>
