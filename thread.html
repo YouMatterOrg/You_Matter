@@ -104,18 +104,38 @@
         return ts?.toDate?.() ? ts.toDate().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
       } catch { return ''; }
     }
-    async function loadForumHeader(){
-      if (!forumId){ titleEl.textContent = "Forum Thread"; subEl.textContent = ""; metaEl.textContent = ""; return; }
+    function wireForumLive(){
+      if (!forumId){
+        titleEl.textContent = "Forum Thread";
+        subEl.textContent = "";
+        metaEl.textContent = "";
+        return;
+      }
+      titleInlineEl.textContent = "Loading…";
+      descInlineEl.textContent = "";
+      metaEl.textContent = "Loading…";
       const forumRef = doc(db, "forums", forumId);
-      const snap = await getDoc(forumRef);
-      const d = snap.exists() ? snap.data() : null;
-      titleEl.textContent = d?.title || "Forum Thread";
-      subEl.textContent = d?.description || "";
-      titleInlineEl.textContent = d?.title || "";
-      descInlineEl.textContent = d?.description || "";
-      const who = d?.authorName || 'Anonymous';
-      const when = fmtDate(d?.createdAt) || '';
-      metaEl.textContent = `Posted by ${who}${when ? ' · ' + when : ''}`;
+      onSnapshot(forumRef, (snap) => {
+        if (!snap.exists()){
+          titleEl.textContent = "Forum Thread";
+          subEl.textContent = "";
+          titleInlineEl.textContent = "";
+          descInlineEl.textContent = "";
+          metaEl.textContent = "Forum not found.";
+          return;
+        }
+        const d = snap.data();
+        titleEl.textContent = d?.title || "Forum Thread";
+        subEl.textContent = d?.description || "";
+        titleInlineEl.textContent = d?.title || "";
+        descInlineEl.textContent = d?.description || "";
+        const who = d?.authorName || 'Anonymous';
+        const when = fmtDate(d?.createdAt) || '';
+        metaEl.textContent = `Posted by ${who}${when ? ' · ' + when : ''}`;
+      }, (err) => {
+        console.error('Failed to load forum:', err);
+        metaEl.textContent = 'Failed to load forum.';
+      });
     }
 
     async function createReply(text, displayName){
@@ -190,7 +210,7 @@
 
     (async function(){
       await ensureAnonAuth();
-      await loadForumHeader();
+      wireForumLive();
       if (forumId) listenForReplies();
     })();
   </script>
