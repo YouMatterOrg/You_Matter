@@ -1,3 +1,27 @@
+    <script type="module">
+      import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
+      import { collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    const dynamicEl = document.getElementById('topicDynamic');
+    function makeSlug(s){
+      return String(s || '').toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,50);
+    function renderThread(docSnap){
+      const d = docSnap.data() || {};
+      const id = docSnap.id; // slug
+      const repliesCell = a.querySelector('.wpReplies');
+      try {
+        const pq = query(collection(db, 'threads', id, 'posts'), orderBy('createdAt','desc'));
+  // Listen for forum threads index and render
+  const tq = query(collection(db, 'threads_index'), orderBy('createdAt','desc'));
+  onSnapshot(tq, (snap) => {
+    btnSubmit?.addEventListener('click', async () => {
+      const title = (titleEl?.value || '').trim();
+      const desc = (textEl.value || '').trim();
+  const id = makeSlug(title);
+  btnSubmit.disabled = true;
+  setStatus('Posting...', true);
+  // Create index entry for the new thread
+  const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+  await setDoc(doc(db, 'threads_index', id), {
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forum Thread | YouMatter</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="forums.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt=""></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="forums.html" aria-current="page">FORUMS</a></li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <h1 id="threadTitle">Forum Thread</h1>
+  </section>
+
+  <section class="content-section">
+    <div class="content-container">
+      <div class="thread-header">
+        <a href="forums.html" class="back-link">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Forums</span>
+        </a>
+        <p id="threadSub" class="thread-sub"></p>
+      </div>
+
+      <div class="thread-shell">
+        <label for="author-name" class="post-form-label">Your name (optional):</label>
+        <input id="author-name" class="input" type="text" placeholder="e.g., Skyfall" />
+
+        <label for="post-text" class="post-form-label">Write a post:</label>
+        <textarea id="post-text" class="textarea" placeholder="Share with the community..."></textarea>
+        <div class="post-actions">
+          <button id="post-btn" type="button">Post</button>
+        </div>
+
+        <div id="postStatus" style="margin-top:10px; font-weight:600;"></div>
+
+        <div id="posts" class="messages-list">
+          <p class="message-empty">No posts yet. Your post will appear here after you share.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <h4>About Us</h4>
+    <p>Built with purpose.</p>
+    <div class="icons">
+      <i class="fab fa-facebook-f"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fab fa-instagram"></i>
+      <i class="fab fa-linkedin-in"></i>
+    </div>
+    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+  </section>
+
+  <script src="menu.js"></script>
+  <script type="module">
+    import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
+    import { collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const params = new URLSearchParams(location.search);
+    const threadId = params.get('id') || 'general';
+    const title = params.get('title') || 'Forum Thread';
+    const sub = params.get('sub') || '';
+
+    const titleEl = document.getElementById('threadTitle');
+    const subEl = document.getElementById('threadSub');
+    titleEl.textContent = title;
+    subEl.textContent = sub;
+
+    const postBtn = document.getElementById('post-btn');
+    const postText = document.getElementById('post-text');
+    const authorNameEl = document.getElementById('author-name');
+    const postsDiv = document.getElementById('posts');
+    const statusEl = document.getElementById('postStatus');
+
+    function setStatus(text, ok=false) {
+      if (!statusEl) return;
+      statusEl.textContent = text;
+      statusEl.style.color = ok ? "#166534" : "#b91c1c";
+    }
+
+    async function createPost(text, displayName) {
+      await addDoc(collection(db, "threads", threadId, "posts"), {
+        text,
+        authorName: displayName,
+        createdAt: serverTimestamp()
+      });
+    }
+
+    function renderPost(postDoc) {
+      const d = postDoc.data();
+      const text = d.text ?? "";
+      const name = d.authorName || "Anonymous";
+
+      const postEl = document.createElement('div');
+      postEl.className = 'message-card';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'message-avatar';
+      avatar.textContent = (name || 'A').charAt(0).toUpperCase();
+
+      const body = document.createElement('div');
+      body.className = 'message-body';
+
+      const meta = document.createElement('div');
+      meta.className = 'message-meta';
+      let timeStr = 'Just now';
+      if (d.createdAt && d.createdAt.toDate) {
+        timeStr = d.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+      meta.textContent = `${name} · ${timeStr}`;
+
+      const msgText = document.createElement('div');
+      msgText.className = 'message-text';
+      msgText.textContent = text;
+
+      body.appendChild(meta);
+      body.appendChild(msgText);
+
+      postEl.appendChild(avatar);
+      postEl.appendChild(body);
+
+      postsDiv.appendChild(postEl);
+    }
+
+    function listenForPosts() {
+      const q = query(
+        collection(db, 'threads', threadId, 'posts'),
+        orderBy('createdAt', 'asc')
+      );
+      onSnapshot(q, (snap) => {
+        postsDiv.innerHTML = '';
+        if (snap.empty) {
+          postsDiv.innerHTML = '<p class="message-empty">No posts yet. Your post will appear here after you share.</p>';
+          return;
+        }
+        snap.forEach((docSnap) => {
+          renderPost(docSnap);
+        });
+      });
+    }
+
+    postBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      setStatus("Posting...", true);
+      const val = postText.value.trim();
+      if (!val) {
+        setStatus("Please write something before posting.");
+        return;
+      }
+      const displayName = authorNameEl.value.trim() || 'Anonymous';
+      postBtn.disabled = true;
+      try {
+        await ensureAnonAuth();
+        await createPost(val, displayName);
+        postText.value = '';
+        postText.focus();
+        setStatus("Posted!", true);
+      } catch (err) {
+        console.error('Error creating post:', err);
+        setStatus(friendlyFirebaseError(err));
+      } finally {
+        postBtn.disabled = false;
+      }
+    });
+
+    listenForPosts();
+  </script>
+</body>
+</html>
