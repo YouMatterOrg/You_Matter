@@ -230,17 +230,6 @@
           <input id="modalTitle" class="wpQPInput" type="text" placeholder="Give your post a clear title" />
         </div>
         <div class="wpQPRow">
-          <label for="modalCategory" class="wpQPLabel">Forum</label>
-          <select id="modalCategory" class="wpQPSelect">
-            <option value="">Choose a forum…</option>
-            <option value="introduce">Introduce Yourself</option>
-            <option value="anxiety">Anxiety &amp; Stress</option>
-            <option value="depression">Depression</option>
-            <option value="selfcare">Self-Care &amp; Coping Tools</option>
-            <option value="wins">Encouragement &amp; Wins</option>
-          </select>
-        </div>
-        <div class="wpQPRow">
           <label for="modalAuthor" class="wpQPLabel">Your name</label>
           <input id="modalAuthor" class="wpQPInput" type="text" placeholder="Optional" />
         </div>
@@ -272,7 +261,6 @@
     const btnOpen = document.querySelector('.wpAddBtn');
     const btnClose = document.getElementById('postModalClose');
     const btnSubmit = document.getElementById('postModalSubmit');
-    const catEl = document.getElementById('modalCategory');
     const authorEl = document.getElementById('modalAuthor');
     const textEl = document.getElementById('modalText');
     const titleEl = document.getElementById('modalTitle');
@@ -302,11 +290,10 @@
 
     // Submit new forum topic (top-level post)
     btnSubmit?.addEventListener('click', async () => {
-      const cat = (catEl.value || '').trim();
+      const cat = 'general';
       const text = (textEl.value || '').trim();
       const title = (titleEl?.value || '').trim();
       const name = (authorEl.value || '').trim() || 'Anonymous';
-      if (!cat) { setStatus('Please choose a forum.'); return; }
       if (!title) { setStatus('Please add a title.'); return; }
       if (!text) { setStatus('Please write something before posting.'); return; }
       btnSubmit.disabled = true;
