@@ -393,3 +393,88 @@ body{ font-family:"Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-
   .wpReplies, .wpLatest{ text-align:left; margin-top: 10px; }
   .wpTopicTop{ align-items:flex-start; }
 }
+
+/* ===== Thread Page Styles ===== */
+.thread-header{
+  max-width: 1040px;
+  margin: 18px auto 10px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap: 12px;
+}
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  text-decoration:none;
+  font-weight: 800;
+  color: var(--wpBrand);
+}
+.thread-sub{
+  margin: 8px 0 0;
+  color: var(--wpMuted);
+}
+
+.thread-shell{
+  max-width: 1040px;
+  margin: 10px auto 24px;
+  background: var(--wpCard);
+  border: 1px solid var(--wpBorder);
+  border-radius: var(--wpRadius);
+  box-shadow: var(--wpShadow);
+  padding: 16px;
+}
+
+.post-form-label{
+  display:block;
+  margin: 12px 0 6px;
+  font-weight: 800;
+  color: var(--wpInk);
+}
+.input, .textarea{
+  width: 100%;
+  border: 1px solid var(--wpBorder);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: .95rem;
+  outline: none;
+}
+.textarea{ min-height: 110px; resize: vertical; }
+.input:focus, .textarea:focus{
+  border-color: rgba(13,43,87,0.35);
+  box-shadow: 0 0 0 4px rgba(13,43,87,0.10);
+}
+
+.post-actions{ margin-top: 10px; }
+#post-btn{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--wpBorder);
+  background: var(--wpBrand);
+  color:#fff;
+  font-weight: 800;
+  cursor:pointer;
+}
+
+.messages-list{ margin-top: 14px; }
+.message-card{
+  display:flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--wpBorder);
+}
+.message-avatar{
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  background:#22c55e; color:#052e16;
+  font-weight: 900;
+  display:flex; align-items:center; justify-content:center;
+}
+.message-body{ flex: 1 1 auto; }
+.message-meta{ color: var(--wpMuted); font-weight: 700; margin-bottom: 4px; }
+.message-text{ white-space: pre-wrap; }
