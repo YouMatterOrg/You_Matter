@@ -1,216 +1,318 @@
-/* Forums shared styles: modern, calm, consistent */
+/* WordPress-style Forums Layout (clean + consistent) */
 
-:root {
-  --color-bg: #ffffff;
-  --color-surface: #f9fafb;
-  --color-surface-2: #f3f4f6;
-  --color-border: #e5e7eb;
-  --color-text: #1f2937;
-  --color-muted: #6b7280;
-  --color-soft: #9ca3af;
-  --color-primary: #0d2b57;
-  --color-success: #166534;
-  --color-danger: #b91c1c;
-  --radius: 12px;
-  --shadow: 0 4px 12px rgba(0,0,0,.08);
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-24: 24px;
-  --spacing-32: 32px;
+:root{
+  --wpInk:#111827;
+  --wpMuted:#6b7280;
+  --wpBorder:#e5e7eb;
+  --wpCard:#ffffff;
+  --wpShell:#ffffff;
+  --wpBrand:#0d2b57;
+  --wpShadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+  --wpRadius: 14px;
 }
 
-/* Typography baseline */
-html { font-size: 16px; }
-body { line-height: 1.5; color: var(--color-text); background: var(--color-bg); }
+*{ box-sizing:border-box; }
+body{ font-family:"Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif; color:var(--wpInk); }
 
-/* Containers */
-.content-section { padding: 60px 20px 80px; background: var(--color-bg); }
-.content-container { max-width: 1000px; margin: 0 auto; }
-
-/* Forum grid layout */
-.forum-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-24); }
-@media (min-width: 960px) {
-  .forum-grid { grid-template-columns: 2fr 1fr; }
+.wpWrap{
+  padding: 34px 16px 70px;
+  background: var(--wpShell);
 }
 
-.board { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 14px; padding: var(--spacing-24); box-shadow: var(--shadow); }
-.board-header { margin-bottom: var(--spacing-16); font-weight: 600; color: var(--color-primary); display: flex; flex-direction: column; gap: 4px; }
-.board-header .small { font-weight: 400; color: var(--color-muted); }
-
-/* Card list injected into #forum-posts */
-#forum-posts { display: grid; grid-template-columns: 1fr; gap: var(--spacing-12); margin-bottom: var(--spacing-24); }
-/* Table-like list - minimal, clean */
-#forum-posts > div { background: transparent; border: 0; border-bottom: 1px solid var(--color-border); border-radius: 0; padding: var(--spacing-12) 0; box-shadow: none; }
-.forum-table-head { display: grid; grid-template-columns: 1fr 120px 280px; gap: var(--spacing-12); padding: var(--spacing-12) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); color: var(--color-muted); font-weight: 600; }
-.forum-table-head .col-topic { }
-.forum-table-head .col-replies { text-align: center; }
-.forum-table-head .col-latest { }
-
-.topic { background: transparent; border: 0; border-radius: 0; box-shadow: none; display: grid; grid-template-columns: 1fr 120px 280px; gap: var(--spacing-12); align-items: center; }
-.topic-main { display: flex; align-items: center; gap: var(--spacing-12); }
-.topic-ico { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 999px; background: var(--color-primary); color: #fff; }
-.topic-text h2 { margin: 0; font-size: 1rem; color: var(--color-text); }
-.topic-text p { margin: 4px 0 8px 0; color: var(--color-muted); }
-.topic-actions { margin-top: 6px; display: flex; gap: 8px; align-items: center; }
-.reply-status { opacity: .7; font-size: .85rem; }
-.reply-box { display: none; margin-top: 10px; padding: 10px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; }
-.reply-actions { margin-top: 8px; display: flex; gap: 8px; }
-
-.metrics { display: flex; justify-content: center; gap: var(--spacing-16); }
-.metric .label { display: block; font-size: .75rem; color: var(--color-muted); text-transform: none; }
-.metric .value { font-weight: 700; color: var(--color-text); }
-
-.latest-link { text-decoration: none; }
-.latest { display: flex; align-items: center; gap: var(--spacing-12); }
-.latest .avatar { width: 32px; height: 32px; border-radius: 999px; background: var(--color-primary); color: #fff; display: grid; place-items: center; font-weight: 700; }
-.latest .latest-title { margin: 0; font-weight: 600; color: var(--color-text); }
-.latest .latest-meta { margin: 0; font-size: .85rem; color: var(--color-muted); }
-
-@media (max-width: 720px) {
-  .forum-table-head { grid-template-columns: 1fr; }
-  .topic { grid-template-columns: 1fr; }
-  .metrics { justify-content: flex-start; }
+.wpHead{
+  max-width: 1040px;
+  margin: 0 auto 16px;
 }
 
-/* Topics */
-.topic { display: grid; grid-template-columns: 1fr auto; gap: var(--spacing-16); align-items: center; background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-16); }
-.topic-ico { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 999px; background: var(--color-primary); color: #fff; }
-.topic-main { display: flex; align-items: center; gap: var(--spacing-12); }
-.topic-text h2 { margin: 0; font-size: 1.1rem; color: var(--color-primary); }
-.topic-text p { margin: 6px 0 10px 0; color: var(--color-muted); }
-.tags { display: flex; gap: 6px; flex-wrap: wrap; }
-.tag { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: .8rem; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-muted); }
-.tag.calm { color: #1f4b99; border-color: #bfd5ff; background: #edf4ff; }
-.tag.green { color: #166534; border-color: #bbf7d0; background: #ecfdf5; }
-.tag.soft { color: #6b7280; }
-.metrics { display: flex; gap: var(--spacing-16); }
-.metric .label { display: block; font-size: .75rem; color: var(--color-muted); }
-.metric .value { font-weight: 700; color: var(--color-text); }
-.latest-link { display: block; text-decoration: none; }
-.latest { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-12); }
-
-/* Sidebar */
-.side { display: flex; flex-direction: column; gap: var(--spacing-16); }
-.panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-16); box-shadow: var(--shadow); }
-.panel h3 { margin: 0 0 var(--spacing-8) 0; color: var(--color-primary); }
-.checklist { margin: 0; padding-left: 1.1rem; color: var(--color-text); }
-.mini-actions { margin-top: var(--spacing-12); display: flex; gap: var(--spacing-12); flex-wrap: wrap; }
-.reactions { display: flex; gap: var(--spacing-8); flex-wrap: wrap; }
-.react { padding: 8px 12px; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface-2); color: var(--color-text); cursor: pointer; }
-.react.blue { color: #1e40af; border-color: #bfdbfe; background: #eff6ff; }
-.react.green { color: #166534; border-color: #bbf7d0; background: #ecfdf5; }
-.react:focus { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-
-/* Rules */
-.rules-wrap { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--spacing-16); box-shadow: var(--shadow); }
-.rules-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-8); }
-.rules-list { margin: 0; padding-left: 1.2rem; }
-
-/* Inputs and buttons (shared for thread pages) */
-.input, input[type="text"], input[type="search"] { width: 100%; padding: 10px 12px; border: 1px solid var(--color-border); border-radius: var(--radius); background: #fff; font-size: .95rem; }
-.textarea, textarea { width: 100%; min-height: 110px; padding: 10px 12px; border: 1px solid var(--color-border); border-radius: var(--radius); background: #fff; resize: vertical; font-size: .95rem; }
-.input:focus, .textarea:focus, input:focus, textarea:focus { outline: 2px solid var(--color-primary); outline-offset: 1px; }
-
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); text-decoration: none; cursor: pointer; font-weight: 600; }
-.btn-primary { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
-.btn-quiet { background: var(--color-surface-2); color: var(--color-text); }
-.btn:hover { filter: brightness(1.03); }
-.btn:focus { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-
-/* Thread pages */
-.thread-shell { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 14px; padding: var(--spacing-16); box-shadow: var(--shadow); }
-.post-form-label { font-size: .95rem; font-weight: 500; margin-bottom: 6px; color: var(--color-text); }
-.post-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
-#post-btn { padding: 8px 18px; border-radius: 999px; border: none; background: var(--color-primary); color: #fff; font-size: .95rem; font-weight: 600; cursor: pointer; }
-#post-btn[disabled] { opacity: .7; cursor: not-allowed; }
-
-/* Message cards */
-.messages-list { margin-top: var(--spacing-16); display: flex; flex-direction: column; gap: var(--spacing-12); }
-.message-card { display: flex; gap: var(--spacing-12); padding: var(--spacing-12); border-radius: var(--radius); background: var(--color-surface-2); border: 1px solid var(--color-border); }
-.message-avatar { width: 34px; height: 34px; border-radius: 999px; background: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: .9rem; font-weight: 700; color: #ffffff; }
-.message-body { flex: 1; }
-.message-meta { font-size: .8rem; color: var(--color-muted); margin-bottom: 4px; }
-.message-text { font-size: .95rem; color: var(--color-text); white-space: pre-wrap; }
-
-/* Replies */
-.replies-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
-.reply { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 8px 10px; }
-.reply-toggle { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--color-border); background: #fff; cursor: pointer; }
-.reply-box { margin-top: 10px; padding: 10px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; }
-.reply-send { margin-top: 8px; padding: 6px 12px; background: var(--color-primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
-.replies-count { margin-left: 8px; font-size: .85rem; color: var(--color-muted); }
-
-/* Empty states */
-.message-empty { font-size: .9rem; color: var(--color-soft); font-style: italic; display: flex; align-items: center; gap: 8px; }
-.message-empty::before { content: "\f05a"; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--color-muted); }
-
-/* Focus and accessibility */
-:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-
-/* Footer consistency */
-.footer { margin-top: var(--spacing-32); }
-
-/* --- WP Forums styles (header, tabs, table) --- */
-main { padding: 32px 16px 60px; }
-.wpHead { max-width: 1000px; margin: 0 auto 16px; }
-.wpKicker { margin: 0 0 6px; color: var(--color-muted); font-size: .95rem; }
-.wpTitle { margin: 0 0 16px; font-size: 1.8rem; font-weight: 800; color: var(--color-primary); }
-
-.wpSearch { display: flex; align-items: center; gap: 10px; border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 12px; background: #fff; }
-.wpSearch i { color: var(--color-muted); }
-.wpSearch input { border: none; outline: none; width: 100%; font-size: .95rem; color: var(--color-text); }
-.wpSearch input::placeholder { color: var(--color-soft); }
-
-.wpTopRow { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
-.wpLeft { display: flex; align-items: center; gap: 10px; }
-.wpLeft .wpMuted { color: var(--color-muted); font-size: .92rem; }
-#forumCategory { border: 1px solid var(--color-border); border-radius: 12px; padding: 8px 12px; background: #fff; color: var(--color-text); }
-
-.wpTabs { display: flex; gap: 8px; flex-wrap: wrap; }
-.wpTab { padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 999px; background: #fff; color: var(--color-text); cursor: pointer; font-weight: 600; }
-.wpTab.active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
-
-.wpTable { max-width: 1000px; margin: 0 auto; background: #fff; border: 1px solid var(--color-border); border-radius: 14px; box-shadow: var(--shadow); }
-.wpTableHead { display: grid; grid-template-columns: 1fr 120px 220px; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--color-border); color: var(--color-muted); font-weight: 600; }
-.wpColReplies { text-align: center; }
-.wpColLatest { }
-
-#topicList { display: flex; flex-direction: column; }
-.wpRow { display: grid; grid-template-columns: 1fr 120px 220px; gap: 12px; align-items: center; padding: 14px 16px; text-decoration: none; color: inherit; border-bottom: 1px solid var(--color-border); }
-.wpRow:hover { background: var(--color-surface-2); }
-
-.wpTopicTitle { margin: 0 0 4px; font-size: 1rem; font-weight: 700; color: var(--color-primary); }
-.wpTopicDesc { margin: 0; font-size: .92rem; color: var(--color-muted); }
-.wpReplies { text-align: center; font-weight: 800; color: var(--color-primary); }
-.wpLatest { font-size: .9rem; color: #334155; }
-.wpNoResults { padding: 16px; color: var(--color-soft); font-style: italic; }
-
-@media (max-width: 900px) {
-  .wpTableHead { display: none; }
-  .wpRow { grid-template-columns: 1fr; }
-  .wpReplies, .wpLatest { text-align: left; margin-top: 8px; }
+.wpKicker{
+  margin: 0 0 6px;
+  color: var(--wpMuted);
+  font-size: .95rem;
 }
 
-/* Modal for Add a Post */
-.wpModal { position: fixed; inset: 0; display: none; }
-.wpModal.open { display: block; }
-.wpModalBackdrop { position: absolute; inset: 0; background: rgba(2,6,23,0.55); }
-.wpModalDialog { position: relative; max-width: 640px; margin: 8vh auto; background: #fff; border: 1px solid var(--color-border); border-radius: 14px; box-shadow: 0 20px 40px rgba(2,6,23,0.35); overflow: hidden; }
-.wpModalHead { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--color-border); }
-.wpModalHead h2 { margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--color-primary); }
-.wpModalClose { border: none; background: transparent; font-size: 1.4rem; line-height: 1; cursor: pointer; color: var(--color-muted); }
-.wpModalBody { padding: 14px 16px; }
-.wpModalActions { padding: 14px 16px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+.wpTitle{
+  margin: 0 0 14px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--wpInk);
+}
 
-/* Reuse form row styles in modal */
-.wpQPRow { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
-.wpQPLabel { width: 120px; color: var(--color-muted); padding-top: 6px; }
-.wpQPInput, .wpQPSelect { flex: 1; border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 12px; font-size: .95rem; }
-.wpQPTextarea { flex: 1; border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 12px; font-size: .95rem; resize: vertical; }
-.wpQPStatus { font-weight: 600; color: var(--color-muted); }
+.wpSearch{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 14px 14px;
+  border: 1px solid var(--wpBorder);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(17,24,39,0.03);
+}
 
-@media (max-width: 700px) {
-  .wpQPRow { flex-direction: column; }
-  .wpQPLabel { width: auto; padding: 0; }
+.wpSearch i{ color: var(--wpMuted); }
+.wpSearch input{
+  border:none;
+  outline:none;
+  width:100%;
+  font-size: 1rem;
+}
+
+.wpTopRow{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.wpLeft{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.wpMuted{ color: var(--wpMuted); font-size: .95rem; }
+
+#forumCategory{
+  border: 1px solid var(--wpBorder);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background:#fff;
+  font-size: .95rem;
+}
+
+.wpActions{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+}
+
+.wpBtn{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--wpBorder);
+  background: #fff;
+  cursor:pointer;
+  font-weight: 700;
+  font-size: .92rem;
+}
+
+.wpBtn:disabled{
+  opacity: .55;
+  cursor:not-allowed;
+}
+
+.wpBtnPrimary{
+  background: var(--wpBrand);
+  color: #fff;
+  border-color: rgba(13,43,87,0.25);
+}
+
+.wpTable{
+  max-width: 1040px;
+  margin: 16px auto 0;
+  background: var(--wpCard);
+  border: 1px solid var(--wpBorder);
+  border-radius: var(--wpRadius);
+  box-shadow: var(--wpShadow);
+  overflow:hidden;
+}
+
+.wpTableHead{
+  display:grid;
+  grid-template-columns: 1fr 120px 200px;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--wpBorder);
+  color: var(--wpMuted);
+  font-weight: 800;
+}
+
+.wpColReplies{ text-align:center; }
+
+#topicList{ display:flex; flex-direction:column; }
+
+.wpRow{
+  display:grid;
+  grid-template-columns: 1fr 120px 200px;
+  gap: 12px;
+  align-items:center;
+  padding: 16px 16px;
+  border-bottom: 1px solid var(--wpBorder);
+}
+
+.wpRow:hover{ background: #f9fafb; }
+.wpRow.selected{
+  background: #eef2ff;
+  outline: 2px solid rgba(37,99,235,0.20);
+  outline-offset: -2px;
+}
+
+.wpTopicTitle{
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 1.05rem;
+}
+
+.wpTopicDesc{
+  margin-top: 6px;
+  color: var(--wpMuted);
+  font-size: .95rem;
+  line-height: 1.35;
+}
+
+.wpReplies{
+  text-align:center;
+  font-weight: 900;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.wpLatest{
+  color: #374151;
+  font-size: .95rem;
+}
+
+.wpTopicTop{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wpMiniBtn{
+  border: 1px solid var(--wpBorder);
+  background:#fff;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-weight: 800;
+  cursor:pointer;
+  font-size: .85rem;
+  display:inline-flex;
+  gap: 8px;
+  align-items:center;
+}
+.wpMiniBtn:hover{ background:#f3f4f6; }
+
+.wpPill{
+  display:inline-block;
+  margin-top: 10px;
+  font-size: .82rem;
+  font-weight: 700;
+  color: #0f172a;
+  background: #f3f4f6;
+  border: 1px solid rgba(17,24,39,0.08);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.wpNoResults{
+  padding: 16px;
+  color: var(--wpMuted);
+  font-style: italic;
+}
+
+/* Modals */
+.wpNoScroll{ overflow:hidden; }
+
+.wpModal{ position:fixed; inset:0; display:none; z-index: 9999; }
+.wpModal.open{ display:block; }
+
+.wpModalBackdrop{
+  position:absolute; inset:0;
+  background: rgba(2,6,23,0.55);
+}
+
+.wpModalDialog{
+  position:relative;
+  width: min(720px, calc(100% - 24px));
+  margin: 10vh auto;
+  background:#fff;
+  border: 1px solid var(--wpBorder);
+  border-radius: var(--wpRadius);
+  box-shadow: 0 20px 40px rgba(2,6,23,0.35);
+  overflow:hidden;
+}
+
+.wpModalHead{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--wpBorder);
+}
+
+.wpModalHead h2{
+  margin:0;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.wpModalClose{
+  border:none;
+  background:transparent;
+  font-size: 1.6rem;
+  cursor:pointer;
+  color: var(--wpMuted);
+}
+
+.wpModalBody{ padding: 14px 16px; }
+.wpModalActions{
+  padding: 14px 16px;
+  border-top: 1px solid var(--wpBorder);
+  display:flex;
+  justify-content:flex-end;
+  gap: 10px;
+}
+
+.wpLabel{
+  display:block;
+  margin: 10px 0 6px;
+  font-weight: 800;
+  font-size: .92rem;
+}
+
+.wpInput{
+  width: 100%;
+  border: 1px solid var(--wpBorder);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: .95rem;
+  outline: none;
+}
+
+.wpInput:focus{
+  border-color: rgba(13,43,87,0.35);
+  box-shadow: 0 0 0 4px rgba(13,43,87,0.10);
+}
+
+.wpStatus{
+  margin: 10px 0 0;
+  color: #b91c1c;
+  font-weight: 700;
+  font-size: .92rem;
+}
+
+.wpSelectedMeta{
+  padding: 10px 12px;
+  border: 1px solid var(--wpBorder);
+  border-radius: 10px;
+  background: #f9fafb;
+  margin-bottom: 10px;
+}
+
+.wpSelectedLabel{ color: var(--wpMuted); font-weight: 800; font-size: .85rem; }
+.wpSelectedTitle{ font-weight: 900; margin-top: 2px; }
+
+/* Mobile */
+@media (max-width: 900px){
+  .wpTableHead{ display:none; }
+  .wpRow{ grid-template-columns: 1fr; }
+  .wpReplies, .wpLatest{ text-align:left; margin-top: 10px; }
+  .wpTopicTop{ align-items:flex-start; }
 }
