@@ -139,6 +139,9 @@
         </a>
       </div>
 
+      <!-- Dynamically loaded posts (from Firebase) -->
+      <div id="topicDynamic"></div>
+
       <div id="noResults" class="wpNoResults" style="display:none;">No results found.</div>
     </section>
   </main>
@@ -169,8 +172,7 @@
   function applyFilter(){
     const q = (searchEl.value || "").trim().toLowerCase();
     const cat = (catEl.value || "all").toLowerCase();
-
-    const rows = Array.from(list.querySelectorAll(".wpRow"));
+    const rows = Array.from(document.querySelectorAll(".wpRow"));
     let shown = 0;
 
     rows.forEach(row => {
@@ -224,6 +226,10 @@
       </div>
       <div class="wpModalBody">
         <div class="wpQPRow">
+          <label for="modalTitle" class="wpQPLabel">Title</label>
+          <input id="modalTitle" class="wpQPInput" type="text" placeholder="Give your post a clear title" />
+        </div>
+        <div class="wpQPRow">
           <label for="modalCategory" class="wpQPLabel">Forum</label>
           <select id="modalCategory" class="wpQPSelect">
             <option value="">Choose a forum…</option>
@@ -252,7 +258,7 @@
 
   <script type="module">
     import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
-    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const THREAD_ID = {
       introduce: 'introduce-yourself',
@@ -269,6 +275,7 @@
     const catEl = document.getElementById('modalCategory');
     const authorEl = document.getElementById('modalAuthor');
     const textEl = document.getElementById('modalText');
+    const titleEl = document.getElementById('modalTitle');
     const statusEl = document.getElementById('postModalStatus');
 
     function setStatus(msg, ok=false){
@@ -283,24 +290,39 @@
     btnClose?.addEventListener('click', () => closeModal());
     modal.addEventListener('click', (e) => { if (e.target && e.target.dataset && e.target.dataset.close) closeModal(); });
 
+    // Helper: tiny HTML escape
+    function escapeHtml(str){
+      return String(str || '')
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+    }
+
+    // Submit new forum topic (top-level post)
     btnSubmit?.addEventListener('click', async () => {
       const cat = (catEl.value || '').trim();
-      const tid = THREAD_ID[cat];
       const text = (textEl.value || '').trim();
+      const title = (titleEl?.value || '').trim();
       const name = (authorEl.value || '').trim() || 'Anonymous';
-      if (!tid) { setStatus('Please choose a forum.'); return; }
+      if (!cat) { setStatus('Please choose a forum.'); return; }
+      if (!title) { setStatus('Please add a title.'); return; }
       if (!text) { setStatus('Please write something before posting.'); return; }
       btnSubmit.disabled = true;
       setStatus('Posting...', true);
       try {
         await ensureAnonAuth();
-        await addDoc(collection(db, 'threads', tid, 'posts'), {
-          text,
+        await addDoc(collection(db, 'forum_posts'), {
+          title,
+          body: text,
           authorName: name,
+          category: cat,
           createdAt: serverTimestamp()
         });
+        if (titleEl) titleEl.value = '';
         textEl.value = '';
-        setStatus('Posted! Your message appears in that forum.', true);
+        setStatus('Posted! Your topic appears below.', true);
         closeModal();
       } catch (e) {
         console.error('Post failed:', e);
@@ -308,6 +330,57 @@
       } finally {
         btnSubmit.disabled = false;
       }
+    });
+
+    // Render dynamic forum posts into #topicDynamic
+    const dynamicEl = document.getElementById('topicDynamic');
+    function renderRow(docSnap){
+      const d = docSnap.data() || {};
+      const id = docSnap.id;
+      const title = d.title || 'Untitled';
+      const desc = (d.body || d.content || d.text || '').trim();
+      const preview = desc.length > 140 ? (desc.slice(0,140) + '…') : desc;
+      const cat = d.category || 'other';
+      let latest = 'Today';
+      try {
+        if (d.createdAt && d.createdAt.toDate) {
+          latest = d.createdAt.toDate().toLocaleDateString();
+        }
+      } catch {}
+      const a = document.createElement('a');
+      a.className = 'wpRow';
+      a.href = `post.html?id=${id}`;
+      a.setAttribute('data-title', title);
+      a.setAttribute('data-desc', preview);
+      a.setAttribute('data-tags', cat);
+      a.setAttribute('data-category', cat);
+      a.setAttribute('data-replies', '0');
+      a.innerHTML = `
+        <div class="wpTopic">
+          <div class="wpTopicTitle">${escapeHtml(title)}</div>
+          <div class="wpTopicDesc">${escapeHtml(preview)}</div>
+        </div>
+        <div class="wpReplies" data-id="${id}">0</div>
+        <div class="wpLatest">${escapeHtml(latest)}</div>
+      `;
+      dynamicEl.appendChild(a);
+
+      // Live replies count for this topic
+      const repliesCell = a.querySelector('.wpReplies');
+      try {
+        const rq = query(collection(db, 'forum_posts', id, 'replies'), orderBy('createdAt','asc'));
+        onSnapshot(rq, (snap) => {
+          repliesCell.textContent = String(snap.size);
+          a.setAttribute('data-replies', String(snap.size));
+        });
+      } catch {}
+    }
+
+    // Listen for forum_posts and render
+    const q = query(collection(db, 'forum_posts'), orderBy('createdAt','desc'));
+    onSnapshot(q, (snap) => {
+      dynamicEl.innerHTML = '';
+      snap.forEach(docSnap => renderRow(docSnap));
     });
   </script>
 
