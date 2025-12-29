@@ -290,26 +290,24 @@
 
     // Submit new forum topic (top-level post)
     btnSubmit?.addEventListener('click', async () => {
-      const cat = 'general';
       const text = (textEl.value || '').trim();
       const title = (titleEl?.value || '').trim();
       const name = (authorEl.value || '').trim() || 'Anonymous';
-      if (!title) { setStatus('Please add a title.'); return; }
-      if (!text) { setStatus('Please write something before posting.'); return; }
+      if (!text && !title) { setStatus('Please write something before posting.'); return; }
+      const combined = title ? `${title}\n\n${text}` : text;
       btnSubmit.disabled = true;
       setStatus('Posting...', true);
       try {
         await ensureAnonAuth();
-        await addDoc(collection(db, 'forum_posts'), {
-          title,
-          body: text,
+        // Create a new post inside the Depression thread (matches existing rules)
+        await addDoc(collection(db, 'threads', 'depression', 'posts'), {
+          text: combined,
           authorName: name,
-          category: cat,
           createdAt: serverTimestamp()
         });
         if (titleEl) titleEl.value = '';
         textEl.value = '';
-        setStatus('Posted! Your topic appears below.', true);
+        setStatus('Posted! Your message appears in Depression.', true);
         closeModal();
       } catch (e) {
         console.error('Post failed:', e);
@@ -324,10 +322,8 @@
     function renderRow(docSnap){
       const d = docSnap.data() || {};
       const id = docSnap.id;
-      const title = d.title || 'Untitled';
-      const desc = (d.body || d.content || d.text || '').trim();
+      const desc = (d.text || '').trim();
       const preview = desc.length > 140 ? (desc.slice(0,140) + '…') : desc;
-      const cat = d.category || 'other';
       let latest = 'Today';
       try {
         if (d.createdAt && d.createdAt.toDate) {
@@ -336,15 +332,15 @@
       } catch {}
       const a = document.createElement('a');
       a.className = 'wpRow';
-      a.href = `post.html?id=${id}`;
-      a.setAttribute('data-title', title);
+      a.href = `thread-depression.html`;
+      a.setAttribute('data-title', 'Depression');
       a.setAttribute('data-desc', preview);
-      a.setAttribute('data-tags', cat);
-      a.setAttribute('data-category', cat);
+      a.setAttribute('data-tags', 'depression');
+      a.setAttribute('data-category', 'depression');
       a.setAttribute('data-replies', '0');
       a.innerHTML = `
         <div class="wpTopic">
-          <div class="wpTopicTitle">${escapeHtml(title)}</div>
+          <div class="wpTopicTitle">Depression</div>
           <div class="wpTopicDesc">${escapeHtml(preview)}</div>
         </div>
         <div class="wpReplies" data-id="${id}">0</div>
@@ -352,10 +348,10 @@
       `;
       dynamicEl.appendChild(a);
 
-      // Live replies count for this topic
+      // Live replies count for this Depression post
       const repliesCell = a.querySelector('.wpReplies');
       try {
-        const rq = query(collection(db, 'forum_posts', id, 'replies'), orderBy('createdAt','asc'));
+        const rq = query(collection(db, 'threads', 'depression', 'posts', id, 'replies'), orderBy('createdAt','asc'));
         onSnapshot(rq, (snap) => {
           repliesCell.textContent = String(snap.size);
           a.setAttribute('data-replies', String(snap.size));
@@ -363,8 +359,8 @@
       } catch {}
     }
 
-    // Listen for forum_posts and render
-    const q = query(collection(db, 'forum_posts'), orderBy('createdAt','desc'));
+    // Listen for new posts in Depression and render
+    const q = query(collection(db, 'threads', 'depression', 'posts'), orderBy('createdAt','desc'));
     onSnapshot(q, (snap) => {
       dynamicEl.innerHTML = '';
       snap.forEach(docSnap => renderRow(docSnap));
