@@ -70,17 +70,13 @@
   <script src="menu.js"></script>
   <script type="module">
     import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
-    import { collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { collection, doc, addDoc, query, orderBy, onSnapshot, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const params = new URLSearchParams(location.search);
-    const threadId = params.get('id') || 'general';
-    const title = params.get('title') || 'Forum Thread';
-    const sub = params.get('sub') || '';
+    const forumId = params.get('forumId');
 
     const titleEl = document.getElementById('threadTitle');
     const subEl = document.getElementById('threadSub');
-    titleEl.textContent = title;
-    subEl.textContent = sub;
 
     const postBtn = document.getElementById('post-btn');
     const postText = document.getElementById('post-text');
@@ -94,64 +90,61 @@
       statusEl.style.color = ok ? "#166534" : "#b91c1c";
     }
 
-    async function createPost(text, displayName) {
-      await addDoc(collection(db, "threads", threadId, "posts"), {
+    async function loadForumHeader(){
+      if (!forumId){ titleEl.textContent = "Forum Thread"; subEl.textContent = ""; return; }
+      const forumRef = doc(db, "forums", forumId);
+      const snap = await getDoc(forumRef);
+      const d = snap.exists() ? snap.data() : null;
+      titleEl.textContent = d?.title || "Forum Thread";
+      subEl.textContent = d?.description || "";
+    }
+
+    async function createReply(text, displayName){
+      const repliesRef = collection(db, "forums", forumId, "replies");
+      await addDoc(repliesRef, {
         text,
         authorName: displayName,
         createdAt: serverTimestamp()
       });
+      const forumRef = doc(db, "forums", forumId);
+      await updateDoc(forumRef, {
+        replyCount: increment(1),
+        latestLabel: "Just now",
+        lastActivityAt: serverTimestamp(),
+      });
     }
 
-    function renderPost(postDoc) {
-      const d = postDoc.data();
+    function renderReply(docSnap){
+      const d = docSnap.data();
       const text = d.text ?? "";
       const name = d.authorName || "Anonymous";
-
-      const postEl = document.createElement('div');
-      postEl.className = 'message-card';
-
+      const el = document.createElement('div');
+      el.className = 'message-card';
       const avatar = document.createElement('div');
       avatar.className = 'message-avatar';
       avatar.textContent = (name || 'A').charAt(0).toUpperCase();
-
-      const body = document.createElement('div');
-      body.className = 'message-body';
-
-      const meta = document.createElement('div');
-      meta.className = 'message-meta';
+      const body = document.createElement('div'); body.className = 'message-body';
+      const meta = document.createElement('div'); meta.className = 'message-meta';
       let timeStr = 'Just now';
       if (d.createdAt && d.createdAt.toDate) {
         timeStr = d.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       }
       meta.textContent = `${name} · ${timeStr}`;
-
-      const msgText = document.createElement('div');
-      msgText.className = 'message-text';
-      msgText.textContent = text;
-
-      body.appendChild(meta);
-      body.appendChild(msgText);
-
-      postEl.appendChild(avatar);
-      postEl.appendChild(body);
-
-      postsDiv.appendChild(postEl);
+      const msgText = document.createElement('div'); msgText.className = 'message-text'; msgText.textContent = text;
+      body.appendChild(meta); body.appendChild(msgText);
+      el.appendChild(avatar); el.appendChild(body);
+      postsDiv.appendChild(el);
     }
 
-    function listenForPosts() {
-      const q = query(
-        collection(db, 'threads', threadId, 'posts'),
-        orderBy('createdAt', 'asc')
-      );
+    function listenForReplies(){
+      const q = query(collection(db, 'forums', forumId, 'replies'), orderBy('createdAt', 'asc'));
       onSnapshot(q, (snap) => {
         postsDiv.innerHTML = '';
         if (snap.empty) {
-          postsDiv.innerHTML = '<p class="message-empty">No posts yet. Your post will appear here after you share.</p>';
+          postsDiv.innerHTML = '<p class="message-empty">No replies yet. Your reply will appear here after you share.</p>';
           return;
         }
-        snap.forEach((docSnap) => {
-          renderPost(docSnap);
-        });
+        snap.forEach((docSnap) => { renderReply(docSnap); });
       });
     }
 
@@ -159,27 +152,28 @@
       e.preventDefault();
       setStatus("Posting...", true);
       const val = postText.value.trim();
-      if (!val) {
-        setStatus("Please write something before posting.");
-        return;
-      }
+      if (!val) { setStatus("Please write something before posting."); return; }
       const displayName = authorNameEl.value.trim() || 'Anonymous';
       postBtn.disabled = true;
       try {
         await ensureAnonAuth();
-        await createPost(val, displayName);
+        await createReply(val, displayName);
         postText.value = '';
         postText.focus();
         setStatus("Posted!", true);
       } catch (err) {
-        console.error('Error creating post:', err);
+        console.error('Error posting reply:', err);
         setStatus(friendlyFirebaseError(err));
       } finally {
         postBtn.disabled = false;
       }
     });
 
-    listenForPosts();
+    (async function(){
+      await ensureAnonAuth();
+      await loadForumHeader();
+      if (forumId) listenForReplies();
+    })();
   </script>
 </body>
 </html>

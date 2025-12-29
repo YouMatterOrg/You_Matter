@@ -600,22 +600,11 @@
       <div class="wpTopRow">
         <div class="wpLeft">
           <span class="wpMuted">All forums</span>
-          <select id="forumCategory">
-            <option value="all">All forums</option>
-            <option value="General">General</option>
-            <option value="Anxiety & Stress">Anxiety & Stress</option>
-            <option value="Depression">Depression</option>
-            <option value="Self-Care">Self-Care</option>
-            <option value="Encouragement">Encouragement</option>
-          </select>
         </div>
 
         <div class="wpActions">
           <button id="addForumBtn" class="wpBtn wpBtnPrimary" type="button">
             <i class="fa-solid fa-plus"></i> Add Forum
-          </button>
-          <button id="replyBtn" class="wpBtn" type="button" disabled>
-            <i class="fa-solid fa-reply"></i> Reply
           </button>
         </div>
       </div>
@@ -647,15 +636,6 @@
           <label class="wpLabel" for="newDesc">Short description</label>
           <input id="newDesc" class="wpInput" type="text" placeholder="One sentence about what this forum is for..." maxlength="140" />
 
-          <label class="wpLabel" for="newCat">Category</label>
-          <select id="newCat" class="wpInput">
-            <option value="General">General</option>
-            <option value="Anxiety & Stress">Anxiety & Stress</option>
-            <option value="Depression">Depression</option>
-            <option value="Self-Care">Self-Care</option>
-            <option value="Encouragement">Encouragement</option>
-          </select>
-
           <p id="addStatus" class="wpStatus"></p>
         </div>
         <div class="wpModalActions">
@@ -665,644 +645,105 @@
       </div>
     </div>
 
-    <!-- Reply Modal -->
-    <div id="replyModal" class="wpModal" aria-hidden="true">
-      <div class="wpModalBackdrop" data-close="reply"></div>
-      <div class="wpModalDialog" role="dialog" aria-modal="true" aria-label="Reply to forum">
-        <div class="wpModalHead">
-          <h2>Reply</h2>
-          <button class="wpModalClose" type="button" data-close="reply">×</button>
-        </div>
-        <div class="wpModalBody">
-          <div class="wpSelectedMeta">
-            <div class="wpSelectedLabel">Replying to</div>
-            <div id="selectedTitle" class="wpSelectedTitle">—</div>
-          </div>
-
-          <label class="wpLabel" for="replyText">Your reply</label>
-          <textarea id="replyText" class="wpInput" rows="4" placeholder="Write something supportive…"></textarea>
-
-          <p id="replyStatus" class="wpStatus"></p>
-        </div>
-        <div class="wpModalActions">
-          <button class="wpBtn" type="button" data-close="reply">Cancel</button>
-          <button id="postReplyBtn" class="wpBtn wpBtnPrimary" type="button">Post Reply</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="wpShell">
-    <section class="content-section">
-      <div class="content-container">
-
-      <!-- Crisis banner (calm + professional) -->
-      <div class="crisis-banner" role="region" aria-label="Crisis support">
-        <div class="crisis-left">
-          <div class="crisis-icon" aria-hidden="true">
-            <i class="fa-solid fa-life-ring"></i>
-          </div>
-          <div class="crisis-text">
-            <h3>Need immediate support?</h3>
-            <p>
-              If you’re in danger or thinking about self-harm, please contact your local emergency number.
-              In the U.S., you can call or text <strong>988</strong> for the Suicide &amp; Crisis Lifeline.
-            </p>
-          </div>
-        </div>
-        <div class="crisis-actions">
-          <a class="btn btn-quiet" href="get-help.html"><i class="fa-solid fa-compass"></i> Get Help</a>
-          <a class="btn btn-primary" href="#forum-rules"><i class="fa-solid fa-shield-heart"></i> Community Safety</a>
-        </div>
-      </div>
-
-      <!-- Page title -->
-      <div class="forum-header-main">
-        <div class="forum-title">
-          <h1>Mental Health Forum</h1>
-          <p>
-            A supportive space to share experiences, ask questions, and connect — with kindness, privacy, and safety at the center.
-          </p>
-        </div>
-        <div class="forum-badges" aria-label="Community highlights">
-          <span class="pill"><i class="fa-solid fa-lock"></i> Pseudonyms supported</span>
-          <span class="pill"><i class="fa-solid fa-hand-holding-heart"></i> <strong>Support</strong> over “likes”</span>
-          <span class="pill"><i class="fa-solid fa-clipboard-check"></i> Moderated with care</span>
-        </div>
-      </div>
-
-      <div class="forum-shell">
-
-        <!-- Toolbar -->
-        <div class="forum-tools" role="search" aria-label="Forum search and filters">
-          <!-- Search + Filters -->
-          <div class="forum-search-row">
-            <input id="forum-search" class="input forum-search" type="search" placeholder="Search topics, descriptions, tags..." aria-label="Search forum" />
-          </div>
-
-          <div class="tools-row">
-            <div class="search-wrap">
-              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-              <input type="search" placeholder="Search topics, keywords, or tags (e.g., anxiety, coping, school)..." aria-label="Search forum">
-            </div>
-
-            <select class="select" aria-label="Filter by category">
-              <option value="all">All categories</option>
-              <option value="general">General Support</option>
-              <option value="anxiety">Anxiety & Stress</option>
-              <option value="depression">Depression</option>
-              <option value="selfcare">Self-Care & Coping Tools</option>
-              <option value="wins">Encouragement & Wins</option>
-              <option value="resources">Resources & Education</option>
-              <option value="caregivers">Caregivers & Allies</option>
-            </select>
-
-            <select class="select" aria-label="Sort topics">
-              <option value="recent">Sort: Most recent</option>
-              <option value="active">Sort: Most active</option>
-              <option value="new">Sort: Newest threads</option>
-            </select>
-          </div>
-
-          <div class="tool-right">
-            <a class="btn btn-quiet" href="#how-to-post"><i class="fa-solid fa-feather-pointed"></i> How to post</a>
-            <a class="btn btn-primary" href="new-post.html"><i class="fa-solid fa-plus"></i> Start a post</a>
-          </div>
-        </div>
-
-        <div class="forum-grid">
-
-          <!-- Main board -->
-          <div class="board" aria-label="Forum categories">
-            <div class="board-header">
-              <div>Mental Health Forum</div>
-              <div class="small">Search, explore, and join the conversation</div>
-            </div>
-
-            <!-- Table header -->
-            <div class="forum-table-head" role="row" aria-label="List header">
-              <div class="col-topic">Topic</div>
-              <div class="col-replies">Replies</div>
-              <div class="col-latest">Latest activity</div>
-            </div>
-
-            <div id="forum-posts"></div>
-            <div id="forum-no-results" class="message-empty" style="display:none;">No results found.</div>
-
-            <!-- Category 1 -->
-            <div class="topic forum-row" data-title="Introduce Yourself" data-description="New here? Share what brought you to YouMatter and what kind of support you’re looking for." data-tags="Welcoming, New members, Kind replies" data-latest-title="A bit about me and my experience…">
-              <div class="topic-main">
-                <div class="topic-ico" aria-hidden="true"><i class="fa-regular fa-comments"></i></div>
-                <div class="topic-text">
-                  <h2>Introduce Yourself</h2>
-                  <p>New here? Share what brought you to YouMatter and what kind of support you’re looking for.</p>
-                  <div class="tags">
-                    <span class="tag soft">Welcoming</span>
-                    <span class="tag calm">New members</span>
-                    <span class="tag green">Kind replies</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="metrics" aria-label="Category stats">
-                <div class="metric">
-                  <span class="label">Threads</span>
-                  <span class="value">23.3K</span>
-                </div>
-                <div class="metric">
-                  <span class="label">Messages</span>
-                  <span class="value">185K</span>
-                </div>
-              </div>
-
-              <a href="thread-introduce-yourself.html" class="latest-link" aria-label="Open latest thread in Introduce Yourself">
-                <div class="latest">
-                  <div class="avatar" aria-hidden="true">E</div>
-                  <div class="latest-text">
-                    <p class="latest-title">A bit about me and my experience…</p>
-                    <p class="latest-meta">Today · 9:33 PM · EchoShade</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Category 2 -->
-            <div class="topic forum-row" data-title="Anxiety & Stress" data-description="Talk through anxious thoughts, school/work stress, panic symptoms, and strategies that help." data-tags="Coping skills, Breathing, Routines" data-latest-title="Does anyone get “what if” spirals at night?">
-              <div class="topic-main">
-                <div class="topic-ico" aria-hidden="true"><i class="fa-solid fa-wind"></i></div>
-                <div class="topic-text">
-                  <h2>Anxiety &amp; Stress</h2>
-                  <p>Talk through anxious thoughts, school/work stress, panic symptoms, and strategies that help.</p>
-                  <div class="tags">
-                    <span class="tag calm">Coping skills</span>
-                    <span class="tag soft">Breathing</span>
-                    <span class="tag soft">Routines</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="metrics" aria-label="Category stats">
-                <div class="metric">
-                  <span class="label">Threads</span>
-                  <span class="value">8.2K</span>
-                </div>
-                <div class="metric">
-                  <span class="label">Messages</span>
-                  <span class="value">61K</span>
-                </div>
-              </div>
-
-              <a href="thread-anxiety-stress.html" class="latest-link" aria-label="Open latest thread in Anxiety & Stress">
-                <div class="latest">
-                  <div class="avatar" aria-hidden="true">M</div>
-                  <div class="latest-text">
-                    <p class="latest-title">Does anyone get “what if” spirals at night?</p>
-                    <p class="latest-meta">Today · 7:18 PM · MoonLit</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Category 3 -->
-            <div class="topic forum-row" data-title="Depression" data-description="A gentle space to discuss low mood, motivation, isolation, and small steps that feel doable." data-tags="Not alone, Small steps, Check-ins" data-latest-title="How do you get started when everything feels heavy?">
-              <div class="topic-main">
-                <div class="topic-ico" aria-hidden="true"><i class="fa-solid fa-cloud-rain"></i></div>
-                <div class="topic-text">
-                  <h2>Depression</h2>
-                  <p>A gentle space to discuss low mood, motivation, isolation, and small steps that feel doable.</p>
-                  <div class="tags">
-                    <span class="tag soft">Not alone</span>
-                    <span class="tag calm">Small steps</span>
-                    <span class="tag soft">Check-ins</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="metrics" aria-label="Category stats">
-                <div class="metric">
-                  <span class="label">Threads</span>
-                  <span class="value">6.9K</span>
-                </div>
-                <div class="metric">
-                  <span class="label">Messages</span>
-                  <span class="value">49K</span>
-                </div>
-              </div>
-
-              <a href="thread-depression.html" class="latest-link" aria-label="Open latest thread in Depression">
-                <div class="latest">
-                  <div class="avatar" aria-hidden="true">J</div>
-                  <div class="latest-text">
-                    <p class="latest-title">How do you get started when everything feels heavy?</p>
-                    <p class="latest-meta">Yesterday · 11:02 PM · JuniperJ</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Category 4 -->
-            <div class="topic forum-row" data-title="Self-Care & Coping Tools" data-description="Share habits, grounding techniques, routines, journaling prompts, and what actually works." data-tags="Tools, Grounding, Sleep" data-latest-title="3 grounding ideas that helped me this week">
-              <div class="topic-main">
-                <div class="topic-ico" aria-hidden="true"><i class="fa-solid fa-seedling"></i></div>
-                <div class="topic-text">
-                  <h2>Self-Care &amp; Coping Tools</h2>
-                  <p>Share habits, grounding techniques, routines, journaling prompts, and what actually works.</p>
-                  <div class="tags">
-                    <span class="tag green">Tools</span>
-                    <span class="tag calm">Grounding</span>
-                    <span class="tag soft">Sleep</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="metrics" aria-label="Category stats">
-                <div class="metric">
-                  <span class="label">Threads</span>
-                  <span class="value">9.7K</span>
-                </div>
-                <div class="metric">
-                  <span class="label">Messages</span>
-                  <span class="value">74K</span>
-                </div>
-              </div>
-
-              <a href="thread-self-care.html" class="latest-link" aria-label="Open latest thread in Self-Care & Coping Tools">
-                <div class="latest">
-                  <div class="avatar" aria-hidden="true">S</div>
-                  <div class="latest-text">
-                    <p class="latest-title">3 grounding ideas that helped me this week</p>
-                    <p class="latest-meta">Today · 4:44 PM · Solstice</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <!-- Category 5 -->
-            <div class="topic forum-row" data-title="Encouragement & Wins" data-description="Celebrate progress—big or tiny. This space is for hope, gratitude, and uplifting stories." data-tags="Hope, Milestones, Gratitude" data-latest-title="I asked for help today (and I’m proud)">
-              <div class="topic-main">
-                <div class="topic-ico" aria-hidden="true"><i class="fa-solid fa-hands-clapping"></i></div>
-                <div class="topic-text">
-                  <h2>Encouragement &amp; Wins</h2>
-                  <p>Celebrate progress—big or tiny. This space is for hope, gratitude, and uplifting stories.</p>
-                  <div class="tags">
-                    <span class="tag green">Hope</span>
-                    <span class="tag soft">Milestones</span>
-                    <span class="tag calm">Gratitude</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="metrics" aria-label="Category stats">
-                <div class="metric">
-                  <span class="label">Threads</span>
-                  <span class="value">4.1K</span>
-                </div>
-                <div class="metric">
-                  <span class="label">Messages</span>
-                  <span class="value">29K</span>
-                </div>
-              </div>
-
-              <a href="thread-wins.html" class="latest-link" aria-label="Open latest thread in Encouragement & Wins">
-                <div class="latest">
-                  <div class="avatar" aria-hidden="true">A</div>
-                  <div class="latest-text">
-                    <p class="latest-title">I asked for help today (and I’m proud)</p>
-                    <p class="latest-meta">Today · 1:07 PM · AuroraA</p>
-                  </div>
-                </div>
-              </a>
-            </div>
-
-          </div>
-
-          <!-- Sidebar -->
-          <aside class="side" aria-label="Forum guidance and actions">
-
-            <div class="panel" id="how-to-post">
-              <h3>How to post safely</h3>
-              <p>We want this to feel like a kind, calm room. Here’s what helps keep everyone safe.</p>
-              <ul class="checklist">
-                <li>Share only what you’re comfortable sharing. You can use a nickname.</li>
-                <li>Avoid posting personal contact info (phone, address, school name, etc.).</li>
-                <li>If you’re asking for advice, say what kind (comfort, tips, or perspectives).</li>
-                <li>Use a content label if your post includes sensitive topics.</li>
-              </ul>
-
-              <div class="mini-actions">
-                <script type="module">
-                  import { db, serverTimestamp, ensureAnonAuth, friendlyFirebaseError } from "./firebase-client.js";
-                  import {
-                    collection, doc, getCountFromServer, getDocs, query, orderBy, limit,
-                    addDoc, updateDoc, increment, writeBatch
-                  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-                  const forumsCol = collection(db, "forums");
-
-                  const els = {
-                    list: document.getElementById("topicList"),
-                    noResults: document.getElementById("noResults"),
-                    search: document.getElementById("searchInput"),
-                    category: document.getElementById("forumCategory"),
-
-                    addBtn: document.getElementById("addForumBtn"),
-                    replyBtn: document.getElementById("replyBtn"),
-
-                    addModal: document.getElementById("addModal"),
-                    replyModal: document.getElementById("replyModal"),
-
-                    newTitle: document.getElementById("newTitle"),
-                    newDesc: document.getElementById("newDesc"),
-                    newCat: document.getElementById("newCat"),
-                    addStatus: document.getElementById("addStatus"),
-                    createForumBtn: document.getElementById("createForumBtn"),
-
-                    selectedTitle: document.getElementById("selectedTitle"),
-                    replyText: document.getElementById("replyText"),
-                    replyStatus: document.getElementById("replyStatus"),
-                    postReplyBtn: document.getElementById("postReplyBtn"),
-                  };
-
-                  let forumsCache = [];
-                  let selectedForum = null;
-
-                  function esc(s){ return String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
-
-                  function openModal(which){
-                    document.body.classList.add("wpNoScroll");
-                    const modal = which === "add" ? els.addModal : els.replyModal;
-                    modal.classList.add("open");
-                    modal.setAttribute("aria-hidden", "false");
-                  }
-                  function closeModal(which){
-                    const modal = which === "add" ? els.addModal : els.replyModal;
-                    modal.classList.remove("open");
-                    modal.setAttribute("aria-hidden", "true");
-                    document.body.classList.remove("wpNoScroll");
-                  }
-
-                  document.addEventListener("click", (e) => {
-                    const close = e.target?.getAttribute?.("data-close");
-                    if (close === "add") closeModal("add");
-                    if (close === "reply") closeModal("reply");
-                  });
-
-                  function setSelected(f){
-                    selectedForum = f;
-                    els.replyBtn.disabled = !f;
-                    els.selectedTitle.textContent = f ? f.title : "—";
-                  }
-
-                  function render(){
-                    const qText = (els.search.value || "").trim().toLowerCase();
-                    const cat = els.category.value;
-
-                    const filtered = forumsCache.filter(f => {
-                      const inCat = (cat === "all") || (f.category === cat);
-                      if (!inCat) return false;
-                      if (!qText) return true;
-                      const hay = `${'${'}f.title${'}'} ${'${'}f.description${'}'} ${'${'}f.category${'}'}`.toLowerCase();
-                      return hay.includes(qText);
-                    });
-
-                    els.list.innerHTML = "";
-                    els.noResults.style.display = filtered.length ? "none" : "block";
-
-                    filtered.forEach(f => {
-                      const row = document.createElement("div");
-                      row.className = "wpRow" + (selectedForum?.id === f.id ? " selected" : "");
-                      row.tabIndex = 0;
-
-                      row.innerHTML = `
-                        <div>
-                          <div class="wpTopicTop">
-                            <div>
-                              <div class="wpTopicTitle">${'${'}esc(f.title)${'}'}</div>
-                              <div class="wpTopicDesc">${'${'}esc(f.description)${'}'}</div>
-                              <div class="wpPill">${'${'}esc(f.category)${'}'}</div>
-                            </div>
-                            <button class="wpMiniBtn" data-reply="${'${'}esc(f.id)${'}'}" type="button">
-                              <i class="fa-solid fa-reply"></i> Reply
-                            </button>
-                          </div>
-                        </div>
-                        <div class="wpReplies">${'${'}Number(f.replyCount || 0)${'}'}</div>
-                        <div class="wpLatest">${'${'}esc(f.latestLabel || "—")${'}'}</div>
-                      `;
-
-                      row.addEventListener("click", () => { setSelected(f); render(); });
-                      row.addEventListener("keydown", (ev) => {
-                        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); setSelected(f); render(); }
-                      });
-
-                      els.list.appendChild(row);
-                    });
-                  }
-
-                  async function seedDefaultsIfEmpty(){
-                    const countSnap = await getCountFromServer(forumsCol);
-                    if (countSnap.data().count > 0) return;
-
-                    const defaults = [
-                      { title:"Introduce Yourself", description:"New here? Share what brought you to YouMatter and what kind of support you’re looking for.", category:"General" },
-                      { title:"Anxiety & Stress", description:"Talk through anxious thoughts, school/work stress, panic symptoms, and strategies that help.", category:"Anxiety & Stress" },
-                      { title:"Depression", description:"A gentle space to discuss low mood, motivation, isolation, and small steps that feel doable.", category:"Depression" },
-                      { title:"Self-Care & Coping Tools", description:"Share habits, grounding techniques, routines, journaling prompts, and what actually works.", category:"Self-Care" },
-                      { title:"Encouragement & Wins", description:"Celebrate progress—big or tiny. This space is for hope, gratitude, and uplifting stories.", category:"Encouragement" },
-                    ];
-
-                    const batch = writeBatch(db);
-                    defaults.forEach(d => {
-                      const ref = doc(forumsCol); // auto-id
-                      batch.set(ref, {
-                        ...d,
-                        replyCount: 0,
-                        latestLabel: "No replies yet",
-                        createdAt: serverTimestamp(),
-                        lastActivityAt: serverTimestamp(),
-                      });
-                    });
-                    await batch.commit();
-                  }
-
-                  async function loadForums(){
-                    const snap = await getDocs(query(forumsCol, orderBy("lastActivityAt","desc"), limit(100)));
-                    forumsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    if (selectedForum){
-                      const still = forumsCache.find(f => f.id === selectedForum.id);
-                      selectedForum = still || null;
-                      els.replyBtn.disabled = !selectedForum;
-                      els.selectedTitle.textContent = selectedForum ? selectedForum.title : "—";
-                    }
-                    render();
-                  }
-
-                  els.search.addEventListener("input", render);
-                  els.category.addEventListener("change", render);
-
-                  els.addBtn.addEventListener("click", () => {
-                    els.addStatus.textContent = "";
-                    els.newTitle.value = "";
-                    els.newDesc.value = "";
-                    els.newCat.value = "General";
-                    openModal("add");
-                  });
-
-                  els.createForumBtn.addEventListener("click", async () => {
-                    els.addStatus.textContent = "";
-                    const title = els.newTitle.value.trim();
-                    const description = els.newDesc.value.trim();
-                    const category = els.newCat.value;
-
-                    if (!title || title.length < 3) { els.addStatus.textContent = "Title is too short."; return; }
-                    if (!description || description.length < 10) { els.addStatus.textContent = "Description is too short."; return; }
-
-                    try{
-                      await ensureAnonAuth();
-                      await addDoc(forumsCol, {
-                        title,
-                        description,
-                        category,
-                        replyCount: 0,
-                        latestLabel: "No replies yet",
-                        createdAt: serverTimestamp(),
-                        lastActivityAt: serverTimestamp(),
-                      });
-                      closeModal("add");
-                      await loadForums();
-                    }catch(err){
-                      console.error(err);
-                      els.addStatus.textContent = friendlyFirebaseError(err);
-                    }
-                  });
-
-                  els.replyBtn.addEventListener("click", () => {
-                    if (!selectedForum) return;
-                    els.replyStatus.textContent = "";
-                    els.replyText.value = "";
-                    els.selectedTitle.textContent = selectedForum.title;
-                    openModal("reply");
-                  });
-
-                  document.addEventListener("click", (e) => {
-                    const id = e.target?.closest?.("[data-reply]")?.getAttribute?.("data-reply");
-                    if (!id) return;
-                    const f = forumsCache.find(x => x.id === id);
-                    if (!f) return;
-                    setSelected(f);
-                    els.replyStatus.textContent = "";
-                    els.replyText.value = "";
-                    els.selectedTitle.textContent = f.title;
-                    openModal("reply");
-                  });
-
-                  els.postReplyBtn.addEventListener("click", async () => {
-                    els.replyStatus.textContent = "";
-                    const text = els.replyText.value.trim();
-                    if (!selectedForum) { els.replyStatus.textContent = "Select a forum first."; return; }
-                    if (!text || text.length < 2) { els.replyStatus.textContent = "Reply is too short."; return; }
-
-                    try{
-                      await ensureAnonAuth();
-                      const forumRef = doc(db, "forums", selectedForum.id);
-                      const repliesRef = collection(db, "forums", selectedForum.id, "replies");
-
-                      await addDoc(repliesRef, { text, createdAt: serverTimestamp() });
-                      await updateDoc(forumRef, {
-                        replyCount: increment(1),
-                        latestLabel: "Just now",
-                        lastActivityAt: serverTimestamp(),
-                      });
-
-                      closeModal("reply");
-                      await loadForums();
-                    }catch(err){
-                      console.error(err);
-                      els.replyStatus.textContent = friendlyFirebaseError(err);
-                    }
-                  });
-
-                  (async function(){
-                    await ensureAnonAuth();
-                    await seedDefaultsIfEmpty();
-                    await loadForums();
-                  })();
-                </script>
-
-          ta.value = "";
-          box.style.display = "none";
-          status.textContent = "Reply posted.";
-        } catch (e) {
-          console.error("Reply write failed:", e);
-          status.textContent = "Failed to post reply. Check console.";
-        }
-      });
-    });
-
-    // Live load replies for each post
-    document.querySelectorAll(".replies").forEach(div => {
-      const postId = div.dataset.postid;
-
-      const q = query(
-        collection(db, "forum_posts", postId, "replies"),
-        orderBy("createdAt", "asc")
-      );
-
-      onSnapshot(q, (snap) => {
-        div.innerHTML = "";
-        snap.forEach(r => {
-          const rep = r.data();
-          const p = document.createElement("div");
-          p.style.padding = "8px 0";
-          p.style.borderTop = "1px solid rgba(255,255,255,.08)";
-          p.innerHTML = `<div style="white-space:pre-wrap;">${escapeHtml(rep.text ?? "")}</div>`;
-          div.appendChild(p);
+    
+
+    
+
+    <!-- Scripts -->
+    <script type="module">
+      import { db, serverTimestamp, ensureAnonAuth, friendlyFirebaseError } from "./firebase-client.js";
+      import { collection, doc, getCountFromServer, getDocs, query, orderBy, limit, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+      const forumsCol = collection(db, "forums");
+      const els = {
+        list: document.getElementById("topicList"),
+        noResults: document.getElementById("noResults"),
+        search: document.getElementById("searchInput"),
+        addBtn: document.getElementById("addForumBtn"),
+        addModal: document.getElementById("addModal"),
+        newTitle: document.getElementById("newTitle"),
+        newDesc: document.getElementById("newDesc"),
+        addStatus: document.getElementById("addStatus"),
+        createForumBtn: document.getElementById("createForumBtn"),
+      };
+      function esc(s){ return String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+      function openModal(){ document.body.classList.add("wpNoScroll"); els.addModal.classList.add("open"); els.addModal.setAttribute("aria-hidden","false"); }
+      function closeModal(){ els.addModal.classList.remove("open"); els.addModal.setAttribute("aria-hidden","true"); document.body.classList.remove("wpNoScroll"); }
+      document.addEventListener("click", (e) => { if (e.target?.getAttribute?.("data-close")==="add") closeModal(); });
+      let forumsCache = [];
+      function render(){
+        const qText = (els.search.value || "").trim().toLowerCase();
+        const filtered = forumsCache.filter(f => {
+          if (!qText) return true;
+          const hay = `${'${'}f.title${'}'} ${'${'}f.description${'}'}`.toLowerCase();
+          return hay.includes(qText);
         });
-
-        if (snap.empty) {
-          div.innerHTML = `<div style="opacity:.6;">No replies yet.</div>`;
+        els.list.innerHTML = "";
+        els.noResults.style.display = filtered.length ? "none" : "block";
+        filtered.forEach(f => {
+          const row = document.createElement("div");
+          row.className = "wpRow";
+          row.tabIndex = 0;
+          row.innerHTML = `
+            <div>
+              <div class="wpTopicTop">
+                <div>
+                  <div class="wpTopicTitle">${'${'}esc(f.title)${'}'}</div>
+                  <div class="wpTopicDesc">${'${'}esc(f.description)${'}'}</div>
+                </div>
+              </div>
+            </div>
+            <div class="wpReplies">${'${'}Number(f.replyCount || 0)${'}'}</div>
+            <div class="wpLatest">${'${'}esc(f.latestLabel || "—")${'}'}</div>
+          `;
+          row.addEventListener("click", () => { window.location.href = `thread.html?forumId=${'${'}encodeURIComponent(f.id)${'}'}`; });
+          row.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); window.location.href = `thread.html?forumId=${'${'}encodeURIComponent(f.id)${'}'}`; }});
+          els.list.appendChild(row);
+        });
+      }
+      async function seedDefaultsIfEmpty(){
+        const countSnap = await getCountFromServer(forumsCol);
+        if (countSnap.data().count > 0) return;
+        const defaults = [
+          { title:"Introduce Yourself", description:"New here? Share what brought you to YouMatter and what kind of support you’re looking for." },
+          { title:"Anxiety & Stress", description:"Talk through anxious thoughts, school/work stress, panic symptoms, and strategies that help." },
+          { title:"Depression", description:"A gentle space to discuss low mood, motivation, isolation, and small steps that feel doable." },
+          { title:"Self-Care & Coping Tools", description:"Share habits, grounding techniques, routines, journaling prompts, and what actually works." },
+          { title:"Encouragement & Wins", description:"Celebrate progress—big or tiny. This space is for hope, gratitude, and uplifting stories." },
+        ];
+        for (const d of defaults){
+          await addDoc(forumsCol, { ...d, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
         }
+      }
+      async function loadForums(){
+        const snap = await getDocs(query(forumsCol, orderBy("lastActivityAt","desc"), limit(100)));
+        forumsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        render();
+      }
+      els.search.addEventListener("input", render);
+      els.addBtn.addEventListener("click", () => { els.addStatus.textContent = ""; els.newTitle.value = ""; els.newDesc.value = ""; openModal(); });
+      els.createForumBtn.addEventListener("click", async () => {
+        els.addStatus.textContent = "";
+        const title = els.newTitle.value.trim();
+        const description = els.newDesc.value.trim();
+        if (!title || title.length < 3) { els.addStatus.textContent = "Title is too short."; return; }
+        if (!description || description.length < 10) { els.addStatus.textContent = "Description is too short."; return; }
+        try{
+          await ensureAnonAuth();
+          await addDoc(forumsCol, { title, description, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
+          closeModal();
+          await loadForums();
+        }catch(err){ console.error(err); els.addStatus.textContent = friendlyFirebaseError(err); }
       });
-    });
-  }
+      (async function(){ await ensureAnonAuth(); await seedDefaultsIfEmpty(); await loadForums(); })();
+    </script>
 
-  (async function init() {
-    await loadForumPosts();
-    wireReplies();
-  })();
+  </main>
 
-  // Live search filtering
-  function filterForumList(query) {
-    const q = String(query || "").trim().toLowerCase();
-    const rows = document.querySelectorAll('.forum-row');
-    let shown = 0;
-    rows.forEach(row => {
-      if (!q) {
-        row.style.display = '';
-        shown++;
-        return;
-      }
-      const hay = [
-        row.getAttribute('data-title') || '',
-        row.getAttribute('data-description') || '',
-        row.getAttribute('data-tags') || '',
-        row.getAttribute('data-latest-title') || ''
-      ].join(' ').toLowerCase();
-      if (hay.includes(q)) {
-        row.style.display = '';
-        shown++;
-      } else {
-        row.style.display = 'none';
-      }
-    });
-    const empty = document.getElementById('forum-no-results');
-    if (empty) empty.style.display = shown ? 'none' : 'block';
-  }
-
-  const searchEl = document.getElementById('forum-search');
-  searchEl?.addEventListener('input', (e) => {
-    filterForumList(e.target.value);
-  });
-</script>
+  <script>
+    var navLinks = document.getElementById("navLinks");
+    function showMenu(){ navLinks.style.right = "0"; }
+    function hideMenu(){ navLinks.style.right = "-200px"; }
+  </script>
 
 </body>
 </html>
