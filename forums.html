@@ -695,16 +695,16 @@
             <div>
               <div class="wpTopicTop">
                 <div>
-                  <div class="wpTopicTitle">${'${'}esc(f.title)${'}'}</div>
-                  <div class="wpTopicDesc">${'${'}esc(f.description)${'}'}</div>
+                  <div class="wpTopicTitle">${esc(f.title)}</div>
+                  <div class="wpTopicDesc">${esc(f.description)}</div>
                 </div>
               </div>
             </div>
-            <div class="wpReplies">${'${'}Number(f.replyCount || 0)${'}'}</div>
-            <div class="wpLatest">${'${'}esc(f.latestLabel || "—")${'}'}</div>
+            <div class="wpReplies">${Number(f.replyCount || 0)}</div>
+            <div class="wpLatest">${esc(f.latestLabel || "—")}</div>
           `;
-          row.addEventListener("click", () => { window.location.href = `thread.html?forumId=${'${'}encodeURIComponent(f.id)${'}'}`; });
-          row.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); window.location.href = `thread.html?forumId=${'${'}encodeURIComponent(f.id)${'}'}`; }});
+          row.addEventListener("click", () => { window.location.href = `thread.html?forumId=${encodeURIComponent(f.id)}`; });
+          row.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); window.location.href = `thread.html?forumId=${encodeURIComponent(f.id)}`; }});
           els.list.appendChild(row);
         });
       }
