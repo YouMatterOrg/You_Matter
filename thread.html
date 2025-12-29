@@ -37,6 +37,8 @@
       </div>
 
       <div class="thread-shell">
+        <div id="forumMeta" class="message-meta"></div>
+
         <label for="author-name" class="post-form-label">Your name (optional):</label>
         <input id="author-name" class="input" type="text" placeholder="e.g., Skyfall" />
 
@@ -77,6 +79,7 @@
 
     const titleEl = document.getElementById('threadTitle');
     const subEl = document.getElementById('threadSub');
+    const metaEl = document.getElementById('forumMeta');
 
     const postBtn = document.getElementById('post-btn');
     const postText = document.getElementById('post-text');
@@ -90,13 +93,21 @@
       statusEl.style.color = ok ? "#166534" : "#b91c1c";
     }
 
+    function fmtDate(ts){
+      try {
+        return ts?.toDate?.() ? ts.toDate().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+      } catch { return ''; }
+    }
     async function loadForumHeader(){
-      if (!forumId){ titleEl.textContent = "Forum Thread"; subEl.textContent = ""; return; }
+      if (!forumId){ titleEl.textContent = "Forum Thread"; subEl.textContent = ""; metaEl.textContent = ""; return; }
       const forumRef = doc(db, "forums", forumId);
       const snap = await getDoc(forumRef);
       const d = snap.exists() ? snap.data() : null;
       titleEl.textContent = d?.title || "Forum Thread";
       subEl.textContent = d?.description || "";
+      const who = d?.authorName || 'Anonymous';
+      const when = fmtDate(d?.createdAt) || '';
+      metaEl.textContent = `Posted by ${who}${when ? ' · ' + when : ''}`;
     }
 
     async function createReply(text, displayName){

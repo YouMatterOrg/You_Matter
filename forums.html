@@ -630,6 +630,9 @@
           <button class="wpModalClose" type="button" data-close="add">×</button>
         </div>
         <div class="wpModalBody">
+          <label class="wpLabel" for="newAuthor">Your name (optional)</label>
+          <input id="newAuthor" class="wpInput" type="text" placeholder="e.g., Skyfall" maxlength="60" />
+
           <label class="wpLabel" for="newTitle">Forum title</label>
           <input id="newTitle" class="wpInput" type="text" placeholder="e.g., How to sleep better" maxlength="80" />
 
@@ -660,6 +663,7 @@
         search: document.getElementById("searchInput"),
         addBtn: document.getElementById("addForumBtn"),
         addModal: document.getElementById("addModal"),
+        newAuthor: document.getElementById("newAuthor"),
         newTitle: document.getElementById("newTitle"),
         newDesc: document.getElementById("newDesc"),
         addStatus: document.getElementById("addStatus"),
@@ -722,12 +726,13 @@
         });
       }
       els.search.addEventListener("input", render);
-      els.addBtn.addEventListener("click", () => { els.addStatus.textContent = ""; els.newTitle.value = ""; els.newDesc.value = ""; openModal(); });
+      els.addBtn.addEventListener("click", () => { els.addStatus.textContent = ""; els.newAuthor.value = ""; els.newTitle.value = ""; els.newDesc.value = ""; openModal(); });
       els.createForumBtn.addEventListener("click", async () => {
         if (creating) return; // prevent double-click duplicates
         creating = true;
         els.createForumBtn.disabled = true;
         els.addStatus.textContent = "";
+        const authorName = (els.newAuthor?.value || "").trim() || "Anonymous";
         const title = els.newTitle.value.trim();
         const description = els.newDesc.value.trim();
         if (!title || title.length < 3) { els.addStatus.textContent = "Title is too short."; creating=false; els.createForumBtn.disabled=false; return; }
@@ -741,7 +746,7 @@
             els.addStatus.textContent = "A forum with this title already exists.";
             creating=false; els.createForumBtn.disabled=false; return;
           }
-          await setDoc(forumRef, { title, description, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
+          await setDoc(forumRef, { title, description, authorName, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
           closeModal();
         }catch(err){ console.error(err); els.addStatus.textContent = friendlyFirebaseError(err); }
         finally{
