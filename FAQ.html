@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | YouMatter</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="forums.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+  <section class="sub-header">
+    <nav>
+      <a href="index.html"><img src="images/logo.png" alt="YouMatter"></a>
+      <div class="nav-links" id="navLinks">
+        <i class="fa fa-times" onclick="hideMenu()"></i>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+
+          <li class="has-dropdown">
+            <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+            <ul class="dropdown">
+              <li><a href="about-youmatter.html">About You Matter</a></li>
+              <li><a href="about-who-we-are.html">Who We Are</a></li>
+              <li><a href="about-why-we-started.html">Why We Started</a></li>
+              <li><a href="about-what-we-do.html">What We Do</a></li>
+            </ul>
+          </li>
+
+          <li class="has-dropdown">
+            <a href="course.html">SERVICES <i class="fa-solid fa-angle-down"></i></a>
+            <ul class="dropdown">
+              <li><a href="disorders.html">Disorders</a></li>
+              <li><a href="appointment.html">Appointment</a></li>
+              <li><a href="check-in.html">Check-in</a></li>
+              <li><a href="get-help.html">Get Help</a></li>
+            </ul>
+          </li>
+
+          <li><a href="blog.html">BLOG</a></li>
+          <li><a href="testimonials.html">TESTIMONIALS</a></li>
+          <li class="has-dropdown">
+            <a href="forums.html">FORUMS <i class="fa-solid fa-angle-down"></i></a>
+            <ul class="dropdown">
+              <li><a href="forums.html">Forums</a></li>
+              <li><a href="FAQ.html" aria-current="page">FAQ</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <h1>Frequently Asked Questions</h1>
+  </section>
+
+  <section class="content-section">
+    <div class="content-container">
+      <div class="thread-shell">
+        <p class="wpMuted" style="margin-bottom:16px;">Answers to common questions about using YouMatter and the community forums.</p>
+
+        <div class="messages-list">
+          <details class="message">
+            <summary class="message-header">How do I post in the forums?</summary>
+            <div class="message-body">Open <a href="forums.html">Forums</a>, choose a topic, and use the reply form. You can post with a display name or anonymously.</div>
+          </details>
+
+          <details class="message">
+            <summary class="message-header">Is my information private?</summary>
+            <div class="message-body">We only store what you submit to a post or reply. Avoid sharing sensitive personal information. See <a href="about-what-we-do.html">What We Do</a> for more.</div>
+          </details>
+
+          <details class="message">
+            <summary class="message-header">Where can I get immediate help?</summary>
+            <div class="message-body">Visit <a href="get-help.html">Get Help</a> for crisis resources and support options.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="menu.js"></script>
+</body>
+</html>
