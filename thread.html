@@ -37,7 +37,11 @@
       </div>
 
       <div class="thread-shell">
-        <div id="forumMeta" class="message-meta"></div>
+        <div class="thread-intro">
+          <h2 id="forumTitleInline" class="thread-inline-title"></h2>
+          <p id="forumDescInline" class="thread-inline-desc"></p>
+          <div id="forumMeta" class="message-meta"></div>
+        </div>
 
         <label for="author-name" class="post-form-label">Your name (optional):</label>
         <input id="author-name" class="input" type="text" placeholder="e.g., Skyfall" />
@@ -80,6 +84,8 @@
     const titleEl = document.getElementById('threadTitle');
     const subEl = document.getElementById('threadSub');
     const metaEl = document.getElementById('forumMeta');
+    const titleInlineEl = document.getElementById('forumTitleInline');
+    const descInlineEl = document.getElementById('forumDescInline');
 
     const postBtn = document.getElementById('post-btn');
     const postText = document.getElementById('post-text');
@@ -105,6 +111,8 @@
       const d = snap.exists() ? snap.data() : null;
       titleEl.textContent = d?.title || "Forum Thread";
       subEl.textContent = d?.description || "";
+      titleInlineEl.textContent = d?.title || "";
+      descInlineEl.textContent = d?.description || "";
       const who = d?.authorName || 'Anonymous';
       const when = fmtDate(d?.createdAt) || '';
       metaEl.textContent = `Posted by ${who}${when ? ' · ' + when : ''}`;
