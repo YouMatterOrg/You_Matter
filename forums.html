@@ -700,20 +700,6 @@
           els.list.appendChild(row);
         });
       }
-      async function seedDefaultsIfEmpty(){
-        const countSnap = await getCountFromServer(forumsCol);
-        if (countSnap.data().count > 0) return;
-        const defaults = [
-          { title:"Introduce Yourself", description:"New here? Share what brought you to YouMatter and what kind of support you’re looking for." },
-          { title:"Anxiety & Stress", description:"Talk through anxious thoughts, school/work stress, panic symptoms, and strategies that help." },
-          { title:"Depression", description:"A gentle space to discuss low mood, motivation, isolation, and small steps that feel doable." },
-          { title:"Self-Care & Coping Tools", description:"Share habits, grounding techniques, routines, journaling prompts, and what actually works." },
-          { title:"Encouragement & Wins", description:"Celebrate progress—big or tiny. This space is for hope, gratitude, and uplifting stories." },
-        ];
-        for (const d of defaults){
-          await addDoc(forumsCol, { ...d, replyCount: 0, latestLabel: "No replies yet", createdAt: serverTimestamp(), lastActivityAt: serverTimestamp() });
-        }
-      }
       async function loadForums(){
         const snap = await getDocs(query(forumsCol, orderBy("lastActivityAt","desc"), limit(100)));
         forumsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -734,7 +720,7 @@
           await loadForums();
         }catch(err){ console.error(err); els.addStatus.textContent = friendlyFirebaseError(err); }
       });
-      (async function(){ await ensureAnonAuth(); await seedDefaultsIfEmpty(); await loadForums(); })();
+      (async function(){ await ensureAnonAuth(); await loadForums(); })();
     </script>
 
   </main>
