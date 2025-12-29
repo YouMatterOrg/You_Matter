@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forum Thread | YouMatter</title>
+  <title>Connect Thread | YouMatter</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="forums.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,9 +42,9 @@
           <li><a href="blog.html">BLOG</a></li>
           <li><a href="testimonials.html">TESTIMONIALS</a></li>
           <li class="has-dropdown">
-            <a href="forums.html">FORUMS <i class="fa-solid fa-angle-down"></i></a>
+            <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
             <ul class="dropdown">
-              <li><a href="forums.html">Forums</a></li>
+              <li><a href="forums.html">Connect</a></li>
               <li><a href="FAQ.html">FAQ</a></li>
             </ul>
           </li>
@@ -52,7 +52,7 @@
       </div>
       <i class="fa fa-bars" onclick="showMenu()"></i>
     </nav>
-    <h1 id="threadTitle">Forum Thread</h1>
+    <h1 id="threadTitle">Connect Thread</h1>
   </section>
 
   <section class="content-section">
@@ -60,7 +60,7 @@
       <div class="thread-header">
         <a href="forums.html" class="back-link">
           <i class="fa-solid fa-arrow-left"></i>
-          <span>Back to Forums</span>
+          <span>Back to Connect</span>
         </a>
         <p id="threadSub" class="thread-sub"></p>
       </div>
@@ -135,7 +135,7 @@
     }
     function wireForumLive(){
       if (!forumId){
-        titleEl.textContent = "Forum Thread";
+        titleEl.textContent = "Connect Thread";
         subEl.textContent = "";
         metaEl.textContent = "";
         return;
@@ -146,7 +146,7 @@
       const forumRef = doc(db, "forums", forumId);
       onSnapshot(forumRef, (snap) => {
         if (!snap.exists()){
-          titleEl.textContent = "Forum Thread";
+          titleEl.textContent = "Connect Thread";
           subEl.textContent = "";
           titleInlineEl.textContent = "";
           descInlineEl.textContent = "";
@@ -154,7 +154,7 @@
           return;
         }
         const d = snap.data();
-        titleEl.textContent = d?.title || "Forum Thread";
+        titleEl.textContent = d?.title || "Connect Thread";
         subEl.textContent = d?.description || "";
         titleInlineEl.textContent = d?.title || "";
         descInlineEl.textContent = d?.description || "";
