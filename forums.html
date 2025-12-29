@@ -78,37 +78,12 @@
         <div class="wpTabs">
           <button class="wpTab active" data-tab="all">All topics</button>
           <button class="wpTab" data-tab="open">Open topics with no replies</button>
-          <button class="wpTab" data-tab="popular">Most popular topics</button>
+          <button class="wpTab wpAddBtn" data-tab="add">Add a post</button>
         </div>
       </div>
     </header>
   
-      <section class="wpQuickPost" aria-label="Quick Post">
-        <h2 class="wpQPTitle">Quick Post</h2>
-        <div class="wpQPRow">
-          <label for="quickCategory" class="wpQPLabel">Forum</label>
-          <select id="quickCategory" class="wpQPSelect">
-            <option value="">Choose a forum…</option>
-            <option value="introduce">Introduce Yourself</option>
-            <option value="anxiety">Anxiety &amp; Stress</option>
-            <option value="depression">Depression</option>
-            <option value="selfcare">Self-Care &amp; Coping Tools</option>
-            <option value="wins">Encouragement &amp; Wins</option>
-          </select>
-        </div>
-        <div class="wpQPRow">
-          <label for="quickAuthor" class="wpQPLabel">Your name</label>
-          <input id="quickAuthor" class="wpQPInput" type="text" placeholder="Optional" />
-        </div>
-        <div class="wpQPRow">
-          <label for="quickText" class="wpQPLabel">Message</label>
-          <textarea id="quickText" class="wpQPTextarea" rows="4" placeholder="Share a thought, question, or update..."></textarea>
-        </div>
-        <div class="wpQPActions">
-          <button id="quickPostBtn" class="btn btn-primary" type="button">Post</button>
-          <span id="quickPostStatus" class="wpQPStatus"></span>
-        </div>
-      </section>
+    
 
     <section class="wpTable">
       <div class="wpTableHead">
@@ -225,6 +200,10 @@
 
   tabs.forEach(t => {
     t.addEventListener("click", () => {
+      if (t.dataset.tab === 'add') {
+        // Modal opens via separate script; do not toggle filters
+        return;
+      }
       tabs.forEach(x => x.classList.remove("active"));
       t.classList.add("active");
       activeTab = t.dataset.tab;
@@ -234,6 +213,42 @@
 
   applyFilter();
   </script>
+  
+  <!-- Add Post Modal -->
+  <div id="postModal" class="wpModal" aria-hidden="true">
+    <div class="wpModalBackdrop" data-close="true"></div>
+    <div class="wpModalDialog" role="dialog" aria-modal="true" aria-labelledby="postModalTitle">
+      <div class="wpModalHead">
+        <h2 id="postModalTitle">Add a Post</h2>
+        <button id="postModalClose" class="wpModalClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="wpModalBody">
+        <div class="wpQPRow">
+          <label for="modalCategory" class="wpQPLabel">Forum</label>
+          <select id="modalCategory" class="wpQPSelect">
+            <option value="">Choose a forum…</option>
+            <option value="introduce">Introduce Yourself</option>
+            <option value="anxiety">Anxiety &amp; Stress</option>
+            <option value="depression">Depression</option>
+            <option value="selfcare">Self-Care &amp; Coping Tools</option>
+            <option value="wins">Encouragement &amp; Wins</option>
+          </select>
+        </div>
+        <div class="wpQPRow">
+          <label for="modalAuthor" class="wpQPLabel">Your name</label>
+          <input id="modalAuthor" class="wpQPInput" type="text" placeholder="Optional" />
+        </div>
+        <div class="wpQPRow">
+          <label for="modalText" class="wpQPLabel">Message</label>
+          <textarea id="modalText" class="wpQPTextarea" rows="5" placeholder="Share a thought, question, or update..."></textarea>
+        </div>
+      </div>
+      <div class="wpModalActions">
+        <button id="postModalSubmit" class="btn btn-primary" type="button">Post</button>
+        <span id="postModalStatus" class="wpQPStatus"></span>
+      </div>
+    </div>
+  </div>
 
   <script type="module">
     import { db, ensureAnonAuth, serverTimestamp, friendlyFirebaseError } from "./firebase-client.js";
@@ -247,26 +262,35 @@
       wins: 'wins'
     };
 
-    const btn = document.getElementById('quickPostBtn');
-    const catEl = document.getElementById('quickCategory');
-    const authorEl = document.getElementById('quickAuthor');
-    const textEl = document.getElementById('quickText');
-    const statusEl = document.getElementById('quickPostStatus');
+    const modal = document.getElementById('postModal');
+    const btnOpen = document.querySelector('.wpAddBtn');
+    const btnClose = document.getElementById('postModalClose');
+    const btnSubmit = document.getElementById('postModalSubmit');
+    const catEl = document.getElementById('modalCategory');
+    const authorEl = document.getElementById('modalAuthor');
+    const textEl = document.getElementById('modalText');
+    const statusEl = document.getElementById('postModalStatus');
 
     function setStatus(msg, ok=false){
-      if (!statusEl) return;
       statusEl.textContent = msg;
       statusEl.style.color = ok ? '#166534' : '#b91c1c';
     }
 
-    btn?.addEventListener('click', async () => {
+    function openModal(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+    function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); setStatus(''); }
+
+    btnOpen?.addEventListener('click', () => openModal());
+    btnClose?.addEventListener('click', () => closeModal());
+    modal.addEventListener('click', (e) => { if (e.target && e.target.dataset && e.target.dataset.close) closeModal(); });
+
+    btnSubmit?.addEventListener('click', async () => {
       const cat = (catEl.value || '').trim();
       const tid = THREAD_ID[cat];
       const text = (textEl.value || '').trim();
       const name = (authorEl.value || '').trim() || 'Anonymous';
       if (!tid) { setStatus('Please choose a forum.'); return; }
       if (!text) { setStatus('Please write something before posting.'); return; }
-      btn.disabled = true;
+      btnSubmit.disabled = true;
       setStatus('Posting...', true);
       try {
         await ensureAnonAuth();
@@ -277,11 +301,12 @@
         });
         textEl.value = '';
         setStatus('Posted! Your message appears in that forum.', true);
+        closeModal();
       } catch (e) {
-        console.error('Quick post failed:', e);
+        console.error('Post failed:', e);
         setStatus(friendlyFirebaseError(e));
       } finally {
-        btn.disabled = false;
+        btnSubmit.disabled = false;
       }
     });
   </script>

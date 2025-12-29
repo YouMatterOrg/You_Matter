@@ -192,14 +192,22 @@ main { padding: 32px 16px 60px; }
   .wpReplies, .wpLatest { text-align: left; margin-top: 8px; }
 }
 
-/* Quick Post section */
-.wpQuickPost { max-width: 1000px; margin: 0 auto 16px; background: #fff; border: 1px solid var(--color-border); border-radius: 14px; box-shadow: var(--shadow); padding: 16px; }
-.wpQPTitle { margin: 0 0 12px; font-size: 1.2rem; font-weight: 800; color: var(--color-primary); }
+/* Modal for Add a Post */
+.wpModal { position: fixed; inset: 0; display: none; }
+.wpModal.open { display: block; }
+.wpModalBackdrop { position: absolute; inset: 0; background: rgba(2,6,23,0.55); }
+.wpModalDialog { position: relative; max-width: 640px; margin: 8vh auto; background: #fff; border: 1px solid var(--color-border); border-radius: 14px; box-shadow: 0 20px 40px rgba(2,6,23,0.35); overflow: hidden; }
+.wpModalHead { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--color-border); }
+.wpModalHead h2 { margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--color-primary); }
+.wpModalClose { border: none; background: transparent; font-size: 1.4rem; line-height: 1; cursor: pointer; color: var(--color-muted); }
+.wpModalBody { padding: 14px 16px; }
+.wpModalActions { padding: 14px 16px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+
+/* Reuse form row styles in modal */
 .wpQPRow { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
 .wpQPLabel { width: 120px; color: var(--color-muted); padding-top: 6px; }
 .wpQPInput, .wpQPSelect { flex: 1; border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 12px; font-size: .95rem; }
 .wpQPTextarea { flex: 1; border: 1px solid var(--color-border); border-radius: 12px; padding: 10px 12px; font-size: .95rem; resize: vertical; }
-.wpQPActions { display: flex; align-items: center; gap: 10px; justify-content: flex-end; margin-top: 8px; }
 .wpQPStatus { font-weight: 600; color: var(--color-muted); }
 
 @media (max-width: 700px) {
