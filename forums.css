@@ -1,3 +1,6 @@
+/* Hide legacy content section when new WP markup is present */
+.content-section{ display:none; }
+.wpShell{ display:none; }
 /* ===== WordPress-style override skin (append only) ===== */
 
 .wpWrap{

@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-  <style>
+  <!--
     :root{
       --ink: #0b1220;
       --muted: #475569;
@@ -541,7 +541,7 @@
       .forum-badges{ justify-content:flex-start; }
       .crisis-actions{ flex-wrap: wrap; justify-content:flex-end; }
     }
-  </style>
+  -->
 </head>
 
 <body>
@@ -588,6 +588,109 @@
 
   <!-- MAIN CONTENT -->
   <main class="wpWrap">
+    <div class="wpHead">
+      <p class="wpKicker">A supportive space to share experiences, ask questions, and connect.</p>
+      <h1 class="wpTitle">Mental Health Forum</h1>
+
+      <div class="wpSearch" role="search" aria-label="Search forums">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input id="searchInput" type="text" placeholder="Search questions, keywords, topics" />
+      </div>
+
+      <div class="wpTopRow">
+        <div class="wpLeft">
+          <span class="wpMuted">All forums</span>
+          <select id="forumCategory">
+            <option value="all">All forums</option>
+            <option value="General">General</option>
+            <option value="Anxiety & Stress">Anxiety & Stress</option>
+            <option value="Depression">Depression</option>
+            <option value="Self-Care">Self-Care</option>
+            <option value="Encouragement">Encouragement</option>
+          </select>
+        </div>
+
+        <div class="wpActions">
+          <button id="addForumBtn" class="wpBtn wpBtnPrimary" type="button">
+            <i class="fa-solid fa-plus"></i> Add Forum
+          </button>
+          <button id="replyBtn" class="wpBtn" type="button" disabled>
+            <i class="fa-solid fa-reply"></i> Reply
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section class="wpTable" aria-label="Forum list">
+      <div class="wpTableHead">
+        <div>Topic</div>
+        <div class="wpColReplies">Replies</div>
+        <div>Latest activity</div>
+      </div>
+
+      <div id="topicList"></div>
+      <div id="noResults" class="wpNoResults" style="display:none;">No results.</div>
+    </section>
+
+    <!-- Add Forum Modal -->
+    <div id="addModal" class="wpModal" aria-hidden="true">
+      <div class="wpModalBackdrop" data-close="add"></div>
+      <div class="wpModalDialog" role="dialog" aria-modal="true" aria-label="Add forum">
+        <div class="wpModalHead">
+          <h2>Add a forum</h2>
+          <button class="wpModalClose" type="button" data-close="add">×</button>
+        </div>
+        <div class="wpModalBody">
+          <label class="wpLabel" for="newTitle">Forum title</label>
+          <input id="newTitle" class="wpInput" type="text" placeholder="e.g., How to sleep better" maxlength="80" />
+
+          <label class="wpLabel" for="newDesc">Short description</label>
+          <input id="newDesc" class="wpInput" type="text" placeholder="One sentence about what this forum is for..." maxlength="140" />
+
+          <label class="wpLabel" for="newCat">Category</label>
+          <select id="newCat" class="wpInput">
+            <option value="General">General</option>
+            <option value="Anxiety & Stress">Anxiety & Stress</option>
+            <option value="Depression">Depression</option>
+            <option value="Self-Care">Self-Care</option>
+            <option value="Encouragement">Encouragement</option>
+          </select>
+
+          <p id="addStatus" class="wpStatus"></p>
+        </div>
+        <div class="wpModalActions">
+          <button class="wpBtn" type="button" data-close="add">Cancel</button>
+          <button id="createForumBtn" class="wpBtn wpBtnPrimary" type="button">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="wpModal" aria-hidden="true">
+      <div class="wpModalBackdrop" data-close="reply"></div>
+      <div class="wpModalDialog" role="dialog" aria-modal="true" aria-label="Reply to forum">
+        <div class="wpModalHead">
+          <h2>Reply</h2>
+          <button class="wpModalClose" type="button" data-close="reply">×</button>
+        </div>
+        <div class="wpModalBody">
+          <div class="wpSelectedMeta">
+            <div class="wpSelectedLabel">Replying to</div>
+            <div id="selectedTitle" class="wpSelectedTitle">—</div>
+          </div>
+
+          <label class="wpLabel" for="replyText">Your reply</label>
+          <textarea id="replyText" class="wpInput" rows="4" placeholder="Write something supportive…"></textarea>
+
+          <p id="replyStatus" class="wpStatus"></p>
+        </div>
+        <div class="wpModalActions">
+          <button class="wpBtn" type="button" data-close="reply">Cancel</button>
+          <button id="postReplyBtn" class="wpBtn wpBtnPrimary" type="button">Post Reply</button>
+        </div>
+      </div>
+    </div>
+
     <div class="wpShell">
     <section class="content-section">
       <div class="content-container">
@@ -886,242 +989,244 @@
               </ul>
 
               <div class="mini-actions">
-                <a class="btn btn-quiet" href="#forum-rules"><i class="fa-solid fa-scroll"></i> Forum rules</a>
-                <a class="btn btn-primary" href="new-post.html"><i class="fa-solid fa-plus"></i> Start a post</a>
-              </div>
-            </div>
+                <script type="module">
+                  import { db, serverTimestamp, ensureAnonAuth, friendlyFirebaseError } from "./firebase-client.js";
+                  import {
+                    collection, doc, getCountFromServer, getDocs, query, orderBy, limit,
+                    addDoc, updateDoc, increment, writeBatch
+                  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-            <div class="panel">
-              <h3>Support reactions</h3>
-              <p>Instead of “likes,” use supportive reactions to show care without pressure.</p>
-              <div class="reactions" role="group" aria-label="Support reactions">
-                <button class="react" type="button"><i class="fa-solid fa-heart"></i> Support</button>
-                <button class="react blue" type="button"><i class="fa-solid fa-ear-listen"></i> I hear you</button>
-                <button class="react green" type="button"><i class="fa-solid fa-seedling"></i> Hope</button>
-              </div>
-              <p style="margin-top:10px; font-size:0.82rem; color:#64748b;">
-                Tip: reactions should never be used to judge or rank someone’s pain.
-              </p>
-            </div>
+                  const forumsCol = collection(db, "forums");
 
-            <div class="panel">
-              <h3>Report a concern</h3>
-              <p>If you see harassment, unsafe advice, or content that feels harmful, please report it. We respond with care.</p>
-              <div class="mini-actions">
-                <a class="btn btn-quiet" href="get-help.html"><i class="fa-solid fa-triangle-exclamation"></i> Safety resources</a>
-                <a class="btn btn-primary" href="report.html"><i class="fa-solid fa-flag"></i> Report</a>
-              </div>
-            </div>
+                  const els = {
+                    list: document.getElementById("topicList"),
+                    noResults: document.getElementById("noResults"),
+                    search: document.getElementById("searchInput"),
+                    category: document.getElementById("forumCategory"),
 
-          </aside>
+                    addBtn: document.getElementById("addForumBtn"),
+                    replyBtn: document.getElementById("replyBtn"),
 
-        </div>
+                    addModal: document.getElementById("addModal"),
+                    replyModal: document.getElementById("replyModal"),
 
-        <!-- Rules -->
-        <section id="forum-rules" class="rules-wrap" aria-label="Forum rules and guidelines">
-          <div class="rules-head">
-            <h3>Forum Rules &amp; Guidelines</h3>
-            <a class="btn btn-quiet" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">
-              <i class="fa-solid fa-arrow-up"></i> Back to top
-            </a>
-          </div>
+                    newTitle: document.getElementById("newTitle"),
+                    newDesc: document.getElementById("newDesc"),
+                    newCat: document.getElementById("newCat"),
+                    addStatus: document.getElementById("addStatus"),
+                    createForumBtn: document.getElementById("createForumBtn"),
 
-          <div class="rules-body">
-            <p>These guidelines exist to keep the forum supportive, respectful, and safe for everyone.</p>
-            <ol class="rules-list">
-              <li><strong>Respect everyone:</strong> No harassment, hate speech, threats, or bullying.</li>
-              <li><strong>Be supportive:</strong> Offer kindness, not judgment. Avoid shaming language.</li>
-              <li><strong>No dangerous instructions:</strong> Do not share methods for self-harm, disordered eating, or violence.</li>
-              <li><strong>Protect privacy:</strong> Don’t post personal identifying info (yours or others).</li>
-              <li><strong>Not a substitute for professional care:</strong> You can share experiences, but don’t diagnose or prescribe.</li>
-              <li><strong>Use content labels when needed:</strong> Add “TW” for sensitive topics so others can choose what to read.</li>
-            </ol>
-            <p style="margin-top:10px;">
-              If you’re in immediate danger, please contact emergency services in your area. In the U.S., call or text <strong>988</strong>.
-            </p>
-          </div>
-        </section>
+                    selectedTitle: document.getElementById("selectedTitle"),
+                    replyText: document.getElementById("replyText"),
+                    replyStatus: document.getElementById("replyStatus"),
+                    postReplyBtn: document.getElementById("postReplyBtn"),
+                  };
 
-      </div>
-    </div>
-  </section>
-    </div>
-  </main>
+                  let forumsCache = [];
+                  let selectedForum = null;
 
-  <!-- FOOTER (kept from your layout) -->
-  <section class="footer">
-    <h4>About Us</h4>
-    <p>Built with purpose.</p>
-    <div class="icons">
-      <i class="fab fa-facebook-f"></i>
-      <i class="fab fa-twitter"></i>
-      <i class="fab fa-instagram"></i>
-      <i class="fab fa-linkedin-in"></i>
-    </div>
-    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
-  </section>
+                  function esc(s){ return String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
 
-  <script src="menu.js"></script>
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    query,
-    getDocs,
-    orderBy,
-    addDoc,
-    serverTimestamp,
-    onSnapshot
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+                  function openModal(which){
+                    document.body.classList.add("wpNoScroll");
+                    const modal = which === "add" ? els.addModal : els.replyModal;
+                    modal.classList.add("open");
+                    modal.setAttribute("aria-hidden", "false");
+                  }
+                  function closeModal(which){
+                    const modal = which === "add" ? els.addModal : els.replyModal;
+                    modal.classList.remove("open");
+                    modal.setAttribute("aria-hidden", "true");
+                    document.body.classList.remove("wpNoScroll");
+                  }
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
-    authDomain: "youmatter-46c43.firebaseapp.com",
-    projectId: "youmatter-46c43",
-    storageBucket: "youmatter-46c43.firebasestorage.app",
-    messagingSenderId: "971089399934",
-    appId: "1:971089399934:web:2d8e0a2988b1938f46082f"
-  };
+                  document.addEventListener("click", (e) => {
+                    const close = e.target?.getAttribute?.("data-close");
+                    if (close === "add") closeModal("add");
+                    if (close === "reply") closeModal("reply");
+                  });
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-  signInAnonymously(auth).catch(e => console.error("Anonymous auth failed:", e));
+                  function setSelected(f){
+                    selectedForum = f;
+                    els.replyBtn.disabled = !f;
+                    els.selectedTitle.textContent = f ? f.title : "—";
+                  }
 
-  // HTML escape helper
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
+                  function render(){
+                    const qText = (els.search.value || "").trim().toLowerCase();
+                    const cat = els.category.value;
 
-  async function loadForumPosts() {
-    const forumPostsDiv = document.getElementById("forum-posts");
-    forumPostsDiv.innerHTML = "<!-- Firestore posts load here -->";
+                    const filtered = forumsCache.filter(f => {
+                      const inCat = (cat === "all") || (f.category === cat);
+                      if (!inCat) return false;
+                      if (!qText) return true;
+                      const hay = `${'${'}f.title${'}'} ${'${'}f.description${'}'} ${'${'}f.category${'}'}`.toLowerCase();
+                      return hay.includes(qText);
+                    });
 
-    const q = query(
-      collection(db, "forum_posts"),
-      orderBy("createdAt", "desc")
-    );
-    const snapshot = await getDocs(q);
+                    els.list.innerHTML = "";
+                    els.noResults.style.display = filtered.length ? "none" : "block";
 
-    snapshot.forEach((docSnap) => {
-      const postId = docSnap.id;
-      const p = docSnap.data();
+                    filtered.forEach(f => {
+                      const row = document.createElement("div");
+                      row.className = "wpRow" + (selectedForum?.id === f.id ? " selected" : "");
+                      row.tabIndex = 0;
 
-      const title = p.title ?? "Untitled";
-      const body = p.body ?? p.content ?? p.text ?? "";
-      const preview = body.length > 120 ? body.slice(0, 120) + "…" : body;
-      const category = p.category ?? "";
-      const threads = p.threads ?? 0;
-      const messages = p.messages ?? 0;
+                      row.innerHTML = `
+                        <div>
+                          <div class="wpTopicTop">
+                            <div>
+                              <div class="wpTopicTitle">${'${'}esc(f.title)${'}'}</div>
+                              <div class="wpTopicDesc">${'${'}esc(f.description)${'}'}</div>
+                              <div class="wpPill">${'${'}esc(f.category)${'}'}</div>
+                            </div>
+                            <button class="wpMiniBtn" data-reply="${'${'}esc(f.id)${'}'}" type="button">
+                              <i class="fa-solid fa-reply"></i> Reply
+                            </button>
+                          </div>
+                        </div>
+                        <div class="wpReplies">${'${'}Number(f.replyCount || 0)${'}'}</div>
+                        <div class="wpLatest">${'${'}esc(f.latestLabel || "—")${'}'}</div>
+                      `;
 
-      const row = document.createElement("div");
-      row.className = "topic forum-row";
-      row.setAttribute("data-title", title);
-      row.setAttribute("data-description", preview);
-      row.setAttribute("data-tags", category);
-      row.setAttribute("data-latest-title", title);
+                      row.addEventListener("click", () => { setSelected(f); render(); });
+                      row.addEventListener("keydown", (ev) => {
+                        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); setSelected(f); render(); }
+                      });
 
-      row.innerHTML = `
-        <div class="topic-main">
-          <div class="topic-ico" aria-hidden="true"><i class="fa-regular fa-comments"></i></div>
-          <div class="topic-text">
-            <h2><a href="post.html?id=${postId}">${escapeHtml(title)}</a></h2>
-            <p>${escapeHtml(preview)}</p>
+                      els.list.appendChild(row);
+                    });
+                  }
 
-            <div class="topic-actions">
-              <button class="reply-btn btn-primary" data-postid="${postId}">Reply</button>
-              <span class="reply-status" data-postid="${postId}"></span>
-            </div>
+                  async function seedDefaultsIfEmpty(){
+                    const countSnap = await getCountFromServer(forumsCol);
+                    if (countSnap.data().count > 0) return;
 
-            <div class="reply-box" data-postid="${postId}">
-              <textarea class="reply-text" data-postid="${postId}" rows="3"></textarea>
-              <div class="reply-actions">
-                <button class="reply-submit btn-primary" data-postid="${postId}">Post Reply</button>
-                <button class="reply-cancel btn" data-postid="${postId}">Cancel</button>
-              </div>
-            </div>
+                    const defaults = [
+                      { title:"Introduce Yourself", description:"New here? Share what brought you to YouMatter and what kind of support you’re looking for.", category:"General" },
+                      { title:"Anxiety & Stress", description:"Talk through anxious thoughts, school/work stress, panic symptoms, and strategies that help.", category:"Anxiety & Stress" },
+                      { title:"Depression", description:"A gentle space to discuss low mood, motivation, isolation, and small steps that feel doable.", category:"Depression" },
+                      { title:"Self-Care & Coping Tools", description:"Share habits, grounding techniques, routines, journaling prompts, and what actually works.", category:"Self-Care" },
+                      { title:"Encouragement & Wins", description:"Celebrate progress—big or tiny. This space is for hope, gratitude, and uplifting stories.", category:"Encouragement" },
+                    ];
 
-            <div class="replies" data-postid="${postId}"></div>
+                    const batch = writeBatch(db);
+                    defaults.forEach(d => {
+                      const ref = doc(forumsCol); // auto-id
+                      batch.set(ref, {
+                        ...d,
+                        replyCount: 0,
+                        latestLabel: "No replies yet",
+                        createdAt: serverTimestamp(),
+                        lastActivityAt: serverTimestamp(),
+                      });
+                    });
+                    await batch.commit();
+                  }
 
-            <div class="tags">
-              ${category ? `<span class="tag soft">${escapeHtml(category)}</span>` : ""}
-            </div>
-          </div>
-        </div>
+                  async function loadForums(){
+                    const snap = await getDocs(query(forumsCol, orderBy("lastActivityAt","desc"), limit(100)));
+                    forumsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    if (selectedForum){
+                      const still = forumsCache.find(f => f.id === selectedForum.id);
+                      selectedForum = still || null;
+                      els.replyBtn.disabled = !selectedForum;
+                      els.selectedTitle.textContent = selectedForum ? selectedForum.title : "—";
+                    }
+                    render();
+                  }
 
-        <div class="metrics" aria-label="Counts">
-          <div class="metric">
-            <span class="label">Replies</span>
-            <span class="value">${messages}</span>
-          </div>
-        </div>
+                  els.search.addEventListener("input", render);
+                  els.category.addEventListener("change", render);
 
-        <a class="latest-link" href="post.html?id=${postId}" aria-label="Open latest">
-          <div class="latest">
-            <div class="avatar" aria-hidden="true">${title.charAt(0)}</div>
-            <div class="latest-text">
-              <p class="latest-title">${escapeHtml(title)}</p>
-              <p class="latest-meta">Just now · YouMatter</p>
-            </div>
-          </div>
-        </a>
-      `;
+                  els.addBtn.addEventListener("click", () => {
+                    els.addStatus.textContent = "";
+                    els.newTitle.value = "";
+                    els.newDesc.value = "";
+                    els.newCat.value = "General";
+                    openModal("add");
+                  });
 
-      forumPostsDiv.appendChild(row);
-    });
-  }
+                  els.createForumBtn.addEventListener("click", async () => {
+                    els.addStatus.textContent = "";
+                    const title = els.newTitle.value.trim();
+                    const description = els.newDesc.value.trim();
+                    const category = els.newCat.value;
 
-  
+                    if (!title || title.length < 3) { els.addStatus.textContent = "Title is too short."; return; }
+                    if (!description || description.length < 10) { els.addStatus.textContent = "Description is too short."; return; }
 
-  // Wire up reply functionality
-  function wireReplies() {
-    // Toggle reply box
-    document.querySelectorAll(".reply-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.postid;
-        const box = document.querySelector(`.reply-box[data-postid="${id}"]`);
-        box.style.display = (box.style.display === "none") ? "block" : "none";
-      });
-    });
+                    try{
+                      await ensureAnonAuth();
+                      await addDoc(forumsCol, {
+                        title,
+                        description,
+                        category,
+                        replyCount: 0,
+                        latestLabel: "No replies yet",
+                        createdAt: serverTimestamp(),
+                        lastActivityAt: serverTimestamp(),
+                      });
+                      closeModal("add");
+                      await loadForums();
+                    }catch(err){
+                      console.error(err);
+                      els.addStatus.textContent = friendlyFirebaseError(err);
+                    }
+                  });
 
-    // Cancel
-    document.querySelectorAll(".reply-cancel").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.postid;
-        const box = document.querySelector(`.reply-box[data-postid="${id}"]`);
-        box.style.display = "none";
-        box.querySelector(".reply-text").value = "";
-      });
-    });
+                  els.replyBtn.addEventListener("click", () => {
+                    if (!selectedForum) return;
+                    els.replyStatus.textContent = "";
+                    els.replyText.value = "";
+                    els.selectedTitle.textContent = selectedForum.title;
+                    openModal("reply");
+                  });
 
-    // Submit reply
-    document.querySelectorAll(".reply-submit").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const postId = btn.dataset.postid;
-        const box = document.querySelector(`.reply-box[data-postid="${postId}"]`);
-        const ta = box.querySelector(".reply-text");
-        const text = ta.value.trim();
+                  document.addEventListener("click", (e) => {
+                    const id = e.target?.closest?.("[data-reply]")?.getAttribute?.("data-reply");
+                    if (!id) return;
+                    const f = forumsCache.find(x => x.id === id);
+                    if (!f) return;
+                    setSelected(f);
+                    els.replyStatus.textContent = "";
+                    els.replyText.value = "";
+                    els.selectedTitle.textContent = f.title;
+                    openModal("reply");
+                  });
 
-        const status = document.querySelector(`.reply-status[data-postid="${postId}"]`);
-        status.textContent = "";
+                  els.postReplyBtn.addEventListener("click", async () => {
+                    els.replyStatus.textContent = "";
+                    const text = els.replyText.value.trim();
+                    if (!selectedForum) { els.replyStatus.textContent = "Select a forum first."; return; }
+                    if (!text || text.length < 2) { els.replyStatus.textContent = "Reply is too short."; return; }
 
-        if (!text) {
-          status.textContent = "Reply cannot be empty.";
-          return;
-        }
+                    try{
+                      await ensureAnonAuth();
+                      const forumRef = doc(db, "forums", selectedForum.id);
+                      const repliesRef = collection(db, "forums", selectedForum.id, "replies");
 
-        try {
-          await addDoc(collection(db, "forum_posts", postId, "replies"), {
-            text,
-            createdAt: serverTimestamp()
-          });
+                      await addDoc(repliesRef, { text, createdAt: serverTimestamp() });
+                      await updateDoc(forumRef, {
+                        replyCount: increment(1),
+                        latestLabel: "Just now",
+                        lastActivityAt: serverTimestamp(),
+                      });
+
+                      closeModal("reply");
+                      await loadForums();
+                    }catch(err){
+                      console.error(err);
+                      els.replyStatus.textContent = friendlyFirebaseError(err);
+                    }
+                  });
+
+                  (async function(){
+                    await ensureAnonAuth();
+                    await seedDefaultsIfEmpty();
+                    await loadForums();
+                  })();
+                </script>
 
           ta.value = "";
           box.style.display = "none";
