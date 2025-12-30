@@ -290,6 +290,40 @@ body.nav-ready nav{
     box-shadow: 0 15px 45px rgba(13, 43, 87, 0.15);
 }
 
+/* =================================
+   Slide-In Reveal Utilities (site-wide)
+   ================================= */
+.slide-in-left,
+.slide-in-right,
+.slide-in-up{
+    opacity: 0;
+    transform: translate3d(0,0,0);
+    will-change: transform, opacity;
+}
+.slide-in-left{ transform: translateX(-28px); }
+.slide-in-right{ transform: translateX(28px); }
+.slide-in-up{ transform: translateY(24px); }
+
+.slide-in-left.in-view,
+.slide-in-right.in-view,
+.slide-in-up.in-view{
+    opacity: 1;
+    transform: none;
+    transition:
+        transform .60s cubic-bezier(0.22, 1, 0.36, 1) var(--si-delay, 0ms),
+        opacity .60s cubic-bezier(0.22, 1, 0.36, 1) var(--si-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .slide-in-left,
+    .slide-in-right,
+    .slide-in-up{
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
 .four-tab-icon {
     font-size: 48px;
     color: #ff8c3a;

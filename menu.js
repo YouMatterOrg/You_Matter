@@ -5,6 +5,27 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.add('nav-ready');
     }, 30);
   });
+
+  // Reveal: slide-in elements when entering viewport
+  try {
+    var revealEls = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
+    if (revealEls && revealEls.length) {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+      revealEls.forEach(function(el){ io.observe(el); });
+    }
+  } catch (e) {
+    // Fallback: if IntersectionObserver unsupported, show immediately
+    var fallbackEls = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
+    fallbackEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
   var navLinks = document.getElementById('navLinks');
 
   // Done so that the website loads before the checkincode is used DONT remove or crash happens
