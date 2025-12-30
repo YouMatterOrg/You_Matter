@@ -6,26 +6,48 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 30);
   });
 
-  // Reveal: slide-in elements when entering viewport
-  try {
-    var revealEls = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
-    if (revealEls && revealEls.length) {
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+  // Reveal: slide-in elements when entering viewport, gated until first scroll
+  (function(){
+    var prefersReduced = false;
+    try {
+      prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch(_) {}
 
-      revealEls.forEach(function(el){ io.observe(el); });
+    var els = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
+    if (!els || !els.length) return;
+
+    if (prefersReduced) {
+      els.forEach(function(el){ el.classList.add('in-view'); });
+      return;
     }
-  } catch (e) {
-    // Fallback: if IntersectionObserver unsupported, show immediately
-    var fallbackEls = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
-    fallbackEls.forEach(function(el){ el.classList.add('in-view'); });
-  }
+
+    var startReveal = function(){
+      try{
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+        els.forEach(function(el){ io.observe(el); });
+      }catch(e){
+        els.forEach(function(el){ el.classList.add('in-view'); });
+      }
+    };
+
+    // If already scrolled, start immediately; otherwise wait for first scroll
+    if (window.scrollY > 12) {
+      startReveal();
+    } else {
+      var onFirstScroll = function(){
+        window.removeEventListener('scroll', onFirstScroll, { passive: true });
+        startReveal();
+      };
+      window.addEventListener('scroll', onFirstScroll, { passive: true, once: true });
+    }
+  })();
   var navLinks = document.getElementById('navLinks');
 
   // Done so that the website loads before the checkincode is used DONT remove or crash happens
