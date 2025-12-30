@@ -199,6 +199,42 @@ nav .fa{
     flex-direction: column;
 }
 
+/* =================================
+     Entrance Animations (Homepage)
+     ================================= */
+@keyframes slideDownFade {
+    0% { opacity: 0; transform: translateY(-18px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(18px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.reveal{
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.reveal.is-visible{ opacity: 1; }
+
+.reveal[data-anim="down"].is-visible{
+    animation: slideDownFade var(--anim-dur, 600ms) var(--anim-ease, cubic-bezier(.2,.75,.25,1)) forwards;
+    animation-delay: var(--anim-delay, 0ms);
+}
+
+.reveal[data-anim="up"].is-visible{
+    animation: slideUpFade var(--anim-dur, 600ms) var(--anim-ease, cubic-bezier(.2,.75,.25,1)) forwards;
+    animation-delay: var(--anim-delay, 0ms);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+    .reveal{ opacity: 1 !important; }
+    .reveal.is-visible{ animation: none !important; }
+}
+
 .four-tab-link {
     display: flex;
     flex-direction: column;
