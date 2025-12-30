@@ -1,4 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Trigger global nav slide-in once DOM is ready
+  requestAnimationFrame(function(){
+    setTimeout(function(){
+      document.body.classList.add('nav-ready');
+    }, 30);
+  });
   var navLinks = document.getElementById('navLinks');
 
   // Done so that the website loads before the checkincode is used DONT remove or crash happens
