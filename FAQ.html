@@ -52,34 +52,75 @@
       </div>
       <i class="fa fa-bars" onclick="showMenu()"></i>
     </nav>
-    <h1>Frequently Asked Questions</h1>
+    <h1 class="sr-only">Frequently Asked Questions</h1>
   </section>
 
-  <section class="content-section">
-    <div class="content-container">
-      <div class="thread-shell">
-        <p class="wpMuted" style="margin-bottom:16px;">Answers to common questions about using YouMatter and the community forums.</p>
+  <section class="faqWrap">
+    <div class="faqInner">
+      <div class="faqHead">
+        <div></div>
+        <h1 class="faqTitle">FAQ</h1>
+        <a class="faqEmail" href="mailto:support@youmatter.org">Email Us</a>
+      </div>
 
-        <div class="messages-list">
-          <details class="message">
-            <summary class="message-header">How do I post in the forums?</summary>
-            <div class="message-body">Open <a href="forums.html">Forums</a>, choose a topic, and use the reply form. You can post with a display name or anonymously.</div>
-          </details>
-
-          <details class="message">
-            <summary class="message-header">Is my information private?</summary>
-            <div class="message-body">We only store what you submit to a post or reply. Avoid sharing sensitive personal information. See <a href="about-what-we-do.html">What We Do</a> for more.</div>
-          </details>
-
-          <details class="message">
-            <summary class="message-header">Where can I get immediate help?</summary>
-            <div class="message-body">Visit <a href="get-help.html">Get Help</a> for crisis resources and support options.</div>
-          </details>
+      <div class="faqTools">
+        <div class="faqSearch" role="search" aria-label="Looking for something?">
+          <span style="color:#6b7280; font-weight:800;">Looking for something?</span>
+          <input id="faqSearchInput" type="text" placeholder="Type a keyword" />
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         </div>
+      </div>
+
+      <div id="faqList" class="faqList">
+        <details class="faqItem">
+          <summary>
+            <span>Is the equipment in the studio for hire?</span>
+            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
+          </summary>
+          <div class="faqAnswer">We currently don’t rent equipment externally. For studio use or session bookings, please contact us via the Email Us button.</div>
+        </details>
+
+        <details class="faqItem">
+          <summary>
+            <span>Do you run classes in glassblowing, coldworking or flameworking?</span>
+            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
+          </summary>
+          <div class="faqAnswer">Yes, we run beginner-friendly workshops. See Services → <a href="course.html">Courses</a> for dates and topics.</div>
+        </details>
+
+        <details class="faqItem">
+          <summary>
+            <span>I need some grinding and polishing done — do you do this?</span>
+            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
+          </summary>
+          <div class="faqAnswer">We can help on a case-by-case basis. Share details of your piece and timeline via Email Us.</div>
+        </details>
+
+        <details class="faqItem">
+          <summary>
+            <span>Do you repair glass objects?</span>
+            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
+          </summary>
+          <div class="faqAnswer">Minor repairs may be possible depending on the damage. Send a photo and description to discuss options.</div>
+        </details>
       </div>
     </div>
   </section>
 
   <script src="menu.js"></script>
+  <script>
+    // Simple client-side filter for FAQ
+    const input = document.getElementById('faqSearchInput');
+    const list = document.getElementById('faqList');
+    if (input && list) {
+      input.addEventListener('input', () => {
+        const q = input.value.trim().toLowerCase();
+        [...list.querySelectorAll('.faqItem')].forEach(item => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = q && !text.includes(q) ? 'none' : '';
+        });
+      });
+    }
+  </script>
 </body>
 </html>
