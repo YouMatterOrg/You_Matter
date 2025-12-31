@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        /* --- HERO AND BACKGROUND OVERLAYS --- */
+        .header.hero-header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #FFA500;
+            clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%);
+            opacity: 0.96;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .header.hero-header::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url("images/background.png") center / cover no-repeat;
+            clip-path: polygon(0 0, 55% 0, 35% 100%, 0 100%);
+            opacity: 0.96;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .header.hero-header {
+            position: relative;
+            min-height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/background.jpg") center / cover no-repeat;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* --- CLEAN NAVIGATION (Fixing the Blue Text Issue) --- */
+        nav {
+            display: flex;
+            padding: 2% 6%;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        nav img {
+            width: 150px;
+        }
+
+        .nav-links {
+            flex: 1;
+            text-align: right;
+        }
+
+        .nav-links ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        .nav-links ul li a {
+            color: #fff !important;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- HERO TEXT BOX --- */
+        .hero-header .text-box { 
+            position: relative;
+            z-index: 10;
+            max-width: 600px; 
+            text-align: right; 
+            margin: 10vh 10% 0 auto; 
+        }
+
+        .hero-header .text-box h1 {
+            font-size: 4rem;
+            letter-spacing: 5px;
+        }
+
+        /* --- SLIDER SECTION --- */
+        .slider-section {
+            padding: 60px 10% 20px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .slider-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .age-display {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #FFA500;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #eee;
+            outline: none;
+            margin: 30px 0;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #FFA500;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* --- THE SPECIFIC HEADER LOCATION REQUESTED --- */
+        .age-advice-header {
+            text-align: center;
+            padding: 20px 10%;
+            background: #fff;
+        }
+
+        .age-advice-header h2 {
+            font-size: 1.8rem;
+            color: #333;
+            font-weight: 600;
+            display: inline-block;
+            border-bottom: 3px solid #FFA500;
+            padding-bottom: 10px;
+        }
+
+        /* --- ARTICLE GRID --- */
+        .article-results {
+            padding: 20px 10% 100px;
+            background: #fdfdfd;
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .article-card {
+            background: white;
+            padding: 25px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            background: #FFA500;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255,165,0,0.2);
+        }
+
+        .article-card i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .article-card h4 {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="slider-section">
+            <div class="slider-container">
+                <div class="age-display">Age: <span id="ageVal">25</span></div>
+                <input type="range" min="13" max="80" value="25" class="slider" id="ageSlider">
+            </div>
+        </section>
+
+        <section class="age-advice-header">
+            <h2>Get advice regarding mental health based on your age:</h2>
+        </section>
+
+        <section class="article-results">
+            <div class="article-grid" id="articleGrid">
+                </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </footer>
+
+    <script>
+        const slider = document.getElementById("ageSlider");
+        const ageVal = document.getElementById("ageVal");
+        const articleGrid = document.getElementById("articleGrid");
+
+        const data = {
+            teens: ["ADHD", "coping with academic Stress", "Social Media's Effect on Mental Health", "Healthy steps to improve your mental health", "The Importance of Setting Realistic Expectations for yourself", "The Importance of talking to Someone You Trust"],
+            youngAdults: ["Relationship Anxiety", "Social Media's Effect on Mental Health", "Depression", "Healthy steps to improve your mental health", "The Importance of Setting Realistic Expectations for yourself", "The Importance of talking to Someone You Trust"],
+            adults: ["Balancing Activities and Rest", "Parenting Stress", "Anxiety", "Mid-life Challenges", "Healthy steps to improve your mental health", "The Importance of Setting Realistic Expectations for yourself", "The Importance of talking to Someone You Trust", "Social Media's Effect on Mental Health", "PTSD"],
+            seniors: ["Retirement adjustment", "Healthy steps to improve your mental health", "The Importance of Setting Realistic Expectations for yourself", "The Importance of talking to Someone You Trust", "PTSD"]
+        };
+
+        function updateList(age) {
+            let list;
+            if (age >= 13 && age <= 19) list = data.teens;
+            else if (age >= 20 && age <= 29) list = data.youngAdults;
+            else if (age >= 30 && age <= 55) list = data.adults;
+            else list = data.seniors;
+
+            articleGrid.innerHTML = list.map(item => `
+                <div class="article-card">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <h4>${item}</h4>
+                </div>
+            `).join('');
+        }
+
+        slider.oninput = function() {
+            ageVal.innerText = this.value;
+            updateList(this.value);
+        }
+
+        // Initialize on load
+        updateList(25);
+    </script>
+</body>
+</html>
