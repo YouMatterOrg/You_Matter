@@ -270,6 +270,23 @@
         const ageVal = document.getElementById("ageVal");
         const articleGrid = document.getElementById("articleGrid");
 
+        const articleLinks = {
+            "ADHD": 1,
+            "coping with academic Stress": 4,
+            "Social Media's Effect on Mental Health": 5,
+            "Healthy steps to improve your mental health": 3,
+            "The Importance of Setting Realistic Expectations for yourself": 8,
+            "The Importance of talking to Someone You Trust": 6,
+            "Relationship Anxiety": 10,
+            "Depression": 9,
+            "Balancing Activities and Rest": 7,
+            "Parenting Stress": 11,
+            "Anxiety": 9,
+            "Mid-life Challenges": 12,
+            "Retirement adjustment": 13,
+            "PTSD": 9
+        };
+
         const data = {
             teens: ["ADHD", "coping with academic Stress", "Social Media's Effect on Mental Health", "Healthy steps to improve your mental health", "The Importance of Setting Realistic Expectations for yourself", "The Importance of talking to Someone You Trust"],
             youngAdults: ["Relationship Anxiety", "Social Media's Effect on Mental Health", "Depression", "Healthy steps to improve your mental health", "The Importance of Setting Realistic Expectations for yourself", "The Importance of talking to Someone You Trust"],
@@ -284,12 +301,17 @@
             else if (age >= 30 && age <= 55) list = data.adults;
             else list = data.seniors;
 
-            articleGrid.innerHTML = list.map(item => `
-                <div class="article-card">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <h4>${item}</h4>
-                </div>
-            `).join('');
+            articleGrid.innerHTML = list.map(item => {
+                const postId = articleLinks[item];
+                return `
+                    <a href="blog.html?post=${postId}" style="text-decoration: none; color: inherit;">
+                        <div class="article-card">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <h4>${item}</h4>
+                        </div>
+                    </a>
+                `;
+            }).join('');
         }
 
         slider.oninput = function() {

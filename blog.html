@@ -379,6 +379,18 @@ function clearFilters() {
   topicFilter.value = "";
   filterPosts();
 }
+
+function checkUrlForPost() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const postId = urlParams.get('post');
+  if (postId) {
+    const post = posts.find(p => p.id == postId);
+    if (post) {
+      showDetail(post);
+    }
+  }
+}
+
 searchInput.addEventListener("input", filterPosts);
 searchBtn.addEventListener("click", filterPosts);
 topicFilter.addEventListener("change", filterPosts);
@@ -388,6 +400,7 @@ clearAllBtn.addEventListener("click", clearFilters);
 
 // Initialize
 renderList();
+checkUrlForPost();
 </script>
 </body>
 </html>
