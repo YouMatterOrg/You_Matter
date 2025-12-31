@@ -277,8 +277,8 @@
             "Healthy steps to improve your mental health": 3,
             "The Importance of Setting Realistic Expectations for yourself": 8,
             "The Importance of talking to Someone You Trust": 6,
-            "Relationship Anxiety": 10,
-            "Depression": 9,
+            "Relationship Anxiety": "blog.html?post=10",
+            "Depression": "thread-depression.html",
             "Balancing Activities and Rest": 7,
             "Parenting Stress": 11,
             "Anxiety": 9,
@@ -302,9 +302,10 @@
             else list = data.seniors;
 
             articleGrid.innerHTML = list.map(item => {
-                const postId = articleLinks[item];
+                const link = articleLinks[item];
+                const href = typeof link === 'string' && link.includes('.html') ? link : `blog.html?post=${link}`;
                 return `
-                    <a href="blog.html?post=${postId}" style="text-decoration: none; color: inherit;">
+                    <a href="${href}" style="text-decoration: none; color: inherit;">
                         <div class="article-card">
                             <i class="fa-solid fa-circle-check"></i>
                             <h4>${item}</h4>
