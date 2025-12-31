@@ -149,13 +149,6 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
       </select>
     </div>
 
-    <div class="filter-group">
-      <label class="filter-label">Type</label>
-      <select class="filter-select" id="type-filter">
-        <option value="">All Types</option>
-      </select>
-    </div>
-
     <a class="clear-all" id="clear-all">Clear All</a>
   </aside>
 
@@ -320,7 +313,6 @@ const detailBodyEl = document.querySelector(".detail-body");
 const btnBack = document.getElementById("btn-back");
 const searchInput = document.getElementById("search-input");
 const topicFilter = document.getElementById("topic-filter");
-const typeFilter = document.getElementById("type-filter");
 const clearAllBtn = document.getElementById("clear-all");
 
 let filteredPosts = [...posts];
@@ -383,18 +375,16 @@ function goBack() {
 }
 
 function clearFilters() {
+function clearFilters() {
   searchInput.value = "";
   topicFilter.value = "";
-  typeFilter.value = "";
   filterPosts();
 }
 
 searchInput.addEventListener("input", filterPosts);
 topicFilter.addEventListener("change", filterPosts);
-typeFilter.addEventListener("change", filterPosts);
 btnBack.addEventListener("click", goBack);
 clearAllBtn.addEventListener("click", clearFilters);
-
 // Initialize
 renderList();
 </script>
