@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fact vs Fiction | YouMatter</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Site Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="forums.css">
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<section class="sub-header">
+  <nav>
+    <a href="index.html"><img src="images/logo.png" alt="YouMatter Logo"></a>
+
+    <div class="nav-links" id="navLinks">
+      <i class="fa fa-times" onclick="hideMenu()"></i>
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+
+        <li class="has-dropdown">
+          <a href="#">ABOUT <i class="fa-solid fa-angle-down"></i></a>
+          <ul class="dropdown">
+            <li><a href="about-youmatter.html">About YouMatter</a></li>
+            <li><a href="about-why-we-started.html">Why We Started</a></li>
+          </ul>
+        </li>
+
+        <li class="has-dropdown">
+          <a href="#">SERVICES <i class="fa-solid fa-angle-down"></i></a>
+          <ul class="dropdown">
+            <li><a href="disorders.html">Disorders</a></li>
+            <li><a href="get-help.html">Get Help</a></li>
+          </ul>
+        </li>
+
+        <li class="has-dropdown">
+          <a href="#">CONNECT <i class="fa-solid fa-angle-down"></i></a>
+          <ul class="dropdown">
+            <li><a href="forums.html">Forums</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+            <li><a href="factvsfiction.html" aria-current="page">Fact vs Fiction</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <i class="fa fa-bars" onclick="showMenu()"></i>
+  </nav>
+
+  <h1>Fact vs Fiction</h1>
+</section>
+
+<!-- ================= CONTENT ================= -->
+<section class="faqWrap">
+  <div class="faqInner">
+
+    <div class="faqHead">
+      <h2 class="faqTitle">Mental Health: Get the Facts</h2>
+      <p class="faqSubtitle">
+        Learn the truth behind common mental health myths and help break stigma.
+      </p>
+    </div>
+
+    <!-- Search -->
+    <div class="faqTools">
+      <div class="faqSearch">
+        <input id="searchInput" type="text" placeholder="Search myths or facts…" />
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+
+    <!-- ================= FACT / FICTION LIST ================= -->
+    <div id="factsList" class="faqList">
+
+      <details class="faqItem">
+        <summary>
+          <span>Fiction: Mental health problems only affect adults.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Fact:</strong> Mental health challenges can affect people at any age, including children and teens. Early support can make a lifelong difference.
+        </div>
+      </details>
+
+      <details class="faqItem">
+        <summary>
+          <span>Fiction: Feeling sad or anxious means something is wrong with you.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Fact:</strong> Everyone experiences sadness and anxiety at times. These emotions are part of being human and don’t mean you’re broken.
+        </div>
+      </details>
+
+      <details class="faqItem">
+        <summary>
+          <span>Fact: Mental health is just as important as physical health.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Explanation:</strong> Mental health influences how we think, feel, and act—just like physical health affects how our bodies function.
+        </div>
+      </details>
+
+      <details class="faqItem">
+        <summary>
+          <span>Fiction: You can always tell when someone is struggling.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Fact:</strong> Many people hide what they’re going through, even from close friends and family. You never truly know what someone is facing.
+        </div>
+      </details>
+
+      <details class="faqItem">
+        <summary>
+          <span>Fact: Talking about mental health can help.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Explanation:</strong> Opening up to someone can reduce feelings of isolation and help people feel supported and understood.
+        </div>
+      </details>
+
+      <details class="faqItem">
+        <summary>
+          <span>Fiction: Strong people don’t struggle with mental health.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Fact:</strong> Mental health challenges affect people regardless of strength, success, or confidence. Asking for help is a form of strength.
+        </div>
+      </details>
+
+      <details class="faqItem">
+        <summary>
+          <span>Fiction: Mental health challenges are a sign of weakness.</span>
+          <i class="fa-solid fa-chevron-down faqChevron"></i>
+        </summary>
+        <div class="faqAnswer">
+          <strong>Fact:</strong> Many people grow stronger after working through mental health challenges and gain better coping skills and self-awareness.
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>Made with <i class="fa-regular fa-heart"></i> by the YouMatter Team</p>
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="menu.js"></script>
+<script>
+  // Search filter
+  const input = document.getElementById('searchInput');
+  const items = document.querySelectorAll('.faqItem');
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase();
+    items.forEach(item => {
+      item.style.display = item.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
