@@ -126,7 +126,7 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
       <h3 class="search-box-title">Search</h3>
       <div class="search-input-wrapper">
         <input type="text" id="search-input" placeholder="Search Blog" />
-        <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="search-btn" id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </div>
     
@@ -312,6 +312,7 @@ const detailMetaEl = document.querySelector(".detail-meta");
 const detailBodyEl = document.querySelector(".detail-body");
 const btnBack = document.getElementById("btn-back");
 const searchInput = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
 const topicFilter = document.getElementById("topic-filter");
 const clearAllBtn = document.getElementById("clear-all");
 
@@ -377,10 +378,11 @@ function clearFilters() {
   topicFilter.value = "";
   filterPosts();
 }
-
 searchInput.addEventListener("input", filterPosts);
+searchBtn.addEventListener("click", filterPosts);
 topicFilter.addEventListener("change", filterPosts);
 btnBack.addEventListener("click", goBack);
+clearAllBtn.addEventListener("click", clearFilters);
 clearAllBtn.addEventListener("click", clearFilters);
 
 // Initialize
