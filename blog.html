@@ -322,7 +322,7 @@ function filterPosts() {
   const selectedTopic = topicFilter.value;
 
   filteredPosts = posts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm) || 
+    const matchesSearch = !searchTerm || post.title.toLowerCase().includes(searchTerm) || 
                          post.body.toLowerCase().includes(searchTerm);
     const matchesTopic = !selectedTopic || post.tag === selectedTopic;
     
