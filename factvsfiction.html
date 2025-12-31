@@ -70,6 +70,16 @@
       <h1 class="faqTitle">Mental Health: Get the Facts</h1>
     </div>
 
+    <p style="margin: 20px 0; font-size: 15px; line-height: 1.6; color: #333;">
+      Can you tell the difference between a mental health myth and fact? Learn the truth about the most common mental health myths and information to help destigmatize them. YouMatter works to prevent and treat mental health conditions and provides support for people seeking or already in recovery.
+    </p>
+
+    <div style="display: flex; justify-content: flex-end; margin: 15px 0; gap: 10px;">
+      <a href="#" id="expandAll" style="color: #0d2b57; text-decoration: none; font-weight: 600; cursor: pointer;">Expand All</a>
+      <span style="color: #ccc;">|</span>
+      <a href="#" id="collapseAll" style="color: #0d2b57; text-decoration: none; font-weight: 600; cursor: pointer;">Collapse All</a>
+    </div>
+
     <div class="faqTools">
       <div class="faqSearch" role="search" aria-label="Looking for something?">
         <span style="color:#6b7280; font-weight:800;">Looking for something?</span>
@@ -291,9 +301,27 @@
 <!-- ================= SCRIPTS ================= -->
 <script src="menu.js"></script>
 <script>
+  // Expand All / Collapse All functionality
+  const expandAllBtn = document.getElementById('expandAll');
+  const collapseAllBtn = document.getElementById('collapseAll');
+  const items = document.querySelectorAll('.faqItem');
+
+  expandAllBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    items.forEach(item => {
+      item.open = true;
+    });
+  });
+
+  collapseAllBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    items.forEach(item => {
+      item.open = false;
+    });
+  });
+
   // Search filter
   const input = document.getElementById('searchInput');
-  const items = document.querySelectorAll('.faqItem');
 
   input.addEventListener('input', () => {
     const q = input.value.toLowerCase();
