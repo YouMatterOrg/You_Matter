@@ -149,13 +149,6 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
       </select>
     </div>
 
-    <div class="filter-group">
-      <label class="filter-label">Type</label>
-      <select class="filter-select" id="type-filter">
-        <option value="">All Types</option>
-      </select>
-    </div>
-
     <a class="clear-all" id="clear-all">Clear All</a>
   </aside>
 
@@ -320,7 +313,6 @@ const detailBodyEl = document.querySelector(".detail-body");
 const btnBack = document.getElementById("btn-back");
 const searchInput = document.getElementById("search-input");
 const topicFilter = document.getElementById("topic-filter");
-const typeFilter = document.getElementById("type-filter");
 const clearAllBtn = document.getElementById("clear-all");
 
 let filteredPosts = [...posts];
@@ -328,15 +320,13 @@ let filteredPosts = [...posts];
 function filterPosts() {
   const searchTerm = searchInput.value.toLowerCase();
   const selectedTopic = topicFilter.value;
-  const selectedType = typeFilter.value;
 
   filteredPosts = posts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm) || 
                          post.body.toLowerCase().includes(searchTerm);
     const matchesTopic = !selectedTopic || post.tag === selectedTopic;
-    const matchesType = !selectedType || post.categoryClass === selectedType;
     
-    return matchesSearch && matchesTopic && matchesType;
+    return matchesSearch && matchesTopic;
   });
 
   renderList();
@@ -392,11 +382,10 @@ function clearFilters() {
 searchInput.addEventListener("input", filterPosts);
 topicFilter.addEventListener("change", filterPosts);
 typeFilter.addEventListener("change", filterPosts);
+searchInput.addEventListener("input", filterPosts);
+topicFilter.addEventListener("change", filterPosts);
 btnBack.addEventListener("click", goBack);
 clearAllBtn.addEventListener("click", clearFilters);
 
 // Initialize
 renderList();
-</script>
-</body>
-</html>
