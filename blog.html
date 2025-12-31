@@ -373,7 +373,6 @@ function goBack() {
 }
 
 function clearFilters() {
-function clearFilters() {
   searchInput.value = "";
   topicFilter.value = "";
   filterPosts();
@@ -383,6 +382,7 @@ searchInput.addEventListener("input", filterPosts);
 topicFilter.addEventListener("change", filterPosts);
 btnBack.addEventListener("click", goBack);
 clearAllBtn.addEventListener("click", clearFilters);
+
 // Initialize
 renderList();
 </script>
