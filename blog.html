@@ -320,15 +320,13 @@ let filteredPosts = [...posts];
 function filterPosts() {
   const searchTerm = searchInput.value.toLowerCase();
   const selectedTopic = topicFilter.value;
-  const selectedType = typeFilter.value;
 
   filteredPosts = posts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm) || 
+    const matchesSearch = !searchTerm || post.title.toLowerCase().includes(searchTerm) || 
                          post.body.toLowerCase().includes(searchTerm);
     const matchesTopic = !selectedTopic || post.tag === selectedTopic;
-    const matchesType = !selectedType || post.categoryClass === selectedType;
     
-    return matchesSearch && matchesTopic && matchesType;
+    return matchesSearch && matchesTopic;
   });
 
   renderList();
