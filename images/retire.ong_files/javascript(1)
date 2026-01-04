@@ -1,0 +1,94 @@
+(() => {
+    var isActive = true;
+    if (!isActive) {
+        console.log("Web chat is not active.");
+        return;
+    }
+    var ignoreUrls = 'https://elevatefinancial.ie/contact-us/';
+    if (ignoreUrls && ignoreUrls.length > 0) {
+        ignoreUrls = ignoreUrls.split(',');
+        if (ignoreUrls && ignoreUrls.length > 0) {
+            var currentUrl = window.location.href;
+            for (var i = 0; i < ignoreUrls.length; i++) {
+                var ignoreUrl = ignoreUrls[i];
+                
+                ignoreUrl = ignoreUrl.trim();
+                if (!ignoreUrl) {
+                    continue;
+                }
+                
+                if (currentUrl.indexOf(ignoreUrl) != -1) {
+                    console.log('URL Ignored');
+                    return;
+                }
+            }
+        }
+    }
+
+    
+    var storageKey = "smc-web-chat-v2-data";
+    localStorage.setItem(storageKey, JSON.stringify({
+        id: "c6402b6d-ed05-4a1c-8b55-f560eb4b357e",
+        primaryColor: "rgb(160, 187, 187)",
+        textColor: "rgb(56, 62, 96)",
+        buttonPosition: "right",
+        icon: {"svg":"PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9Ii01LjI3OTk5OTk5OTk5OTk5OSAtNS4yNzk5OTk5OTk5OTk5OTkgMzQuNTYgMzQuNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgaWQ9IlNWR1JlcG9fYmdDYXJyaWVyIiBzdHJva2Utd2lkdGg9IjAiPjwvZz48ZyBpZD0iU1ZHUmVwb190cmFjZXJDYXJyaWVyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvZz48ZyBpZD0iU1ZHUmVwb19pY29uQ2FycmllciI+IDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTMuNjI4OCAyMC40NzE4TDEzLjA4NjcgMjEuMzg3N0MxMi42MDM1IDIyLjIwNCAxMS4zOTY1IDIyLjIwNCAxMC45MTMzIDIxLjM4NzdMMTAuMzcxMiAyMC40NzE4QzkuOTUwNzMgMTkuNzYxNCA5Ljc0MDQ5IDE5LjQwNjMgOS40MDI3OSAxOS4yMDk4QzkuMDY1MDkgMTkuMDEzNCA4LjYzOTkyIDE5LjAwNjEgNy43ODk1OCAxOC45OTE1QzYuNTM0MjIgMTguOTY5OCA1Ljc0Njg5IDE4Ljg5MjkgNS4wODY1OCAxOC42MTk0QzMuODYxNDQgMTguMTExOSAyLjg4ODA3IDE3LjEzODYgMi4zODA2IDE1LjkxMzRDMiAxNC45OTQ2IDIgMTMuODI5NyAyIDExLjVWMTAuNUMyIDcuMjI2NTcgMiA1LjU4OTg1IDIuNzM2OCA0LjM4NzUxQzMuMTQ5MDggMy43MTQ3MyAzLjcxNDczIDMuMTQ5MDggNC4zODc1MSAyLjczNjhDNS41ODk4NSAyIDcuMjI2NTcgMiAxMC41IDJIMTMuNUMxNi43NzM0IDIgMTguNDEwMSAyIDE5LjYxMjUgMi43MzY4QzIwLjI4NTMgMy4xNDkwOCAyMC44NTA5IDMuNzE0NzMgMjEuMjYzMiA0LjM4NzUxQzIyIDUuNTg5ODUgMjIgNy4yMjY1NyAyMiAxMC41VjExLjVDMjIgMTMuODI5NyAyMiAxNC45OTQ2IDIxLjYxOTQgMTUuOTEzNEMyMS4xMTE5IDE3LjEzODYgMjAuMTM4NiAxOC4xMTE5IDE4LjkxMzQgMTguNjE5NEMxOC4yNTMxIDE4Ljg5MjkgMTcuNDY1OCAxOC45Njk4IDE2LjIxMDQgMTguOTkxNUMxNS4zNiAxOS4wMDYxIDE0LjkzNDkgMTkuMDEzNCAxNC41OTcyIDE5LjIwOThDMTQuMjU5NSAxOS40MDYyIDE0LjA0OTIgMTkuNzYxNCAxMy42Mjg4IDIwLjQ3MThaTTggMTEuNzVDNy41ODU3OSAxMS43NSA3LjI1IDEyLjA4NTggNy4yNSAxMi41QzcuMjUgMTIuOTE0MiA3LjU4NTc5IDEzLjI1IDggMTMuMjVIMTMuNUMxMy45MTQyIDEzLjI1IDE0LjI1IDEyLjkxNDIgMTQuMjUgMTIuNUMxNC4yNSAxMi4wODU4IDEzLjkxNDIgMTEuNzUgMTMuNSAxMS43NUg4Wk03LjI1IDlDNy4yNSA4LjU4NTc5IDcuNTg1NzkgOC4yNSA4IDguMjVIMTZDMTYuNDE0MiA4LjI1IDE2Ljc1IDguNTg1NzkgMTYuNzUgOUMxNi43NSA5LjQxNDIxIDE2LjQxNDIgOS43NSAxNiA5Ljc1SDhDNy41ODU3OSA5Ljc1IDcuMjUgOS40MTQyMSA3LjI1IDlaIiBmaWxsPSJyZ2IoMjU1LCAyNTUsIDI1NSkiPjwvcGF0aD4gPC9nPjwvc3ZnPg==","size":"60","index":"39","width":"60","height":"60","viewBox":{"x":-7.199999999999999,"y":-7.199999999999999,"width":38.4,"height":38.4},"lineColor":"rgb(255, 255, 255)","strokeWidth":0.912,"backgroundColor":"rgb(56, 62, 96)","paddingPercentage":"15","thicknessPercentage":"38"},
+        brand_logo: "https://smarketingcloud-bot-production-files.s3.eu-west-1.amazonaws.com/media/5d61ac9f-c997-44be-99b3-c901ce0a6fe0/305132460_504177108375217_977643567706101359_n-(1).png",
+        links: [{"href":"https:\/\/elevatefinancial.ie\/contact-us\/","name":"Free Pension Review","type":"other","phone":"https:\/\/elevatefinancial.ie\/contact-us\/","selected":false,"settings":{"show_in":null,"schedule":{"Friday":[],"Monday":[],"Sunday":[],"Tuesday":[],"Saturday":[],"Thursday":[],"Wednesday":[]},"schedule_active":false}},{"href":"tel:+35315363071","name":"01 536 3071","type":"phone","email":"grace@elevatefinancial.ie","phone":"+35315363071","selected":false,"settings":{"show_in":null,"schedule":{"Friday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0,"start_utc":"2026-01-04T09:00:00.000000Z","end_utc":"2026-01-04T17:00:00.000000Z"}],"Monday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0,"start_utc":"2026-01-04T09:00:00.000000Z","end_utc":"2026-01-04T17:00:00.000000Z"}],"Sunday":[],"Tuesday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0,"start_utc":"2026-01-04T09:00:00.000000Z","end_utc":"2026-01-04T17:00:00.000000Z"}],"Saturday":[],"Thursday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0,"start_utc":"2026-01-04T09:00:00.000000Z","end_utc":"2026-01-04T17:00:00.000000Z"}],"Wednesday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0,"start_utc":"2026-01-04T09:00:00.000000Z","end_utc":"2026-01-04T17:00:00.000000Z"}]},"schedule_active":false}},{"href":"https:\/\/wa.me\/353838982493","name":"WhatsApp","type":"whatsapp","phone":"353838982493","settings":{"show_in":null,"schedule":{"Friday":[],"Monday":[],"Sunday":[],"Tuesday":[],"Saturday":[],"Thursday":[],"Wednesday":[]},"schedule_active":false}},{"name":"Web Chat","type":"webchat","settings":{"show_in":null,"schedule":{"Friday":[],"Monday":[],"Sunday":[],"Tuesday":[],"Saturday":[],"Thursday":[],"Wednesday":[]},"schedule_active":false},"showDirectChatOption":true}],
+        users: [{"id":261,"name":"Grace O'Brien","avatar":"https:\/\/smarketingcloud-bot-production-files.s3.eu-west-1.amazonaws.com\/media\/eae358c4-6564-45b6-9909-d1901b903647\/conversions\/ChatGPT-Image-May-7%2C-2025%2C-06_09_52-PM-thumb.jpg"},{"id":242,"name":"Orlaith Farrell","avatar":"https:\/\/smarketingcloud-bot-production-files.s3.eu-west-1.amazonaws.com\/media\/2aa1b51a-ac35-48bb-841a-e31817fa44e9\/305132460_504177108375217_977643567706101359_n.png"}],
+    }));
+    localStorage.setItem('smc_chat_open', 0);
+    localStorage.setItem('smc_webchat_uuid', 'c6402b6d-ed05-4a1c-8b55-f560eb4b357e');
+
+        localStorage.setItem('smc_webchat', `{"id":10,"uuid":"c6402b6d-ed05-4a1c-8b55-f560eb4b357e","display_name":"Elevate Financial","domain":"elevatefinancial.ie","tagline":"Contact us through any of the following channels:","styling_options":{"color":"rgb(160, 187, 187)","color_2":"rgb(56, 62, 96)"},"continue_email_conversation":true,"sender_name":null,"sender_email":null,"pre_chat_form_enabled":false,"web_form_id":null,"bubble_position":"bottom-right","bubble_title":null,"icon_setting":"","help_email":"info@elevatefinancial.ie","action_trigger_delays":[],"action_workflows":[],"active":true,"ignored_urls":"https:\/\/elevatefinancial.ie\/contact-us\/","schedule":null,"off_notice":0,"notice":null,"schedule_active":false,"container_ids":[6842],"links":[{"href":"https:\/\/elevatefinancial.ie\/contact-us\/","name":"Free Pension Review","type":"other","phone":"https:\/\/elevatefinancial.ie\/contact-us\/","selected":false,"settings":{"show_in":null,"schedule":{"Friday":[],"Monday":[],"Sunday":[],"Tuesday":[],"Saturday":[],"Thursday":[],"Wednesday":[]},"schedule_active":false}},{"href":"tel:+35315363071","name":"01 536 3071","type":"phone","email":"grace@elevatefinancial.ie","phone":"+35315363071","selected":false,"settings":{"show_in":null,"schedule":{"Friday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0}],"Monday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0}],"Sunday":[],"Tuesday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0}],"Saturday":[],"Thursday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0}],"Wednesday":[{"end_hour":17,"timezone":"Europe\/Dublin","end_minute":0,"start_hour":9,"start_minute":0}]},"schedule_active":false}},{"href":"https:\/\/wa.me\/353838982493","name":"WhatsApp","type":"whatsapp","phone":"353838982493","settings":{"show_in":null,"schedule":{"Friday":[],"Monday":[],"Sunday":[],"Tuesday":[],"Saturday":[],"Thursday":[],"Wednesday":[]},"schedule_active":false}},{"name":"Web Chat","type":"webchat","settings":{"show_in":null,"schedule":{"Friday":[],"Monday":[],"Sunday":[],"Tuesday":[],"Saturday":[],"Thursday":[],"Wednesday":[]},"schedule_active":false},"showDirectChatOption":true}],"users":[{"id":261},{"id":242}],"website_tracker_id":59,"brand_logo":"","media":[{"id":1483792,"model_type":"web_chat","model_id":"10","uuid":"5d61ac9f-c997-44be-99b3-c901ce0a6fe0","collection_name":"logo","name":"305132460_504177108375217_977643567706101359_n (1)","file_name":"305132460_504177108375217_977643567706101359_n-(1).png","mime_type":"image\/png","disk":"media","conversions_disk":"media","size":4526,"manipulations":[],"custom_properties":[],"responsive_images":[],"order_column":1,"created_at":"2025-05-20T14:44:52.000000Z","updated_at":"2025-05-20T14:44:52.000000Z","created_by":3,"updated_by":3,"folder_id":null,"data_link":null,"generated_conversions":[],"note_id":null,"ad_creative_id":null,"original_url":"https:\/\/smarketingcloud-bot-production-files.s3.eu-west-1.amazonaws.com\/media\/5d61ac9f-c997-44be-99b3-c901ce0a6fe0\/305132460_504177108375217_977643567706101359_n-%281%29.png","preview_url":""}]}`);
+    localStorage.setItem('smc_webchat_logo', `https://smarketingcloud-bot-production-files.s3.eu-west-1.amazonaws.com/media/5d61ac9f-c997-44be-99b3-c901ce0a6fe0/305132460_504177108375217_977643567706101359_n-(1).png`);
+    window.smc_route = "https://pro.smarketingcloud.com";
+
+    // Create container and shadow root
+    const hostDiv = document.createElement("div");
+    hostDiv.id = "smc-web-chat-v2-host";
+    const shadow = hostDiv.attachShadow({ mode: "open" });
+
+    var initFunction = () => {
+        document.body.appendChild(hostDiv);
+    
+        // Create mount point for Vue
+        const appDiv = document.createElement("div");
+        appDiv.id = "smc-web-chat-v2";
+        shadow.appendChild(appDiv);
+    
+        // Inject CSS <link> into shadow
+        const styleLink = document.createElement("link");
+        styleLink.rel = "stylesheet";
+        styleLink.type = "text/css";
+        styleLink.href = window.smc_route + "/css/web_chat_v2/web_chat_v2.css?id=432100b784bedae12efb387c87738979";
+        shadow.appendChild(styleLink);
+    
+        // Inject Vue build JS scripts into shadow (optional fallback for script injection isolation)
+        const scripts = [
+            "/js/manifest.js?id=d7dd7aa77a61a4045cb3a3777c97d202",
+            "/js/vendor.js?id=065b7e98cd3a4760122e34f72f939342",
+            "/js/web_chat_v2/web_chat_v2.js?id=023e413ec73f64ba228b0c74ddcc7e62"
+        ];
+    
+        scripts.forEach(src => {
+            const script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = window.smc_route + src;
+            // Instead of appending to document.head, clone into shadow
+            shadow.appendChild(script);
+        });
+    
+        // Optional: expose shadow root to Vue app if you want to manually mount
+        window.__SMC_CHAT_V2_SHADOW__ = shadow;
+    }
+
+    
+    if (document.body) {
+        initFunction();
+    } else {
+        // If body is not ready, wait for DOMContentLoaded
+        document.addEventListener("DOMContentLoaded", initFunction);
+    }
+
+})();
