@@ -666,8 +666,6 @@
 
           <button class="ym-primary" id="ymSignInBtn" type="button">Sign in</button>
 
-          <button class="ym-link-center" id="ymTrouble" type="button">Trouble signing in?</button>
-
           <div class="ym-or">
             <div class="ym-or-line"></div>
             <div class="ym-or-text">OR</div>
@@ -797,7 +795,7 @@
       const googleBtn1 = document.getElementById("ymGoogleBtn");
       const googleBtn2 = document.getElementById("ymGoogleBtn2");
 
-      const forgotBtn = document.getElementById("ymForgot");
+
 
       function setMsg(el, t){
         if (!el) return;
@@ -954,22 +952,7 @@
       googleBtn1?.addEventListener("click", () => googleSignIn(msg1));
       googleBtn2?.addEventListener("click", () => googleSignIn(msg2));
 
-      // Forgot password
-      forgotBtn?.addEventListener("click", async () => {
-        setMsg(msg1, "");
-        const email = (emailEl.value || "").trim();
-        if (!email) {
-          setMsg(msg1, "Enter your email above first then click Forgot your password?");
-          return;
-        }
-        try{
-          await sendPasswordResetEmail(auth, email);
-          setMsg(msg1, "Password reset email sent. Check your inbox.");
-        } catch(e){
-          console.error(e);
-          setMsg(msg1, e.code || e.message);
-        }
-      });
+
 
       // Auth state - update both desktop and mobile buttons
       onAuthStateChanged(auth, (user) => {
