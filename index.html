@@ -740,20 +740,24 @@
 
     <!-- Auth modal management -->
     <script type="module">
-      import { auth } from "./firebase-client.js";
-      import {
-        onAuthStateChanged,
-        signOut,
-        setPersistence,
-        browserLocalPersistence,
-        browserSessionPersistence,
-        signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
-        GoogleAuthProvider,
-        signInWithPopup,
-        sendPasswordResetEmail,
-        updateProfile
-      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
+        authDomain: "youmatter-46c43.firebaseapp.com",
+        projectId: "youmatter-46c43",
+        storageBucket: "youmatter-46c43.firebasestorage.app",
+        messagingSenderId: "971089399934",
+        appId: "1:971089399934:web:2d8e0a2988b1938f46082f",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      window.auth = auth;
+      window.db = db;
 
       // Modal elements
       let overlay = document.getElementById("authModalOverlay");
