@@ -766,43 +766,60 @@
       // Auth state - update both desktop and mobile buttons
       onAuthStateChanged(auth, (user) => {
         // Update desktop button
-        if (openSigninDesktopBtn) {
+        if (openSigninDesktopBtn && authButtons) {
           if (user) {
-            authButtons.innerHTML = `
-              <div class="user-pill">
-                <span>Hi, ${user.displayName || user.email || "User"}</span>
-                <button id="logoutBtnDesktop" class="btn-logout">Log out</button>
-              </div>
-            `;
-            document.getElementById("logoutBtnDesktop")?.addEventListener("click", async () => {
-              await signOut(auth);
-            });
+            // Show user info
+            const displayName = user.displayName || user.email?.split("@")[0] || "User";
+            openSigninDesktopBtn.innerHTML = `<span class="user-pill">${displayName}</span>`;
+            
+            // Add logout button if not present
+            if (!document.getElementById("logoutBtnDesktop")) {
+              const logoutBtn = document.createElement("button");
+              logoutBtn.id = "logoutBtnDesktop";
+              logoutBtn.className = "btn-logout";
+              logoutBtn.textContent = "Log out";
+              logoutBtn.addEventListener("click", async () => {
+                await signOut(auth);
+              });
+              authButtons.appendChild(logoutBtn);
+            }
           } else {
-            authButtons.innerHTML = `
-              <button id="openSigninDesktop" class="btn-auth">Sign in</button>
-            `;
-            document.getElementById("openSigninDesktop")?.addEventListener("click", () => openModal("login"));
+            // Reset to Sign in button
+            openSigninDesktopBtn.textContent = "Sign in";
+            openSigninDesktopBtn.className = "btn-auth";
+            
+            // Remove logout button if present
+            const logoutBtn = document.getElementById("logoutBtnDesktop");
+            if (logoutBtn) logoutBtn.remove();
           }
         }
         
         // Update mobile button in menu
-        if (navAuthContainer) {
-          const navAuthBtn = navAuthContainer.querySelector("button");
+        if (navAuthContainer && openSigninMobileBtn) {
           if (user) {
-            navAuthContainer.innerHTML = `
-              <div style="padding: 0 12px;">
-                <div style="color: #fff; font-size: 13px; margin-bottom: 8px;">Hi, ${user.displayName || user.email || "User"}</div>
-                <button id="logoutBtnMobile" class="btn-logout" style="width: 100%;">Log out</button>
-              </div>
-            `;
-            document.getElementById("logoutBtnMobile")?.addEventListener("click", async () => {
-              await signOut(auth);
-            });
+            const displayName = user.displayName || user.email?.split("@")[0] || "User";
+            openSigninMobileBtn.innerHTML = `Hi, ${displayName}`;
+            openSigninMobileBtn.className = "user-pill-mobile";
+            
+            // Add logout button if not present
+            if (!document.getElementById("logoutBtnMobile")) {
+              const logoutBtn = document.createElement("button");
+              logoutBtn.id = "logoutBtnMobile";
+              logoutBtn.className = "btn-logout";
+              logoutBtn.textContent = "Log out";
+              logoutBtn.style.width = "100%";
+              logoutBtn.addEventListener("click", async () => {
+                await signOut(auth);
+              });
+              navAuthContainer.appendChild(logoutBtn);
+            }
           } else {
-            navAuthContainer.innerHTML = `
-              <button id="openSignin" class="btn-auth">Sign in</button>
-            `;
-            document.getElementById("openSignin")?.addEventListener("click", () => openModal("login"));
+            openSigninMobileBtn.textContent = "Sign in";
+            openSigninMobileBtn.className = "btn-auth";
+            
+            // Remove logout button if present
+            const logoutBtn = document.getElementById("logoutBtnMobile");
+            if (logoutBtn) logoutBtn.remove();
           }
         }
       });
