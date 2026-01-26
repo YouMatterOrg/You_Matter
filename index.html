@@ -881,10 +881,8 @@
           });
         } else {
           authButtons.innerHTML = `
-            <button id="openLogin" class="ym-auth-btn ym-auth-btn-dark" type="button">Log in</button>
             <button id="openSignup" class="ym-auth-btn ym-auth-btn-green" type="button">Sign up</button>
           `;
-          document.getElementById("openLogin")?.addEventListener("click", () => openModal("login"));
           document.getElementById("openSignup")?.addEventListener("click", () => openModal("signup"));
         }
       });
