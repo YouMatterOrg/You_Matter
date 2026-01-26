@@ -127,6 +127,35 @@
         box-shadow: 0 10px 24px rgba(15, 23, 42, 0.55);
       }
 
+      /* Auth buttons styling */
+      .auth-buttons{
+        margin-left:auto;
+        display:flex;
+        gap:10px;
+        align-items:center;
+      }
+
+      .auth-btn{
+        padding:10px 14px;
+        border-radius:10px;
+        font-weight:700;
+        text-decoration:none;
+        font-size:14px;
+        border:1px solid rgba(255,255,255,.15);
+        color:#fff;
+        background:rgba(17,24,39,.75);
+        backdrop-filter: blur(6px);
+      }
+
+      .auth-btn:hover{
+        filter:brightness(1.1);
+      }
+
+      .auth-signup{
+        background:#10b981;
+        border-color:rgba(255,255,255,.0);
+      }
+
       /* Mobile adjustments */
       @media (max-width: 768px) {
         .header.hero-header {
@@ -140,12 +169,6 @@
     </style>
 </head>
 <body>
-    <!-- Auth Buttons (top-right) -->
-    <div id="authButtons" style="position:fixed;top:18px;right:18px;z-index:9999;display:flex;gap:10px;">
-      <a id="loginLink" href="login.html" style="padding:10px 14px;border-radius:10px;background:#111827;color:#fff;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,.15)">Log in</a>
-      <a id="signupLink" href="login.html?mode=signup" style="padding:10px 14px;border-radius:10px;background:#10b981;color:#fff;text-decoration:none;font-weight:700">Sign up</a>
-    </div>
-
     <!-- Hero Section -->
     <header class="header hero-header">
         <nav>
@@ -188,6 +211,10 @@
                         </ul>
                     </li>
                 </ul>
+            </div>
+            <div id="authButtons" class="auth-buttons">
+              <a id="loginLink" class="auth-btn auth-login" href="login.html">Log in</a>
+              <a id="signupLink" class="auth-btn auth-signup" href="login.html?mode=signup">Sign up</a>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
@@ -321,16 +348,6 @@
 
     <script src="menu.js"></script>
 
-    <!-- Update login/signup links with next parameter -->
-    <script>
-      const currentPath = location.pathname.split("/").pop() || "index.html";
-      const login = document.getElementById("loginLink");
-      const signup = document.getElementById("signupLink");
-
-      if (login) login.href = `login.html?next=${encodeURIComponent(currentPath)}`;
-      if (signup) signup.href = `login.html?mode=signup&next=${encodeURIComponent(currentPath)}`;
-    </script>
-
     <!-- Auth state management: show login/logout buttons -->
     <script type="module">
       import { auth } from "./firebase-client.js";
@@ -338,37 +355,46 @@
 
       const authButtons = document.getElementById("authButtons");
 
+      function currentPage() {
+        const file = location.pathname.split("/").pop();
+        return file && file.length ? file : "index.html";
+      }
+
+      function setLoggedOutUI() {
+        authButtons.innerHTML = `
+          <a id="loginLink" class="auth-btn auth-login" href="login.html">Log in</a>
+          <a id="signupLink" class="auth-btn auth-signup" href="login.html?mode=signup">Sign up</a>
+        `;
+
+        const next = encodeURIComponent(currentPage());
+        document.getElementById("loginLink").href = `login.html?next=${next}`;
+        document.getElementById("signupLink").href = `login.html?mode=signup&next=${next}`;
+      }
+
+      function setLoggedInUI(user) {
+        const name = user.displayName || user.email || "User";
+
+        authButtons.innerHTML = `
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.35);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15)">
+            <span style="color:white;font-weight:700;font-size:14px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+              Hi, ${name}
+            </span>
+            <button id="logoutBtn" style="padding:8px 12px;border-radius:10px;border:0;background:#ef4444;color:white;font-weight:800;cursor:pointer">
+              Log out
+            </button>
+          </div>
+        `;
+
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+          await signOut(auth);
+          location.reload();
+        });
+      }
+
       onAuthStateChanged(auth, (user) => {
         if (!authButtons) return;
-
-        if (user) {
-          authButtons.innerHTML = `
-            <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.4);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15)">
-              <span style="color:white;font-weight:700;font-size:14px;">
-                Hi, ${user.displayName || user.email || "User"}
-              </span>
-              <button id="logoutBtn" style="padding:8px 12px;border-radius:10px;border:0;background:#ef4444;color:white;font-weight:800;cursor:pointer">
-                Log out
-              </button>
-            </div>
-          `;
-
-          document.getElementById("logoutBtn").addEventListener("click", async () => {
-            await signOut(auth);
-            location.reload();
-          });
-        } else {
-          authButtons.innerHTML = `
-            <a id="loginLink" href="login.html" style="padding:10px 14px;border-radius:10px;background:#111827;color:#fff;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,.15)">Log in</a>
-            <a id="signupLink" href="login.html?mode=signup" style="padding:10px 14px;border-radius:10px;background:#10b981;color:#fff;text-decoration:none;font-weight:700">Sign up</a>
-          `;
-
-          const currentPath = location.pathname.split("/").pop() || "index.html";
-          const login = document.getElementById("loginLink");
-          const signup = document.getElementById("signupLink");
-          if (login) login.href = `login.html?next=${encodeURIComponent(currentPath)}`;
-          if (signup) signup.href = `login.html?mode=signup&next=${encodeURIComponent(currentPath)}`;
-        }
+        if (user) setLoggedInUI(user);
+        else setLoggedOutUI();
       });
     </script>
 
