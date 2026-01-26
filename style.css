@@ -69,6 +69,8 @@ nav{
     align-items: center;
     transform: translateY(-120%);
     transition: transform .45s ease-out;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 nav img{
     /* increased default logo size; keep responsive with max-width */

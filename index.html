@@ -163,9 +163,23 @@
         font-weight:800;
         cursor:pointer;
         border:1px solid rgba(255,255,255,.15);
+        font-size:clamp(12px, 2vw, 14px);
+        white-space:nowrap;
       }
       .ym-auth-btn-dark{ background:#111827; color:#fff; }
       .ym-auth-btn-green{ background:#10b981; color:#fff; border:0; }
+
+      /* Mobile adjustments for top-right buttons */
+      @media (max-width: 480px) {
+        #authButtons {
+          gap: 6px !important;
+          right: 12px !important;
+          top: 12px !important;
+        }
+        .ym-auth-btn {
+          padding: 8px 10px;
+        }
+      }
 
       /* Modal overlay */
       .ym-modal-overlay{
@@ -175,20 +189,25 @@
         display:none;
         align-items:center;
         justify-content:center;
-        padding:24px;
+        padding:16px;
         z-index:10000;
+        overflow-y:auto;
       }
       .ym-modal-overlay.is-open{ display:flex; }
 
       /* Modal card */
       .ym-modal{
-        width:min(520px, 96vw);
+        width:100%;
+        max-width:480px;
         background:#fff;
         color:#111;
         border-radius:18px;
         box-shadow:0 30px 90px rgba(0,0,0,.35);
-        padding:22px;
+        padding:28px;
         position:relative;
+        max-height:90vh;
+        overflow-y:auto;
+        margin:auto;
       }
       .ym-modal-close{
         position:absolute;
@@ -213,7 +232,7 @@
       }
       .ym-title{
         margin:0;
-        font-size:34px;
+        font-size:clamp(28px, 6vw, 34px);
         font-weight:900;
         letter-spacing:-0.02em;
       }
@@ -241,11 +260,12 @@
       .ym-req{ color:#b91c1c; }
       .ym-input{
         width:100%;
-        padding:14px 14px;
-        border-radius:14px;
-        border:2px solid rgba(0,0,0,.35);
-        font-size:18px;
+        padding:12px 14px;
+        border-radius:12px;
+        border:2px solid rgba(0,0,0,.25);
+        font-size:clamp(16px, 4vw, 18px);
         outline:none;
+        box-sizing:border-box;
       }
       .ym-input:focus{
         border-color:#111;
@@ -294,13 +314,13 @@
 
       .ym-primary{
         width:100%;
-        margin-top:14px;
-        padding:16px 18px;
+        margin-top:12px;
+        padding:14px 16px;
         border-radius:999px;
         border:0;
         background:#222;
         color:#fff;
-        font-size:20px;
+        font-size:clamp(16px, 4vw, 20px);
         font-weight:900;
         cursor:pointer;
       }
@@ -322,15 +342,15 @@
         display:flex;
         align-items:center;
         justify-content:center;
-        gap:12px;
-        padding:14px 16px;
+        gap:10px;
+        padding:12px 14px;
         border-radius:999px;
         border:2px solid #111;
         background:#fff;
-        font-size:20px;
+        font-size:clamp(16px, 4vw, 20px);
         font-weight:900;
         cursor:pointer;
-        margin-bottom:12px;
+        margin-bottom:10px;
       }
       .ym-provider-icon{
         width:34px;
@@ -369,6 +389,34 @@
 
         .header.hero-header .text-box {
           padding: 18vh 1.2rem 4rem;
+        }
+
+        #authButtons {
+          gap: 6px !important;
+          right: 10px !important;
+          top: 10px !important;
+        }
+
+        .ym-auth-btn {
+          padding: 8px 12px !important;
+          font-size: 12px !important;
+        }
+
+        .ym-modal {
+          max-width: 90vw !important;
+          padding: 20px !important;
+        }
+
+        .ym-title {
+          font-size: 24px !important;
+        }
+
+        .ym-label {
+          font-size: 16px !important;
+        }
+
+        .ym-check {
+          font-size: 14px !important;
         }
       }
     </style>
@@ -417,7 +465,7 @@
                     </li>
                 </ul>
             </div>
-            <div id="authButtons" style="position:fixed;top:18px;right:18px;z-index:9999;display:flex;gap:10px;">
+            <div id="authButtons" style="position:fixed;top:14px;right:14px;z-index:9999;display:flex;gap:8px;">
               <button id="openLogin" class="ym-auth-btn ym-auth-btn-dark" type="button">Log in</button>
               <button id="openSignup" class="ym-auth-btn ym-auth-btn-green" type="button">Sign up</button>
             </div>
