@@ -156,6 +156,170 @@
         border-color:rgba(255,255,255,.0);
       }
 
+      /* Auth modal (Etsy-style popup) */
+      .auth-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        z-index: 20000;
+      }
+
+      .auth-modal-backdrop.show {
+        display: flex;
+      }
+
+      .auth-modal {
+        width: min(520px, 94vw);
+        background: rgba(8, 18, 31, 0.92);
+        border: 1px solid rgba(255,255,255,0.16);
+        border-radius: 18px;
+        box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+        overflow: hidden;
+        transform: translateY(6px);
+      }
+
+      .auth-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 18px 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.10);
+      }
+
+      .auth-modal-title {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+
+      .auth-modal-title h3 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: 0.01em;
+      }
+
+      .auth-mode-pill {
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.18);
+        opacity: 0.9;
+      }
+
+      .auth-close {
+        background: transparent;
+        border: 0;
+        color: rgba(255,255,255,0.85);
+        font-size: 22px;
+        cursor: pointer;
+        padding: 6px 10px;
+        border-radius: 10px;
+      }
+
+      .auth-close:hover {
+        background: rgba(255,255,255,0.08);
+      }
+
+      .auth-modal-body {
+        padding: 16px 18px 18px;
+      }
+
+      .auth-field {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.18);
+        background: rgba(9, 28, 49, 0.85);
+        color: #fff;
+        margin: 10px 0;
+        outline: none;
+      }
+
+      .auth-field:focus {
+        border-color: rgba(147, 197, 253, 0.6);
+        box-shadow: 0 0 0 4px rgba(59,130,246,0.18);
+      }
+
+      .auth-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .auth-btn {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 0;
+        cursor: pointer;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+      }
+
+      .auth-btn.primary {
+        background: #3b82f6;
+        color: #fff;
+      }
+
+      .auth-btn.secondary {
+        background: #10b981;
+        color: #fff;
+      }
+
+      .auth-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 14px 0;
+        opacity: 0.85;
+      }
+
+      .auth-divider::before,
+      .auth-divider::after {
+        content: "";
+        height: 1px;
+        background: rgba(255,255,255,0.18);
+        flex: 1;
+      }
+
+      .auth-divider span {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.9;
+      }
+
+      .auth-btn.google {
+        background: rgba(17, 24, 39, 0.9);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.18);
+      }
+
+      .auth-msg {
+        margin-top: 10px;
+        min-height: 18px;
+        font-size: 13px;
+        opacity: 0.95;
+        color: rgba(255,255,255,0.9);
+      }
+
+      .auth-switch {
+        margin-top: 12px;
+        font-size: 13px;
+        opacity: 0.9;
+      }
+
+      .auth-switch a {
+        color: #93c5fd;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
       /* Mobile adjustments */
       @media (max-width: 768px) {
         .header.hero-header {
@@ -212,10 +376,7 @@
                     </li>
                 </ul>
             </div>
-            <div id="authButtons" class="auth-buttons">
-              <a id="loginLink" class="auth-btn auth-login" href="login.html">Log in</a>
-              <a id="signupLink" class="auth-btn auth-signup" href="login.html?mode=signup">Sign up</a>
-            </div>
+            <div id="authButtons" class="auth-buttons"></div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
         <div class="text-box">
@@ -348,55 +509,196 @@
 
     <script src="menu.js"></script>
 
-    <!-- Auth state management: show login/logout buttons -->
+    <!-- Auth modal management -->
     <script type="module">
       import { auth } from "./firebase-client.js";
-      import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import {
+        onAuthStateChanged,
+        signOut,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup
+      } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
+      // Elements
       const authButtons = document.getElementById("authButtons");
 
-      function currentPage() {
-        const file = location.pathname.split("/").pop();
-        return file && file.length ? file : "index.html";
-      }
+      const backdrop = document.getElementById("authBackdrop");
+      const closeBtn = document.getElementById("authClose");
+      const titleEl = document.getElementById("authTitle");
+      const pillEl = document.getElementById("authModePill");
 
-      function setLoggedOutUI() {
-        authButtons.innerHTML = `
-          <a id="loginLink" class="auth-btn auth-login" href="login.html">Log in</a>
-          <a id="signupLink" class="auth-btn auth-signup" href="login.html?mode=signup">Sign up</a>
-        `;
+      const emailEl = document.getElementById("authEmail");
+      const passEl = document.getElementById("authPass");
+      const msgEl = document.getElementById("authMsg");
 
-        const next = encodeURIComponent(currentPage());
-        document.getElementById("loginLink").href = `login.html?next=${next}`;
-        document.getElementById("signupLink").href = `login.html?mode=signup&next=${next}`;
-      }
+      const loginBtn = document.getElementById("authLoginBtn");
+      const signupBtn = document.getElementById("authSignupBtn");
+      const googleBtn = document.getElementById("authGoogleBtn");
 
-      function setLoggedInUI(user) {
-        const name = user.displayName || user.email || "User";
+      const switchText = document.getElementById("authSwitchText");
+      const switchLink = document.getElementById("authSwitchLink");
 
-        authButtons.innerHTML = `
-          <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.35);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15)">
-            <span style="color:white;font-weight:700;font-size:14px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-              Hi, ${name}
-            </span>
-            <button id="logoutBtn" style="padding:8px 12px;border-radius:10px;border:0;background:#ef4444;color:white;font-weight:800;cursor:pointer">
-              Log out
-            </button>
-          </div>
-        `;
+      let mode = "login"; // "login" | "signup"
 
-        document.getElementById("logoutBtn").addEventListener("click", async () => {
-          await signOut(auth);
-          location.reload();
-        });
-      }
+      const setMsg = (t) => { msgEl.textContent = t || ""; };
 
+      const setMode = (m) => {
+        mode = m;
+        if (mode === "login") {
+          titleEl.textContent = "Sign in";
+          pillEl.textContent = "Log in";
+          switchText.textContent = "New here?";
+          switchLink.textContent = "Create an account";
+          passEl.autocomplete = "current-password";
+        } else {
+          titleEl.textContent = "Create account";
+          pillEl.textContent = "Sign up";
+          switchText.textContent = "Already have an account?";
+          switchLink.textContent = "Log in instead";
+          passEl.autocomplete = "new-password";
+        }
+        setMsg("");
+      };
+
+      const openAuth = (m = "login") => {
+        setMode(m);
+        backdrop.classList.add("show");
+        backdrop.setAttribute("aria-hidden", "false");
+        setTimeout(() => emailEl.focus(), 50);
+      };
+
+      const closeAuth = () => {
+        backdrop.classList.remove("show");
+        backdrop.setAttribute("aria-hidden", "true");
+        setMsg("");
+        passEl.value = "";
+      };
+
+      // Close behaviors
+      closeBtn.addEventListener("click", closeAuth);
+      backdrop.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeAuth();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && backdrop.classList.contains("show")) closeAuth();
+      });
+
+      switchLink.addEventListener("click", () => {
+        setMode(mode === "login" ? "signup" : "login");
+      });
+
+      // Actions
+      loginBtn.addEventListener("click", async () => {
+        setMsg("Signing in...");
+        try {
+          await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+          closeAuth();
+        } catch (e) {
+          console.error(e);
+          setMsg(e.code || e.message);
+        }
+      });
+
+      signupBtn.addEventListener("click", async () => {
+        setMsg("Creating account...");
+        try {
+          await createUserWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+          closeAuth();
+        } catch (e) {
+          console.error(e);
+          setMsg(e.code || e.message);
+        }
+      });
+
+      googleBtn.addEventListener("click", async () => {
+        setMsg("Opening Google sign-in...");
+        try {
+          const provider = new GoogleAuthProvider();
+          await signInWithPopup(auth, provider);
+          closeAuth();
+        } catch (e) {
+          console.error(e);
+          setMsg(e.code || e.message);
+        }
+      });
+
+      // Render top-right buttons based on auth state
       onAuthStateChanged(auth, (user) => {
         if (!authButtons) return;
-        if (user) setLoggedInUI(user);
-        else setLoggedOutUI();
+
+        if (user) {
+          authButtons.innerHTML = `
+            <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.38);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15)">
+              <span style="color:white;font-weight:800;font-size:14px;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                Hi, ${user.displayName || user.email || "User"}
+              </span>
+              <button id="logoutBtn" style="padding:8px 12px;border-radius:10px;border:0;background:#ef4444;color:white;font-weight:900;cursor:pointer">
+                Log out
+              </button>
+            </div>
+          `;
+          document.getElementById("logoutBtn").addEventListener("click", async () => {
+            await signOut(auth);
+          });
+        } else {
+          authButtons.innerHTML = `
+            <button id="openLogin" style="padding:10px 14px;border-radius:10px;background:#111827;color:#fff;font-weight:800;border:1px solid rgba(255,255,255,.15);cursor:pointer">
+              Log in
+            </button>
+            <button id="openSignup" style="padding:10px 14px;border-radius:10px;background:#10b981;color:#fff;font-weight:900;border:0;cursor:pointer">
+              Sign up
+            </button>
+          `;
+
+          document.getElementById("openLogin").addEventListener("click", () => openAuth("login"));
+          document.getElementById("openSignup").addEventListener("click", () => openAuth("signup"));
+        }
       });
+
+      // Optional: allow opening the modal from URL params (nice for deep links)
+      const params = new URLSearchParams(location.search);
+      if (params.get("auth") === "login") openAuth("login");
+      if (params.get("auth") === "signup") openAuth("signup");
+
+      // Expose for other pages if you copy this snippet
+      window.openAuthModal = openAuth;
     </script>
+
+    <!-- Auth Modal -->
+    <div id="authBackdrop" class="auth-modal-backdrop" aria-hidden="true">
+      <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="auth-modal-header">
+          <div class="auth-modal-title">
+            <h3 id="authTitle">Sign in</h3>
+            <span id="authModePill" class="auth-mode-pill">Log in</span>
+          </div>
+          <button id="authClose" class="auth-close" aria-label="Close">✕</button>
+        </div>
+
+        <div class="auth-modal-body">
+          <input id="authEmail" class="auth-field" type="email" placeholder="Email address" autocomplete="email" />
+          <input id="authPass" class="auth-field" type="password" placeholder="Password" autocomplete="current-password" />
+
+          <div class="auth-actions">
+            <button id="authLoginBtn" class="auth-btn primary">Log in</button>
+            <button id="authSignupBtn" class="auth-btn secondary">Sign up</button>
+          </div>
+
+          <div class="auth-divider"><span>or</span></div>
+
+          <button id="authGoogleBtn" class="auth-btn google">Continue with Google</button>
+
+          <div id="authMsg" class="auth-msg"></div>
+
+          <div class="auth-switch">
+            <span id="authSwitchText">New here?</span>
+            <a id="authSwitchLink">Create an account</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
         <!-- Entrance animations: reveal elements on load and scroll -->
         <script>
