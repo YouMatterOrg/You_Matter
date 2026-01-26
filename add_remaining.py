@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ | YouMatter</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="forums.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <!-- Auth Modal Styles -->
+import re
+
+pages = ["thread.html", "post.html", "new-post.html"]
+
+for page in pages:
+    try:
+        with open(page, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        if 'openSigninDesktopBtn' in content:
+            print(f"✗ {page} - Already has auth buttons")
+            continue
+        
+        # Add modal CSS if not present
+        if 'ym-modal-overlay' not in content:
+            css_style = '''  <!-- Auth Modal Styles -->
   <style>
     .ym-modal-overlay {
       display: none;
@@ -270,297 +274,11 @@
       }
     }
   </style>
-
-</head>
-<body>
-  <section class="sub-header">
-    <nav>
-      <a href="index.html"><img src="images/logo.png" alt="YouMatter"></a>
-      <div class="nav-links" id="navLinks">
-        <i class="fa fa-times" onclick="hideMenu()"></i>
-        <ul>
-          <li><a href="index.html">HOME</a></li>
-
-          <li class="has-dropdown">
-            <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
-            <ul class="dropdown">
-              <li><a href="about-youmatter.html">About You Matter</a></li>
-              <li><a href="about-who-we-are.html">Who We Are</a></li>
-              <li><a href="about-why-we-started.html">Why We Started</a></li>
-              <li><a href="about-what-we-do.html">What We Do</a></li>
-            </ul>
-          </li>
-
-          <li class="has-dropdown">
-            <a href="course.html">SERVICES <i class="fa-solid fa-angle-down"></i></a>
-            <ul class="dropdown">
-              <li><a href="appointment.html">Appointment</a></li>
-              <li><a href="check-in.html">Check-in</a></li>
-              <li><a href="gethelp.html">Get Help</a></li>
-            </ul>
-          </li>
-
-          <li class="has-dropdown">
-            <a href="blog.html">LEARN <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-            <ul class="dropdown">
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="disorders.html">Disorders</a></li>
-              <li><a href="factvsfiction.html">Fact vs Fiction</a></li>
-              <li><a href="lifestages.html">Life Stages</a></li>
-            </ul>
-          </li>
-          <li><a href="testimonials.html">TESTIMONIALS</a></li>
-          <li class="has-dropdown">
-            <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
-            <ul class="dropdown">
-              <li><a href="forums.html">Forums</a></li>
-              <li><a href="FAQ.html" aria-current="page">FAQ</a></li>
-            </ul>
-          </li>
-          <li id="navAuthContainer" class="nav-auth-container">
-            <button id="openSignin" class="btn-auth" type="button">Sign in</button>
-          </li>
-        </ul>
-      </div>
-      <div id="authButtons" class="nav-actions">
-        <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
-      </div>
-      <li class="nav-auth-container" id="navAuthContainer">
-            <button class="btn-auth" id="openSigninMobileBtn">Sign in</button>
-          </li>
-        </ul>
-
-        <div class="auth-buttons" id="authButtons" style="display: flex; align-items: center; gap: 10px; margin-right: 20px;">
-          <button class="btn-auth" id="openSigninDesktopBtn">Sign in</button>
-        </div>
-      </div>
-
-      
-      <i class="fa fa-bars" onclick="showMenu()"></i>
-    </nav>
-    <h1 class="sr-only">Frequently Asked Questions</h1>
-  </section>
-
-  <section class="faqWrap">
-    <div class="faqInner">
-      <div class="faqHead">
-        <div></div>
-        <h1 class="faqTitle">FAQ</h1>
-        <a class="faqEmail" href="mailto:support@youmatter.org">Email Us</a>
-      </div>
-
-      <div class="faqTools">
-        <div class="faqSearch" role="search" aria-label="Looking for something?">
-          <span style="color:#6b7280; font-weight:800;">Looking for something?</span>
-          <input id="faqSearchInput" type="text" placeholder="Type a keyword" />
-          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-        </div>
-      </div>
-
-      <div id="faqList" class="faqList">
-        <details class="faqItem">
-          <summary>
-            <span>What is mental health?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Mental health is a person’s emotional and psychological well-being. It affects how we think, feel, act, and make decisions.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>Why is mental health awareness important?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Awareness reduces stigma and encourages people to seek support from professionals, family, or friends. It helps communities understand, include, and care for those who are struggling.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What are mental health disorders?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">These are conditions that affect mood, thinking, or behavior. Severity can range from mild to severe, and may impact daily life, relationships, and functioning.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What are some common types of mental health disorders?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">
-            <ul>
-              <li>Anxiety disorders</li>
-              <li>OCD</li>
-              <li>Depression</li>
-              <li>ADHD</li>
-              <li>PTSD</li>
-              <li>Bipolar Disorder</li>
-              <li>Eating disorders</li>
-              <li>Suicide-related conditions</li>
-              <li>Substance Use Disorder</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is Anxiety Disorder?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">A condition involving persistent fear or worry that can interfere with daily activities and well-being.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is OCD?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Obsessive-Compulsive Disorder causes unwanted thoughts (obsessions) and repetitive behaviors (compulsions) that can disrupt everyday life.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is Depression?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">A disorder marked by persistent sadness, loss of interest, and changes in sleep, appetite, or energy that affect daily functioning.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is ADHD?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Attention-Deficit/Hyperactivity Disorder involves inattention, hyperactivity, and impulsivity that can affect school, work, and relationships.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is PTSD?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Post-Traumatic Stress Disorder can follow traumatic events and include intrusive memories, avoidance, negative mood, and hyperarousal.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is Bipolar Disorder?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">A mood disorder with episodes of depression and mania/hypomania, causing significant changes in energy, activity, and mood.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is an Eating Disorder?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Eating disorders affect thoughts, emotions, and behaviors around food, weight, and body image. Common types include anorexia, bulimia, and binge eating disorder. They can be serious and sometimes life-threatening without support.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is Suicide?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Suicidal thoughts can arise from overwhelming pain, stress, or despair. With support, attention, and professional care, most crises can be averted. If you or someone you know is in immediate danger, seek emergency help.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What is Substance Use Disorder?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">A condition where repeated use of drugs or alcohol leads to dependence and harms health, behavior, and daily life.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>Can children and teens have mental health disorders?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Yes. Mental health conditions can affect all ages. Early identification and support improve outcomes.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>What causes mental health disorders?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Causes often involve a mix of genetics, brain chemistry, life experiences, trauma, and stress.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>How can I support someone struggling with mental health?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Listen without judgment, offer consistent support, encourage professional help, and check in regularly. Respect their pace and privacy.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>Is it okay to talk about mental health?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Yes. Open conversations reduce stigma, help people feel less alone, and can lead to understanding and healing.</div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>Where can someone get help for mental health issues?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">
-            <ul>
-              <li>Mental health professionals (therapists, counselors, psychologists)</li>
-              <li>School counselors or trusted adults</li>
-              <li>Support hotlines and community organizations</li>
-              <li>Friends and family</li>
-            </ul>
-            See <a href="get-help.html">Get Help</a> for resources.
-          </div>
-        </details>
-
-        <details class="faqItem">
-          <summary>
-            <span>Can mental health disorders be treated?</span>
-            <i class="fa-solid fa-chevron-down faqChevron" aria-hidden="true"></i>
-          </summary>
-          <div class="faqAnswer">Yes. Many conditions can be managed or treated with therapy, medication, healthy routines, and supportive relationships.</div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <h4>About Us</h4>
-    <p>Built with purpose.</p>
-    <div class="icons">
-      <i class="fab fa-facebook-f" aria-label="Facebook"></i>
-      <i class="fab fa-twitter" aria-label="Twitter"></i>
-      <i class="fab fa-instagram" aria-label="Instagram"></i>
-      <i class="fab fa-linkedin-in" aria-label="LinkedIn"></i>
-    </div>
-    <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
-  </footer>
-
-  <script src="menu.js"></script>
-  <script>
-    // Simple client-side filter for FAQ
-    const input = document.getElementById('faqSearchInput');
-    const list = document.getElementById('faqList');
-    if (input && list) {
-      input.addEventListener('input', () => {
-        const q = input.value.trim().toLowerCase();
-        [...list.querySelectorAll('.faqItem')].forEach(item => {
-          const text = item.textContent.toLowerCase();
-          item.style.display = q && !text.includes(q) ? 'none' : '';
-        });
-      });
-    }
-  </script>
-<!-- ================= AUTH MODAL ================= -->
+'''
+            content = content.replace('</head>', css_style + '\n</head>')
+        
+        # Add auth modal HTML and script before closing body
+        auth_modal = '''<!-- ================= AUTH MODAL ================= -->
 <div class="ym-modal-overlay" id="authModal">
   <div class="ym-modal-content">
     <button class="modal-close" onclick="closeModal()">&times;</button>
@@ -853,6 +571,19 @@
     }
   });
 </script>
-
-</body>
-</html>
+'''
+        content = content.replace('</body>', auth_modal + '\n</body>')
+        
+        # Now add the button before closing nav
+        pattern = r'(</li>\s*</ul>\s*</div>\s*)<i class="fa fa-bars"[^>]*></i>\s*</nav>'
+        replacement = r'\1<li class="nav-auth-container" id="navAuthContainer">\n            <button class="btn-auth" id="openSigninMobileBtn">Sign in</button>\n          </li>\n        </ul>\n\n        <div class="auth-buttons" id="authButtons" style="display: flex; align-items: center; gap: 10px; margin-right: 20px;">\n          <button class="btn-auth" id="openSigninDesktopBtn">Sign in</button>\n        </div>\n      </div>\n\n      <i class="fa fa-bars" onclick="showMenu()"></i>\n    </nav>'
+        
+        if re.search(pattern, content):
+            content = re.sub(pattern, replacement, content)
+            with open(page, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print(f"✓ Updated {page}")
+        else:
+            print(f"✗ {page} - Could not find nav pattern")
+    except Exception as e:
+        print(f"✗ {page} - Error: {e}")
