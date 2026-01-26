@@ -501,7 +501,7 @@
                 </ul>
             </div>
             <div id="authButtons" style="position:fixed;top:14px;right:14px;z-index:9999;display:flex;gap:8px;">
-              <a id="openSignup" href="login.html" class="ym-auth-btn ym-auth-btn-register" type="button" style="text-decoration:none;display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;transition:all 0.3s ease;cursor:pointer;">Register</a>
+              <button id="openSignin" class="ym-auth-btn ym-auth-btn-signin" type="button" style="text-decoration:none;display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;transition:all 0.3s ease;cursor:pointer;">Sign in</button>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
@@ -740,6 +740,8 @@
       switchToRegister?.addEventListener("click", showRegister);
       switchToSignIn?.addEventListener("click", showSignIn);
 
+      document.getElementById("openSignin")?.addEventListener("click", () => openModal("login"));
+
       // Enable/disable Register button based on required fields
       function refreshRegisterState(){
         const ok =
@@ -878,8 +880,9 @@
           });
         } else {
           authButtons.innerHTML = `
-            <a id="openSignup" href="login.html" class="ym-auth-btn ym-auth-btn-register" style="text-decoration:none;display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;transition:all 0.3s ease;cursor:pointer;">Register</a>
+            <button id="openSignin" class="ym-auth-btn ym-auth-btn-signin" type="button" style="text-decoration:none;display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;transition:all 0.3s ease;cursor:pointer;">Sign in</button>
           `;
+          document.getElementById("openSignin")?.addEventListener("click", () => openModal("login"));
         }
       });
 
