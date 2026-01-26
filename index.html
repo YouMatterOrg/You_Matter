@@ -140,6 +140,12 @@
     </style>
 </head>
 <body>
+    <!-- Auth Buttons (top-right) -->
+    <div id="authButtons" style="position:fixed;top:18px;right:18px;z-index:9999;display:flex;gap:10px;">
+      <a id="loginLink" href="login.html" style="padding:10px 14px;border-radius:10px;background:#111827;color:#fff;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,.15)">Log in</a>
+      <a id="signupLink" href="login.html?mode=signup" style="padding:10px 14px;border-radius:10px;background:#10b981;color:#fff;text-decoration:none;font-weight:700">Sign up</a>
+    </div>
+
     <!-- Hero Section -->
     <header class="header hero-header">
         <nav>
@@ -314,6 +320,57 @@
     </footer>
 
     <script src="menu.js"></script>
+
+    <!-- Update login/signup links with next parameter -->
+    <script>
+      const currentPath = location.pathname.split("/").pop() || "index.html";
+      const login = document.getElementById("loginLink");
+      const signup = document.getElementById("signupLink");
+
+      if (login) login.href = `login.html?next=${encodeURIComponent(currentPath)}`;
+      if (signup) signup.href = `login.html?mode=signup&next=${encodeURIComponent(currentPath)}`;
+    </script>
+
+    <!-- Auth state management: show login/logout buttons -->
+    <script type="module">
+      import { auth } from "./firebase-client.js";
+      import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+      const authButtons = document.getElementById("authButtons");
+
+      onAuthStateChanged(auth, (user) => {
+        if (!authButtons) return;
+
+        if (user) {
+          authButtons.innerHTML = `
+            <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.4);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15)">
+              <span style="color:white;font-weight:700;font-size:14px;">
+                Hi, ${user.displayName || user.email || "User"}
+              </span>
+              <button id="logoutBtn" style="padding:8px 12px;border-radius:10px;border:0;background:#ef4444;color:white;font-weight:800;cursor:pointer">
+                Log out
+              </button>
+            </div>
+          `;
+
+          document.getElementById("logoutBtn").addEventListener("click", async () => {
+            await signOut(auth);
+            location.reload();
+          });
+        } else {
+          authButtons.innerHTML = `
+            <a id="loginLink" href="login.html" style="padding:10px 14px;border-radius:10px;background:#111827;color:#fff;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,.15)">Log in</a>
+            <a id="signupLink" href="login.html?mode=signup" style="padding:10px 14px;border-radius:10px;background:#10b981;color:#fff;text-decoration:none;font-weight:700">Sign up</a>
+          `;
+
+          const currentPath = location.pathname.split("/").pop() || "index.html";
+          const login = document.getElementById("loginLink");
+          const signup = document.getElementById("signupLink");
+          if (login) login.href = `login.html?next=${encodeURIComponent(currentPath)}`;
+          if (signup) signup.href = `login.html?mode=signup&next=${encodeURIComponent(currentPath)}`;
+        }
+      });
+    </script>
 
         <!-- Entrance animations: reveal elements on load and scroll -->
         <script>

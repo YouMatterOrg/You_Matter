@@ -55,7 +55,12 @@
     const msgEl = document.getElementById("msg");
 
     const redirectTo = new URLSearchParams(location.search).get("next") || "index.html";
+    const mode = new URLSearchParams(location.search).get("mode");
     const setMsg = (t) => msgEl.textContent = t || "";
+
+    if (mode === "signup") {
+      setMsg("Sign up mode selected.");
+    }
 
     // If already logged in, skip login page
     onAuthStateChanged(auth, (user) => {
