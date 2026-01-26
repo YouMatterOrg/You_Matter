@@ -498,10 +498,13 @@
                             <li><a href="FAQ.html">FAQ</a></li>
                         </ul>
                     </li>
+                    <li id="navAuthContainer" class="nav-auth-container">
+                      <button id="openSignin" class="btn-auth" type="button">Sign in</button>
+                    </li>
                 </ul>
             </div>
-            <div id="authButtons" style="position:fixed;top:14px;right:14px;z-index:9999;display:flex;gap:8px;">
-              <button id="openSignin" class="ym-auth-btn ym-auth-btn-signin" type="button" style="text-decoration:none;display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;transition:all 0.3s ease;cursor:pointer;">Sign in</button>
+            <div id="authButtons" class="nav-actions">
+              <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
@@ -669,8 +672,10 @@
       const msg1 = document.getElementById("ymMsg");
       const msg2 = document.getElementById("ymMsg2");
 
-      const openLoginBtn = document.getElementById("openLogin");
-      const openSignupBtn = document.getElementById("openSignup");
+      const authButtons = document.getElementById("authButtons");
+      const navAuthContainer = document.getElementById("navAuthContainer");
+      const openSigninDesktopBtn = document.getElementById("openSigninDesktop");
+      const openSigninMobileBtn = document.getElementById("openSignin");
 
       // Sign in inputs
       const emailEl = document.getElementById("ymEmail");
@@ -740,7 +745,8 @@
       switchToRegister?.addEventListener("click", showRegister);
       switchToSignIn?.addEventListener("click", showSignIn);
 
-      document.getElementById("openSignin")?.addEventListener("click", () => openModal("login"));
+      openSigninDesktopBtn?.addEventListener("click", () => openModal("login"));
+      openSigninMobileBtn?.addEventListener("click", () => openModal("login"));
 
       // Enable/disable Register button based on required fields
       function refreshRegisterState(){
@@ -860,29 +866,47 @@
         }
       });
 
-      // Auth state - swap top-right UI (login buttons vs user + logout)
+      // Auth state - update both desktop and mobile buttons
       onAuthStateChanged(auth, (user) => {
-        if (!authButtons) return;
-
-        if (user) {
-          authButtons.innerHTML = `
-            <div style="display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.35);padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.15)">
-              <span style="color:white;font-weight:800;font-size:14px;">
-                Hi, ${user.displayName || user.email || "User"}
-              </span>
-              <button id="logoutBtn" style="padding:8px 12px;border-radius:10px;border:0;background:#ef4444;color:white;font-weight:900;cursor:pointer">
-                Log out
-              </button>
-            </div>
-          `;
-          document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-            await signOut(auth);
-          });
-        } else {
-          authButtons.innerHTML = `
-            <button id="openSignin" class="ym-auth-btn ym-auth-btn-signin" type="button" style="text-decoration:none;display:inline-block;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;transition:all 0.3s ease;cursor:pointer;">Sign in</button>
-          `;
-          document.getElementById("openSignin")?.addEventListener("click", () => openModal("login"));
+        // Update desktop button
+        if (openSigninDesktopBtn) {
+          if (user) {
+            authButtons.innerHTML = `
+              <div class="user-pill">
+                <span>Hi, ${user.displayName || user.email || "User"}</span>
+                <button id="logoutBtnDesktop" class="btn-logout">Log out</button>
+              </div>
+            `;
+            document.getElementById("logoutBtnDesktop")?.addEventListener("click", async () => {
+              await signOut(auth);
+            });
+          } else {
+            authButtons.innerHTML = `
+              <button id="openSigninDesktop" class="btn-auth">Sign in</button>
+            `;
+            document.getElementById("openSigninDesktop")?.addEventListener("click", () => openModal("login"));
+          }
+        }
+        
+        // Update mobile button in menu
+        if (navAuthContainer) {
+          const navAuthBtn = navAuthContainer.querySelector("button");
+          if (user) {
+            navAuthContainer.innerHTML = `
+              <div style="padding: 0 12px;">
+                <div style="color: #fff; font-size: 13px; margin-bottom: 8px;">Hi, ${user.displayName || user.email || "User"}</div>
+                <button id="logoutBtnMobile" class="btn-logout" style="width: 100%;">Log out</button>
+              </div>
+            `;
+            document.getElementById("logoutBtnMobile")?.addEventListener("click", async () => {
+              await signOut(auth);
+            });
+          } else {
+            navAuthContainer.innerHTML = `
+              <button id="openSignin" class="btn-auth">Sign in</button>
+            `;
+            document.getElementById("openSignin")?.addEventListener("click", () => openModal("login"));
+          }
         }
       });
 
