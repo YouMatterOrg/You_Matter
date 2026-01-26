@@ -768,28 +768,64 @@
       // Sign in
       signInBtn?.addEventListener("click", async () => {
         setMsg(msg1, "");
+        const email = (emailEl.value || "").trim();
+        const password = passEl.value || "";
+        
+        // Basic validation
+        if (!email) {
+          setMsg(msg1, "Please enter your email address.");
+          return;
+        }
+        if (!password) {
+          setMsg(msg1, "Please enter your password.");
+          return;
+        }
+        
         try{
           await applyPersistence();
-          await signInWithEmailAndPassword(auth, (emailEl.value || "").trim(), passEl.value || "");
+          await signInWithEmailAndPassword(auth, email, password);
           closeModal();
         } catch(e){
           console.error(e);
-          setMsg(msg1, e.code || e.message);
+          // User-friendly error messages
+          if (e.code === "auth/user-not-found") {
+            setMsg(msg1, "No account found with this email address.");
+          } else if (e.code === "auth/wrong-password") {
+            setMsg(msg1, "Incorrect password. Please try again.");
+          } else if (e.code === "auth/invalid-email") {
+            setMsg(msg1, "Please enter a valid email address.");
+          } else if (e.code === "auth/user-disabled") {
+            setMsg(msg1, "This account has been disabled.");
+          } else {
+            setMsg(msg1, e.message || "Sign in failed. Please try again.");
+          }
         }
       });
 
       // Register
       registerBtn?.addEventListener("click", async () => {
         setMsg(msg2, "");
+        const email = (regEmailEl.value || "").trim();
+        const password = regPassEl.value || "";
+        const name = (firstNameEl.value || "").trim();
+        
         try{
           await setPersistence(auth, browserLocalPersistence);
-          const cred = await createUserWithEmailAndPassword(auth, (regEmailEl.value || "").trim(), regPassEl.value || "");
-          const name = (firstNameEl.value || "").trim();
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
           if (name) await updateProfile(cred.user, { displayName: name });
           closeModal();
         } catch(e){
           console.error(e);
-          setMsg(msg2, e.code || e.message);
+          // User-friendly error messages
+          if (e.code === "auth/email-already-in-use") {
+            setMsg(msg2, "This email is already registered. Please sign in instead.");
+          } else if (e.code === "auth/weak-password") {
+            setMsg(msg2, "Password should be at least 6 characters.");
+          } else if (e.code === "auth/invalid-email") {
+            setMsg(msg2, "Please enter a valid email address.");
+          } else {
+            setMsg(msg2, e.message || "Registration failed. Please try again.");
+          }
         }
       });
 
@@ -899,16 +935,6 @@
             <span>Continue with Google</span>
           </button>
 
-          <button class="ym-provider ym-provider-disabled" type="button" disabled title="Enable Facebook provider in Firebase first">
-            <span class="ym-provider-icon">f</span>
-            <span>Continue with Facebook</span>
-          </button>
-
-          <button class="ym-provider ym-provider-disabled" type="button" disabled title="Enable Apple provider in Firebase first">
-            <span class="ym-provider-icon"></span>
-            <span>Continue with Apple</span>
-          </button>
-
           <p class="ym-legal">
             By clicking Sign in or Continue with Google you agree to You Matter's Terms of Use and Privacy Policy.
           </p>
@@ -949,16 +975,6 @@
           <button class="ym-provider" id="ymGoogleBtn2" type="button">
             <span class="ym-provider-icon">G</span>
             <span>Continue with Google</span>
-          </button>
-
-          <button class="ym-provider ym-provider-disabled" type="button" disabled>
-            <span class="ym-provider-icon">f</span>
-            <span>Continue with Facebook</span>
-          </button>
-
-          <button class="ym-provider ym-provider-disabled" type="button" disabled>
-            <span class="ym-provider-icon"></span>
-            <span>Continue with Apple</span>
           </button>
 
           <div class="ym-msg" id="ymMsg2"></div>
