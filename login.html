@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YouMatter - Login</title>
+  <style>
+    html,body{height:100%;margin:0;font-family:system-ui;background:#06121f;color:#fff}
+    .wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:min(420px,92vw);background:rgba(0,0,0,.45);padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,.18)}
+    input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:#0b1e33;color:#fff;margin:8px 0}
+    button{width:100%;padding:12px;border-radius:10px;border:0;background:#3b82f6;color:#fff;font-weight:700;margin-top:10px;cursor:pointer}
+    .row{display:flex;gap:10px}
+    .row button{width:50%}
+    .msg{margin-top:10px;opacity:.9;min-height:20px}
+    a{color:#93c5fd}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h2 style="margin:0 0 10px 0">Log in</h2>
+
+      <input id="email" type="email" placeholder="Email" autocomplete="email" />
+      <input id="pass" type="password" placeholder="Password" autocomplete="current-password" />
+
+      <div class="row">
+        <button id="loginBtn">Log in</button>
+        <button id="signupBtn" style="background:#10b981">Sign up</button>
+      </div>
+
+      <button id="googleBtn" style="background:#111827;border:1px solid rgba(255,255,255,.2)">
+        Continue with Google
+      </button>
+
+      <div class="msg" id="msg"></div>
+      <div style="font-size:14px;opacity:.85;margin-top:10px">
+        Back to <a href="index.html">Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth } from "./firebase-client.js";
+    import {
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    const emailEl = document.getElementById("email");
+    const passEl = document.getElementById("pass");
+    const msgEl = document.getElementById("msg");
+
+    const redirectTo = new URLSearchParams(location.search).get("next") || "index.html";
+    const setMsg = (t) => msgEl.textContent = t || "";
+
+    // If already logged in, skip login page
+    onAuthStateChanged(auth, (user) => {
+      if (user) location.href = redirectTo;
+    });
+
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      setMsg("Logging in...");
+      try {
+        await signInWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+        location.href = redirectTo;
+      } catch (e) {
+        console.error(e);
+        setMsg(e.code || e.message);
+      }
+    });
+
+    document.getElementById("signupBtn").addEventListener("click", async () => {
+      setMsg("Creating account...");
+      try {
+        await createUserWithEmailAndPassword(auth, emailEl.value.trim(), passEl.value);
+        location.href = redirectTo;
+      } catch (e) {
+        console.error(e);
+        setMsg(e.code || e.message);
+      }
+    });
+
+    document.getElementById("googleBtn").addEventListener("click", async () => {
+      setMsg("Opening Google sign-in...");
+      try {
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(auth, provider);
+        location.href = redirectTo;
+      } catch (e) {
+        console.error(e);
+        setMsg(e.code || e.message);
+      }
+    });
+  </script>
+</body>
+</html>
