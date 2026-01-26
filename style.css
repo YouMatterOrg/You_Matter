@@ -177,7 +177,7 @@ nav img{
 
 .text-box{
     width: 90%;
-    color: #fff;
+    color: #001f3f;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -190,6 +190,7 @@ nav img{
     font-weight: 700;
     margin-bottom: 20px;
     letter-spacing: -1px;
+    color: #001f3f;
 }
 
 .text-box p{
@@ -200,7 +201,7 @@ nav img{
     line-height: 1.6;
     margin-left: auto;
     margin-right: auto;
-    color: #fff;
+    color: #001f3f;
 }
 .hero-btn{
     display: inline-block;
