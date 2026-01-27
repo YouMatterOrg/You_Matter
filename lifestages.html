@@ -551,20 +551,20 @@
         const articleGrid = document.getElementById("articleGrid");
 
         const articleLinks = {
-            "ADHD": 1,
-            "coping with academic Stress": 4,
-            "Social Media's Effect on Mental Health": 5,
-            "Healthy steps to improve your mental health": 3,
-            "The Importance of Setting Realistic Expectations for yourself": 8,
-            "The Importance of talking to Someone You Trust": 6,
-            "Relationship Anxiety": "blog.html?post=10",
-            "Depression": "thread-depression.html",
-            "Balancing Activities and Rest": 7,
-            "Parenting Stress": 11,
-            "Anxiety": 9,
-            "Mid-life Challenges": 12,
-            "Retirement adjustment": 13,
-            "PTSD": 9
+            "ADHD": "blog-mental-health.html",
+            "coping with academic Stress": "blog-academic-stress.html",
+            "Social Media's Effect on Mental Health": "blog-social-media.html",
+            "Healthy steps to improve your mental health": "blog-mental-health.html",
+            "The Importance of Setting Realistic Expectations for yourself": "blog-realistic-expectations.html",
+            "The Importance of talking to Someone You Trust": "blog-talking-trust.html",
+            "Relationship Anxiety": "blog-relationship-anxiety.html",
+            "Depression": "blog-mental-health.html",
+            "Balancing Activities and Rest": "blog-balance.html",
+            "Parenting Stress": "blog-parenting-stress.html",
+            "Anxiety": "blog-harvard-study.html",
+            "Mid-life Challenges": "blog-midlife-crisis.html",
+            "Retirement adjustment": "blog-retirement.html",
+            "PTSD": "blog-harvard-study.html"
         };
 
         const data = {
@@ -583,9 +583,8 @@
 
             articleGrid.innerHTML = list.map(item => {
                 const link = articleLinks[item];
-                const href = typeof link === 'string' && link.includes('.html') ? link : `blog.html?post=${link}`;
                 return `
-                    <a href="${href}" style="text-decoration: none; color: inherit;">
+                    <a href="${link}" style="text-decoration: none; color: inherit;">
                         <div class="article-card">
                             <i class="fa-solid fa-circle-check"></i>
                             <h4>${item}</h4>
