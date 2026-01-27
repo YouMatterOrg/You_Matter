@@ -251,6 +251,11 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
  </footer>
 
 <script src="menu.js"></script>
+<script>
+  function goBack() {
+    window.location.href = 'blog.html';
+  }
+</script>
 <script type="module">
   import { initializeApp, getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   
@@ -265,10 +270,6 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-
-  function goBack() {
-    window.location.href = 'blog.html';
-  }
 
   var navLinks = document.getElementById("navLinks");
   function showMenu() { navLinks.style.right = "0"; }
