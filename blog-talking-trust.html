@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Importance of Talking to Someone You Trust | YOU MATTER</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f6fa; color: #0b2345; }
+.blog-wrapper { max-width: 900px; margin: 0 auto; padding: 40px 16px 60px; }
+.blog-intro { text-align: left; margin-bottom: 40px; }
+.blog-intro h1 { font-size: 2.5rem; font-weight: 700; color: #0b2345; margin-bottom: 12px; }
+.blog-meta { font-size: 0.95rem; color: #6b7280; margin-bottom: 30px; }
+.blog-content { background: #ffffff; border-radius: 24px; border: 1px solid #e5e7eb; padding: 40px; box-shadow: 0 16px 50px rgba(15, 23, 42, 0.10); }
+.blog-content p { line-height: 1.7; margin: 16px 0; font-size: 0.98rem; color: #1f2933; }
+.blog-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 24px 0; }
+.blog-content ul { margin: 16px 0 16px 24px; }
+.blog-content li { margin: 8px 0; line-height: 1.7; }
+.btn-back { appearance: none; border-radius: 999px; padding: 10px 20px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 0.9rem; cursor: pointer; font-weight: 500; color: #0b2345; display: inline-flex; align-items: center; gap: 6px; transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease; margin-top: 30px; }
+.btn-back i { font-size: 0.85rem; }
+.btn-back:hover { background: #e5edff; border-color: #2563eb; transform: translateY(-1px); }
+@media (max-width: 600px) {
+  .blog-wrapper { padding: 20px 12px 40px; }
+  .blog-intro h1 { font-size: 1.8rem; }
+  .blog-content { padding: 20px; }
+}
+</style>
+  <!-- Auth Modal Styles -->
+  <style>
+    .ym-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ym-modal-overlay.active {
+      display: flex;
+    }
+
+    .ym-modal-content {
+      background: white;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 450px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .modal-close:hover {
+      color: #000;
+    }
+
+    .modal-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #0d2b57;
+      margin-bottom: 10px;
+    }
+
+    .btn-auth {
+      width: 100%;
+      padding: 12px;
+      background: #0d2b57;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-auth:hover {
+      background: #051d42;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: rgba(13, 43, 87, 0.1);
+      border-radius: 20px;
+      font-size: 13px;
+      color: #0d2b57;
+      font-weight: 500;
+    }
+
+    .user-pill button {
+      background: none;
+      border: none;
+      color: #0d2b57;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: underline;
+      padding: 0;
+      font-size: 13px;
+    }
+
+    .nav-auth-container {
+      display: none;
+    }
+
+    .nav-auth-container.active {
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-buttons {
+      display: none;
+    }
+
+    .auth-buttons.active {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .ym-modal-content {
+        width: 95%;
+        max-width: 100%;
+        padding: 30px 20px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+      }
+    }
+  </style>
+
+</head>
+<body>
+<header class="sub-header">
+  <nav>
+    <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
+    <div class="nav-links" id="navLinks">
+      <i class="fa fa-times" onclick="hideMenu()"></i>
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li class="has-dropdown">
+          <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+          <ul class="dropdown">
+            <li><a href="about-youmatter.html">About You Matter</a></li>
+            <li><a href="about-who-we-are.html">Who We Are</a></li>
+            <li><a href="about-why-we-started.html">Why We Started</a></li>
+            <li><a href="about-what-we-do.html">What We Do</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="course.html">SERVICES <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+          <ul class="dropdown">
+            <li><a href="appointment.html">Appointment</a></li>
+            <li><a href="check-in.html">Check-in</a></li>
+            <li><a href="gethelp.html">Get Help</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="blog.html">LEARN <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+          <ul class="dropdown">
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="disorders.html">Disorders</a></li>
+            <li><a href="factvsfiction.html">Fact vs Fiction</a></li>
+            <li><a href="lifestages.html">Life Stages</a></li>
+          </ul>
+        </li>
+        <li><a href="testimonials.html">TESTIMONIALS</a></li>
+        <li class="has-dropdown">
+          <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
+          <ul class="dropdown">
+            <li><a href="forums.html">Forums</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+          </ul>
+        </li>
+      </ul>
+      <li id="navAuthContainer" class="nav-auth-container">
+        <button id="openSignin" class="btn-auth" type="button">Sign in</button>
+      </li>
+    </ul>
+    </div>
+    <div id="authButtons" class="nav-actions">
+      <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
+    </div>
+    <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+  <h1>Blog</h1>
+</header>
+
+<main class="blog-wrapper">
+  <section class="blog-intro">
+    <h1>The Importance of Talking to Someone You Trust</h1>
+    <div class="blog-meta">Dec 2025 · Support</div>
+  </section>
+
+  <article class="blog-content">
+    <p>Everyone, including you and me, experiences stress or worries at some point in our lives. But when these feelings start to build up, it can become detrimental to your mental health. One of the easiest ways to fix this is to talk with someone you trust. A person you trust could be many people, like your parents, siblings, friends or even teachers at your school. This act of talking to a trusted adult or friend can help provide a sense of relief. So here are some reasons you should talk to someone you trust:</p>
+    <img src="images/trust.png" alt="Family Talking">
+    <p>Firstly, talking to someone you love can help release emotions that might be bottled up deep within. By keeping these feelings trapped inside, you can increase stress and anxiety levels, making you feel uneasy and/or unsafe. Simply talking to a trusted adult allows you to express yourself freely without any judgment. Moreover, just speaking out loud about your troubles can sometimes help.</p>
+    <p>Secondly, talking to someone you trust can help you gain a different perspective. With another person's perspective, you can clearly see the situation and understand why you might be feeling stressed out, and solve it together. Furthermore, your problems will be easier to solve when there are 2 people helping you instead of you trying to solo it. A trusted person can also give you reassurance on whether the decision you are making is okay.</p>
+    <p>Thirdly, talking to someone you trust strengthens relationships. As you are freely able to talk to someone shows that open communication builds trust and empathy. Moreover, when people support each other during hard or difficult times, it can often strengthen relationships. This sense of connection can reduce feelings of loneliness or feelings of not belonging in society.</p>
+    <button class="btn-back" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i> Back to all posts</button>
+  </article>
+</main>
+
+<footer class="footer">
+  <h4>About Us</h4>
+  <p>Built with purpose.</p>
+  <div class="icons">
+    <i class="fab fa-facebook-f" aria-label="Facebook"></i>
+    <i class="fab fa-twitter" aria-label="Twitter"></i>
+    <i class="fab fa-instagram" aria-label="Instagram"></i>
+    <i class="fab fa-linkedin-in" aria-label="LinkedIn"></i>
+  </div>
+  <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+ </footer>
+
+<script src="menu.js"></script>
+<script type="module">
+  import { initializeApp, getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyAMvDJnUzIBVXDdKO7DqXGYjbL2EYmWHvQ",
+    authDomain: "youmatter-96049.firebaseapp.com",
+    projectId: "youmatter-96049",
+    storageBucket: "youmatter-96049.appspot.com",
+    messagingSenderId: "476949147227",
+    appId: "1:476949147227:web:3e7768d9eb7e6e1a5ee25c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  function goBack() {
+    window.location.href = "blog.html";
+  }
+
+  var navLinks = document.getElementById("navLinks");
+  function showMenu() { navLinks.style.right = "0"; }
+  function hideMenu() { navLinks.style.right = "-200px"; }
+
+  onAuthStateChanged(auth, (user) => {
+    const navAuthContainer = document.getElementById("navAuthContainer");
+    const authButtons = document.getElementById("authButtons");
+
+    if (user) {
+      navAuthContainer.innerHTML = `
+        <div class="user-pill">
+          <span>${user.email.split("@")[0]}</span>
+          <button onclick="logOut()" type="button">Logout</button>
+        </div>
+      `;
+      navAuthContainer.classList.add("active");
+      authButtons.innerHTML = `
+        <div class="user-pill">
+          <span>${user.email.split("@")[0]}</span>
+          <button onclick="logOut()" type="button">Logout</button>
+        </div>
+      `;
+      authButtons.classList.add("active");
+    } else {
+      navAuthContainer.innerHTML = `<button id="openSignin" class="btn-auth" type="button">Sign in</button>`;
+      navAuthContainer.classList.remove("active");
+      authButtons.innerHTML = `<button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>`;
+      authButtons.classList.remove("active");
+      document.getElementById("openSignin")?.addEventListener("click", openModal);
+      document.getElementById("openSigninDesktop")?.addEventListener("click", openModal);
+    }
+  });
+
+  window.logOut = function() {
+    signOut(auth).then(() => {
+      window.location.reload();
+    });
+  };
+
+  function openModal() {
+    document.getElementById("authModal")?.classList.add("active");
+  }
+</script>
+</body>
+</html>
