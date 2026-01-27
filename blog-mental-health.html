@@ -266,11 +266,7 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
   const auth = getAuth(app);
 
   function goBack() {
-    if (document.referrer.includes('lifestages') || history.length <= 2) {
-      window.location.href = 'lifestages.html';
-    } else {
-      window.history.back();
-    }
+    window.location.href = 'blog.html';
   }
 
   var navLinks = document.getElementById("navLinks");
