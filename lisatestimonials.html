@@ -824,5 +824,291 @@
         }
       });
     </script>
-</body>
+    <!-- Auth modal management -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
+        authDomain: "youmatter-46c43.firebaseapp.com",
+        projectId: "youmatter-46c43",
+        storageBucket: "youmatter-46c43.firebasestorage.app",
+        messagingSenderId: "971089399934",
+        appId: "1:971089399934:web:2d8e0a2988b1938f46082f",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      
+      // Set default persistence to localStorage before anything else
+      setPersistence(auth, browserLocalPersistence).catch(err => console.error('Persistence error:', err));
+      
+      window.auth = auth;
+      window.db = db;
+
+      // Modal elements
+      let overlay = document.getElementById("authModalOverlay");
+      if (!overlay) {
+        console.warn("Auth modal overlay not found");
+      }
+      const modal = overlay?.querySelector(".ym-modal");
+      const closeBtn = document.getElementById("closeAuthModal");
+
+      const signInView = document.getElementById("ymSignInView");
+      const registerView = document.getElementById("ymRegisterView");
+
+      const switchToRegister = document.getElementById("switchToRegister");
+      const switchToSignIn = document.getElementById("switchToSignIn");
+
+      const msg1 = document.getElementById("ymMsg");
+      const msg2 = document.getElementById("ymMsg2");
+
+      const authButtons = document.getElementById("authButtons");
+      const navAuthContainer = document.getElementById("navAuthContainer");
+      const openSigninDesktopBtn = document.getElementById("openSigninDesktop");
+      const openSigninMobileBtn = document.getElementById("openSignin");
+
+      // Sign in inputs
+      const emailEl = document.getElementById("ymEmail");
+      const passEl = document.getElementById("ymPassword");
+      const stayEl = document.getElementById("ymStaySignedIn");
+
+      // Register inputs
+      const regEmailEl = document.getElementById("ymRegEmail");
+      const firstNameEl = document.getElementById("ymFirstName");
+      const regPassEl = document.getElementById("ymRegPassword");
+
+      const signInBtn = document.getElementById("ymSignInBtn");
+      const registerBtn = document.getElementById("ymRegisterBtn");
+
+      const googleBtn1 = document.getElementById("ymGoogleBtn");
+      const googleBtn2 = document.getElementById("ymGoogleBtn2");
+
+
+
+      function setMsg(el, t){
+        if (!el) return;
+        el.textContent = t || "";
+      }
+
+      function openModal(mode){
+        if (!overlay) return;
+        overlay.classList.add("is-open");
+        overlay.setAttribute("aria-hidden", "false");
+        setMsg(msg1, "");
+        setMsg(msg2, "");
+
+        if (mode === "signup") showRegister();
+        else showSignIn();
+
+        // focus first field
+        setTimeout(() => {
+          if (mode === "signup") regEmailEl?.focus();
+          else emailEl?.focus();
+        }, 50);
+      }
+      window.openModal = openModal;
+
+      function closeModal(){
+        if (!overlay) return;
+        overlay.classList.remove("is-open");
+        overlay.setAttribute("aria-hidden", "true");
+      }
+
+      function showRegister(){
+        if (signInView) signInView.style.display = "none";
+        if (registerView) registerView.style.display = "block";
+      }
+
+      function showSignIn(){
+        if (registerView) registerView.style.display = "none";
+        if (signInView) signInView.style.display = "block";
+      }
+
+      // Close interactions
+      closeBtn?.addEventListener("click", closeModal);
+      overlay?.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      switchToRegister?.addEventListener("click", showRegister);
+      switchToSignIn?.addEventListener("click", showSignIn);
+
+      openSigninDesktopBtn?.addEventListener("click", () => openModal("login"));
+      openSigninMobileBtn?.addEventListener("click", () => openModal("login"));
+
+      // Enable/disable Register button based on required fields
+      function refreshRegisterState(){
+        const ok =
+          (regEmailEl?.value || "").trim().length > 3 &&
+          (firstNameEl?.value || "").trim().length > 0 &&
+          (regPassEl?.value || "").length >= 6;
+        if (registerBtn) {
+          registerBtn.disabled = !ok;
+          registerBtn.classList.toggle("ym-primary-disabled", !ok);
+        }
+      }
+      regEmailEl?.addEventListener("input", refreshRegisterState);
+      firstNameEl?.addEventListener("input", refreshRegisterState);
+      regPassEl?.addEventListener("input", refreshRegisterState);
+      refreshRegisterState();
+
+      async function applyPersistence(){
+        const stay = !!stayEl?.checked;
+        await setPersistence(auth, stay ? browserLocalPersistence : browserSessionPersistence);
+      }
+
+      // Sign in
+      signInBtn?.addEventListener("click", async () => {
+        setMsg(msg1, "");
+        const email = (emailEl.value || "").trim();
+        const password = passEl.value || "";
+        
+        // Basic validation
+        if (!email) {
+          setMsg(msg1, "Please enter your email address.");
+          return;
+        }
+        if (!password) {
+          setMsg(msg1, "Please enter your password.");
+          return;
+        }
+        
+        try{
+          await applyPersistence();
+          await signInWithEmailAndPassword(auth, email, password);
+          closeModal();
+        } catch(e){
+          console.error(e);
+          // User-friendly error messages
+          if (e.code === "auth/user-not-found") {
+            setMsg(msg1, "No account found with this email address.");
+          } else if (e.code === "auth/wrong-password") {
+            setMsg(msg1, "Incorrect password. Please try again.");
+          } else if (e.code === "auth/invalid-email") {
+            setMsg(msg1, "Please enter a valid email address.");
+          } else if (e.code === "auth/user-disabled") {
+            setMsg(msg1, "This account has been disabled.");
+          } else {
+            setMsg(msg1, e.message || "Sign in failed. Please try again.");
+          }
+        }
+      });
+
+      // Register
+      registerBtn?.addEventListener("click", async () => {
+        setMsg(msg2, "");
+        const email = (regEmailEl.value || "").trim();
+        const password = regPassEl.value || "";
+        const name = (firstNameEl.value || "").trim();
+        
+        try{
+          await setPersistence(auth, browserLocalPersistence);
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          if (name) await updateProfile(cred.user, { displayName: name });
+          closeModal();
+        } catch(e){
+          console.error(e);
+          // User-friendly error messages
+          if (e.code === "auth/email-already-in-use") {
+            setMsg(msg2, "This email is already registered. Please sign in instead.");
+          } else if (e.code === "auth/weak-password") {
+            setMsg(msg2, "Password should be at least 6 characters.");
+          } else if (e.code === "auth/invalid-email") {
+            setMsg(msg2, "Please enter a valid email address.");
+          } else {
+            setMsg(msg2, e.message || "Registration failed. Please try again.");
+          }
+        }
+      });
+
+      // Google sign-in
+      async function googleSignIn(targetMsgEl){
+        setMsg(targetMsgEl, "");
+        try{
+          await applyPersistence();
+          const provider = new GoogleAuthProvider();
+          await signInWithPopup(auth, provider);
+          closeModal();
+        } catch(e){
+          console.error(e);
+          setMsg(targetMsgEl, e.code || e.message);
+        }
+      }
+      googleBtn1?.addEventListener("click", () => googleSignIn(msg1));
+      googleBtn2?.addEventListener("click", () => googleSignIn(msg2));
+
+
+
+      // Auth state - update both desktop and mobile buttons
+      onAuthStateChanged(auth, (user) => {
+        // Update desktop button
+        if (openSigninDesktopBtn && authButtons) {
+          if (user) {
+            // Show user info
+            const displayName = user.displayName || user.email?.split("@")[0] || "User";
+            openSigninDesktopBtn.innerHTML = `<span class="user-pill">${displayName}</span>`;
+            
+            // Add logout button if not present
+            if (!document.getElementById("logoutBtnDesktop")) {
+              const logoutBtn = document.createElement("button");
+              logoutBtn.id = "logoutBtnDesktop";
+              logoutBtn.className = "btn-logout";
+              logoutBtn.textContent = "Log out";
+              logoutBtn.addEventListener("click", async () => {
+                await signOut(auth);
+              });
+              authButtons.appendChild(logoutBtn);
+            }
+          } else {
+            // Reset to Sign in button
+            openSigninDesktopBtn.textContent = "Sign in";
+            openSigninDesktopBtn.className = "btn-auth";
+            
+            // Remove logout button if present
+            const logoutBtn = document.getElementById("logoutBtnDesktop");
+            if (logoutBtn) logoutBtn.remove();
+          }
+        }
+        
+        // Update mobile button in menu
+        if (navAuthContainer && openSigninMobileBtn) {
+          if (user) {
+            const displayName = user.displayName || user.email?.split("@")[0] || "User";
+            openSigninMobileBtn.innerHTML = `Hi, ${displayName}`;
+            openSigninMobileBtn.className = "user-pill-mobile";
+            
+            // Add logout button if not present
+            if (!document.getElementById("logoutBtnMobile")) {
+              const logoutBtn = document.createElement("button");
+              logoutBtn.id = "logoutBtnMobile";
+              logoutBtn.className = "btn-logout";
+              logoutBtn.textContent = "Log out";
+              logoutBtn.style.width = "100%";
+              logoutBtn.addEventListener("click", async () => {
+                await signOut(auth);
+              });
+              navAuthContainer.appendChild(logoutBtn);
+            }
+          } else {
+            openSigninMobileBtn.textContent = "Sign in";
+            openSigninMobileBtn.className = "btn-auth";
+            
+            // Remove logout button if present
+            const logoutBtn = document.getElementById("logoutBtnMobile");
+            if (logoutBtn) logoutBtn.remove();
+          }
+        }
+      });
+
+    </script>
+
+
+    </body>
 </html>
