@@ -1298,8 +1298,8 @@
   }
 
   onAuthStateChanged(auth, (user) => {
-    const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-    const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+    const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+    const openSigninMobileBtn = document.getElementById('openSignin');
     const authButtons = document.getElementById('authButtons');
     const navAuthContainer = document.getElementById('navAuthContainer');
 
@@ -1327,8 +1327,8 @@
     }
   });
 
-  const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-  const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+  const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+  const openSigninMobileBtn = document.getElementById('openSignin');
 
   openSigninDesktopBtn?.addEventListener('click', () => {
     if (!auth.currentUser) {

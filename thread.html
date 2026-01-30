@@ -301,7 +301,7 @@
           </li>
 
           <li class="has-dropdown">
-            <a href="blog.html">BLOG <i class="fa-solid fa-angle-down"></i></a>
+            <a href="blog.html">LEARN <i class="fa-solid fa-angle-down"></i></a>
             <ul class="dropdown">
               <li><a href="blog.html">Blog</a></li>
               <li><a href="disorders.html">Disorders</a></li>
@@ -317,16 +317,13 @@
               <li><a href="FAQ.html">FAQ</a></li>
             </ul>
           </li>
-        </ul>
-      </div>
-      <li class="nav-auth-container" id="navAuthContainer">
-            <button class="btn-auth" id="openSigninMobileBtn">Sign in</button>
+          <li id="navAuthContainer" class="nav-auth-container">
+            <button id="openSignin" class="btn-auth" type="button">Sign in</button>
           </li>
         </ul>
-
-        <div class="auth-buttons" id="authButtons" style="display: flex; align-items: center; gap: 10px; margin-right: 20px;">
-          <button class="btn-auth" id="openSigninDesktopBtn">Sign in</button>
-        </div>
+      </div>
+      <div id="authButtons" class="nav-actions">
+        <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
       </div>
 
       <i class="fa fa-bars" onclick="showMenu()"></i>
@@ -772,8 +769,8 @@
   }
 
   onAuthStateChanged(auth, (user) => {
-    const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-    const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+    const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+    const openSigninMobileBtn = document.getElementById('openSignin');
     const authButtons = document.getElementById('authButtons');
     const navAuthContainer = document.getElementById('navAuthContainer');
 
@@ -801,8 +798,8 @@
     }
   });
 
-  const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-  const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+  const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+  const openSigninMobileBtn = document.getElementById('openSignin');
 
   openSigninDesktopBtn?.addEventListener('click', () => {
     if (!auth.currentUser) {

@@ -586,7 +586,7 @@
           <label class="ym-label" for="ymRegPassword">Password (6+ characters)</label>
           <input id="ymRegPassword" class="ym-input" type="password" />
 
-          <p class="ym-primary ym-primary-disabled" id="ymRegisterBtn" type="button">Register</p>
+<button class="ym-primary ym-primary-disabled" id="ymRegisterBtn" type="button">Register</button>
 
           <div class="ym-or">
             <div class="ym-or-line"></div>
@@ -655,6 +655,7 @@
       const registerBtn = document.getElementById("ymRegisterBtn");
       const googleBtn1 = document.getElementById("ymGoogleBtn");
       const googleBtn2 = document.getElementById("ymGoogleBtn2");
+      const forgotBtn = document.getElementById("ymForgot");
 
 
       function setMsg(el, t) {
@@ -726,8 +727,10 @@
           return;
         }
         try {
-          await applyPersistence();
+          await setPersistence(auth, browserLocalPersistence);
           await signInWithEmailAndPassword(auth, email, password);
+          emailEl.value = "";
+          passEl.value = "";
           closeModal();
         } catch(e) {
           console.error(e);

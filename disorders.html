@@ -412,15 +412,6 @@
       <div id="authButtons" class="nav-actions">
         <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
       </div>
-      <li class="nav-auth-container" id="navAuthContainer">
-            <button class="btn-auth" id="openSigninMobileBtn">Sign in</button>
-          </li>
-        </ul>
-
-        <div class="auth-buttons" id="authButtons" style="display: flex; align-items: center; gap: 10px; margin-right: 20px;">
-          <button class="btn-auth" id="openSigninDesktopBtn">Sign in</button>
-        </div>
-      </div>
 
       
       <i class="fa fa-bars" onclick="showMenu()"></i>
@@ -1247,8 +1238,8 @@
   }
 
   onAuthStateChanged(auth, (user) => {
-    const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-    const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+    const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+    const openSigninMobileBtn = document.getElementById('openSignin');
     const authButtons = document.getElementById('authButtons');
     const navAuthContainer = document.getElementById('navAuthContainer');
 
@@ -1276,8 +1267,8 @@
     }
   });
 
-  const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-  const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+  const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+  const openSigninMobileBtn = document.getElementById('openSignin');
 
   openSigninDesktopBtn?.addEventListener('click', () => {
     if (!auth.currentUser) {

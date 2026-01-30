@@ -171,7 +171,7 @@ nav img{
 }
 
 /* Mobile nav auth container */
-.nav-auth-container {
+.nav-links ul li.nav-auth-container {
     display: none !important;
 }
 
@@ -351,7 +351,7 @@ body.nav-ready nav{
     .nav-links ul li.has-dropdown > .dropdown a{ color: #fff; padding: 6px 0; }
     
     /* Mobile: show auth button in menu, hide desktop version */
-    .nav-auth-container {
+    .nav-links ul li.nav-auth-container {
         display: list-item !important;
         border-top: 1px solid rgba(255, 255, 255, 0.15);
         padding-top: 12px;

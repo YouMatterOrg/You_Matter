@@ -457,71 +457,59 @@
 
 </head>
 <body>
-<header class="sub-header">
-  <nav>
-    <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
-    <div class="nav-links" id="navLinks">
-      <i class="fa fa-times" onclick="hideMenu()"></i>
-      <ul>
-        <li><a href="index.html">HOME</a></li>
-        <li class="has-dropdown">
-          <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-          <ul class="dropdown">
-            <li><a href="about-youmatter.html">About You Matter</a></li>
-            <li><a href="about-who-we-are.html">Who We Are</a></li>
-            <li><a href="about-why-we-started.html">Why We Started</a></li>
-            <li><a href="about-what-we-do.html">What We Do</a></li>
-          </ul>
-        </li>
-        <li class="has-dropdown">
-          <a href="course.html">SERVICES <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-          <ul class="dropdown">
-            <li><a href="appointment.html">Appointment</a></li>
-            <li><a href="check-in.html">Check-in</a></li>
-            <li><a href="gethelp.html">Get Help</a></li>
-          </ul>
-        </li>
-        <li class="has-dropdown">
-          <a href="blog.html">LEARN <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-          <ul class="dropdown">
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="disorders.html">Disorders</a></li>
-            <li><a href="factvsfiction.html">Fact vs Fiction</a></li>
-            <li><a href="lifestages.html" aria-current="page">Lifestages</a></li>
-          </ul>
-        </li>
-        <li><a href="testimonials.html">TESTIMONIALS</a></li>
-        <li class="has-dropdown">
-          <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
-          <ul class="dropdown">
-            <li><a href="forums.html">Forums</a></li>
-            <li><a href="FAQ.html">FAQ</a></li>
-          </ul>
-        </li>
-      </ul>
-      <li id="navAuthContainer" class="nav-auth-container">
-        <button id="openSignin" class="btn-auth" type="button">Sign in</button>
-      </li>
-    </ul>
-    </div>
-    <div id="authButtons" class="nav-actions">
-      <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
-    </div>
-    <li class="nav-auth-container" id="navAuthContainer">
-            <button class="btn-auth" id="openSigninMobileBtn">Sign in</button>
-          </li>
-        </ul>
-
-        <div class="auth-buttons" id="authButtons" style="display: flex; align-items: center; gap: 10px; margin-right: 20px;">
-          <button class="btn-auth" id="openSigninDesktopBtn">Sign in</button>
-        </div>
-      </div>
-
-      
-    <i class="fa fa-bars" onclick="showMenu()"></i>
-    </nav>
-  <h1>Lifestages</h1>
-</header>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="About.html">ABOUT US <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">SERVICES <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                            <li><a href="gethelp.html">Get Help</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="blog.html">LEARN <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="factvsfiction.html">Fact vs Fiction</a></li>
+                            <li><a href="lifestages.html" aria-current="page">Life Stages</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                    <li class="has-dropdown">
+                        <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="forums.html">Forums</a></li>
+                            <li><a href="FAQ.html">FAQ</a></li>
+                        </ul>
+                    </li>
+                    <li id="navAuthContainer" class="nav-auth-container">
+                      <button id="openSignin" class="btn-auth" type="button">Sign in</button>
+                    </li>
+                </ul>
+            </div>
+            <div id="authButtons" class="nav-actions">
+              <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Lifestages</h1>
+    </section>
 
     <main>
         <section class="slider-section">
@@ -852,8 +840,8 @@
   }
 
   onAuthStateChanged(auth, (user) => {
-    const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-    const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+    const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+    const openSigninMobileBtn = document.getElementById('openSignin');
     const authButtons = document.getElementById('authButtons');
     const navAuthContainer = document.getElementById('navAuthContainer');
 
@@ -881,8 +869,8 @@
     }
   });
 
-  const openSigninDesktopBtn = document.getElementById('openSigninDesktopBtn');
-  const openSigninMobileBtn = document.getElementById('openSigninMobileBtn');
+  const openSigninDesktopBtn = document.getElementById('openSigninDesktop');
+  const openSigninMobileBtn = document.getElementById('openSignin');
 
   openSigninDesktopBtn?.addEventListener('click', () => {
     if (!auth.currentUser) {
