@@ -922,7 +922,9 @@
   </script>
 
   <!-- Forum Modal Management -->
-  <script>
+  <script type="module">
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    
     // Get forum modal elements
     const addForumBtn = document.getElementById('addForumBtn');
     const addModal = document.getElementById('addModal');
@@ -932,6 +934,15 @@
     const newDesc = document.getElementById('newDesc');
     const addStatus = document.getElementById('addStatus');
     const closeButtons = document.querySelectorAll('[data-close="add"]');
+
+    // Get db from window (set by auth module)
+    let db = null;
+    const checkDb = setInterval(() => {
+      if (window.db) {
+        db = window.db;
+        clearInterval(checkDb);
+      }
+    }, 100);
 
     // Open modal when Add Forum button is clicked
     if (addForumBtn) {
@@ -960,7 +971,7 @@
 
     // Handle form submission
     if (createForumBtn) {
-      createForumBtn.addEventListener('click', function() {
+      createForumBtn.addEventListener('click', async function() {
         const author = newAuthor.value.trim() || 'Anonymous';
         const title = newTitle.value.trim();
         const description = newDesc.value.trim();
@@ -983,11 +994,27 @@
         addStatus.style.color = '#0d2b57';
         createForumBtn.disabled = true;
 
-        // Simulate creating the forum (replace with actual Firebase code if needed)
-        setTimeout(function() {
+        try {
+          if (!db) {
+            throw new Error('Database not initialized');
+          }
+
+          // Add forum to Firestore
+          const forumsRef = collection(db, 'forums');
+          const docRef = await addDoc(forumsRef, {
+            title: title,
+            description: description,
+            author: author,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+            replies: 0
+          });
+
           // Success
           addStatus.textContent = 'Forum created successfully!';
           addStatus.style.color = '#16a34a';
+          
+          console.log('Forum created with ID:', docRef.id);
           
           // Close modal after 1.5 seconds
           setTimeout(function() {
@@ -1001,7 +1028,12 @@
             newDesc.value = '';
             addStatus.textContent = '';
           }, 1500);
-        }, 800);
+        } catch (error) {
+          console.error('Error creating forum:', error);
+          addStatus.textContent = 'Error creating forum: ' + error.message;
+          addStatus.style.color = '#c41e3a';
+          createForumBtn.disabled = false;
+        }
       });
     }
 
