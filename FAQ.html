@@ -104,23 +104,6 @@
       border-color: #0d2b57;
     }
 
-    .btn-auth {
-      width: 100%;
-      padding: 12px;
-      background: #0d2b57;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .btn-auth:hover {
-      background: #051d42;
-    }
-
     .btn-auth-google {
       width: 100%;
       padding: 12px;
@@ -642,7 +625,6 @@
       </div>
     </div>
 
-
     
 
     <script src="menu.js"></script>
@@ -713,8 +695,6 @@
 
       const googleBtn1 = document.getElementById("ymGoogleBtn");
       const googleBtn2 = document.getElementById("ymGoogleBtn2");
-
-
 
       function setMsg(el, t){
         if (!el) return;
@@ -870,8 +850,6 @@
       }
       googleBtn1?.addEventListener("click", () => googleSignIn(msg1));
       googleBtn2?.addEventListener("click", () => googleSignIn(msg2));
-
-
 
       // Auth state - update both desktop and mobile buttons
       onAuthStateChanged(auth, (user) => {
