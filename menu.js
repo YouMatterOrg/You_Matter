@@ -108,4 +108,35 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
+
+  // Set active navigation link on page load and when clicking
+  function setActiveNav() {
+    var currentPath = window.location.pathname;
+    var navItems = document.querySelectorAll('.nav-links ul li:not(.nav-auth-container)');
+    
+    navItems.forEach(function (li) {
+      // Remove active class from all items
+      li.classList.remove('active');
+      
+      // Check if this item or any of its dropdown children match current path
+      var links = li.querySelectorAll('a');
+      links.forEach(function (link) {
+        if (link.href.includes(currentPath) || currentPath.includes(link.href.split('/').pop())) {
+          li.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Set active on page load
+  setActiveNav();
+
+  // Update active state on link clicks
+  var allNavLinks = document.querySelectorAll('.nav-links a');
+  allNavLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      // Give the browser time to navigate, then set active
+      setTimeout(setActiveNav, 100);
+    });
+  });
 });

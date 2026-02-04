@@ -106,6 +106,9 @@ nav img{
 .nav-links ul li:hover::after{
     width: 100%;
 }
+.nav-links ul li.active::after{
+    width: 100%;
+}
 
 /* Navigation Actions (Sign in button on desktop) */
 .nav-actions {
