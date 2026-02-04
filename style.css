@@ -120,8 +120,8 @@ nav img{
     border-radius: 8px;
     font-weight: 700;
     font-size: 14px;
-    background: #FF9F43;
-    border: 1px solid #FF9F43;
+    background: transparent;
+    border: 2px solid #fff;
     color: #fff;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -130,8 +130,8 @@ nav img{
 }
 
 .btn-auth:hover {
-    background: #FF8C1A;
-    border-color: #FF8C1A;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
     transform: translateY(-1px);
 }
 
