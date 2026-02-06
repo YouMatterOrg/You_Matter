@@ -1025,10 +1025,20 @@
           return;
         }
         
-        querySnapshot.forEach((docSnapshot) => {
+        // Process each forum
+        for (const docSnapshot of querySnapshot.docs) {
           const forum = docSnapshot.data();
           const forumId = docSnapshot.id;
-          const replyCount = forum.replies || 0;
+          
+          // Count actual replies in subcollection
+          let replyCount = 0;
+          try {
+            const repliesRef = collection(db, 'forums', forumId, 'replies');
+            const repliesSnap = await getDocs(repliesRef);
+            replyCount = repliesSnap.size;
+          } catch (e) {
+            console.error('Error counting replies:', e);
+          }
           
           const forumHtml = `
             <div class="topic" style="cursor: pointer; transition: background 0.2s;" onclick="window.openForum('${forumId}')">
@@ -1049,7 +1059,7 @@
             </div>
           `;
           topicList.innerHTML += forumHtml;
-        });
+        }
       } catch (error) {
         console.error('Error loading forums:', error);
         topicList.innerHTML = '<div style="padding: 20px; text-align: center; color: #c41e3a;">Error loading forums</div>';
