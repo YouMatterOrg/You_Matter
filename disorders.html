@@ -961,6 +961,19 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Handle hash anchors from lifestages page
+    function handleHashAnchor() {
+      const hash = window.location.hash.substring(1); // Remove the #
+      if (hash && ['anxiety', 'depression', 'adhd', 'ptsd'].includes(hash)) {
+        openDisorder(hash);
+      }
+    }
+
+    // Call on page load
+    window.addEventListener('load', handleHashAnchor);
+    // Also handle if hash changes
+    window.addEventListener('hashchange', handleHashAnchor);
   </script>
 <!-- ================= AUTH MODAL ================= -->
 <div id="authModalOverlay" class="ym-modal-overlay">
