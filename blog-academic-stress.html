@@ -681,61 +681,57 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
       onAuthStateChanged(auth, (user) => {
         // Update desktop button
         if (openSigninDesktopBtn && authButtons) {
+          // Clear any existing logout buttons to prevent duplicates
+          const existingLogout = document.getElementById("logoutBtnDesktop");
+          if (existingLogout) existingLogout.remove();
+          
           if (user) {
             // Show user info
             const displayName = user.displayName || user.email?.split("@")[0] || "User";
             openSigninDesktopBtn.innerHTML = `<span class="user-pill">${displayName}</span>`;
             
-            // Add logout button if not present
-            const existingLogout = document.getElementById("logoutBtnDesktop");
-            if (existingLogout) existingLogout.remove();
-            if (true) {
-              const logoutBtn = document.createElement("button");
-              logoutBtn.id = "logoutBtnDesktop";
-              logoutBtn.className = "btn-logout";
-              logoutBtn.textContent = "Log out";
-              logoutBtn.addEventListener("click", async () => {
-                await signOut(auth);
-              });
-              authButtons.appendChild(logoutBtn);
-            }
+            // Add logout button
+            const logoutBtn = document.createElement("button");
+            logoutBtn.id = "logoutBtnDesktop";
+            logoutBtn.className = "btn-logout";
+            logoutBtn.textContent = "Log out";
+            logoutBtn.addEventListener("click", async () => {
+              await signOut(auth);
+            });
+            authButtons.appendChild(logoutBtn);
           } else {
             // Reset to Sign in button
             openSigninDesktopBtn.textContent = "Sign in";
             openSigninDesktopBtn.className = "btn-auth";
-            
-            // Remove logout button if present
-            const logoutBtn = document.getElementById("logoutBtnDesktop");
-            if (logoutBtn) logoutBtn.remove();
           }
         }
         
         // Update mobile button in menu
         if (navAuthContainer && openSigninMobileBtn) {
+          // Clear any existing logout buttons to prevent duplicates
+          const existingLogout = document.getElementById("logoutBtnMobile");
+          if (existingLogout) existingLogout.remove();
+          
           if (user) {
             const displayName = user.displayName || user.email?.split("@")[0] || "User";
             openSigninMobileBtn.innerHTML = `Hi, ${displayName}`;
             openSigninMobileBtn.className = "user-pill-mobile";
             
-            // Add logout button if not present
-            if (!document.getElementById("logoutBtnMobile")) {
-              const logoutBtn = document.createElement("button");
-              logoutBtn.id = "logoutBtnMobile";
-              logoutBtn.className = "btn-logout";
-              logoutBtn.textContent = "Log out";
-              logoutBtn.style.width = "100%";
-              logoutBtn.addEventListener("click", async () => {
-                await signOut(auth);
-              });
-              navAuthContainer.appendChild(logoutBtn);
-            }
+            // Add logout button
+            const logoutBtn = document.createElement("button");
+            logoutBtn.id = "logoutBtnMobile";
+            logoutBtn.className = "btn-logout";
+            logoutBtn.textContent = "Log out";
+            logoutBtn.style.width = "100%";
+            logoutBtn.addEventListener("click", async () => {
+              await signOut(auth);
+            });
+            navAuthContainer.appendChild(logoutBtn);
           } else {
             openSigninMobileBtn.textContent = "Sign in";
             openSigninMobileBtn.className = "btn-auth";
-            
-            // Remove logout button if present
-            const logoutBtn = document.getElementById("logoutBtnMobile");
-            if (logoutBtn) logoutBtn.remove();
+          }
+        }
           }
         }
       });
