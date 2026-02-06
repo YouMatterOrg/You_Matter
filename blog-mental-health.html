@@ -563,55 +563,45 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
       onAuthStateChanged(auth, (user) => {
         // Update desktop button
         if (openSigninDesktopBtn && authButtons) {
-          // Clear any existing logout buttons to prevent duplicates
-          const existingLogout = document.getElementById("logoutBtnDesktop");
-          if (existingLogout) existingLogout.remove();
-          
           if (user) {
-            // Show user info
+            // Hide the sign-in button and show logout button
             const displayName = user.displayName || user.email?.split("@")[0] || "User";
             openSigninDesktopBtn.innerHTML = `<span class="user-pill">${displayName}</span>`;
+            openSigninDesktopBtn.className = "user-pill";
             
-            // Add logout button
-            const logoutBtn = document.createElement("button");
-            logoutBtn.id = "logoutBtnDesktop";
-            logoutBtn.className = "btn-logout";
-            logoutBtn.textContent = "Log out";
-            logoutBtn.addEventListener("click", async () => {
+            // Replace onclick with logout handler
+            openSigninDesktopBtn.onclick = null;
+            openSigninDesktopBtn.removeEventListener("click", null);
+            openSigninDesktopBtn.addEventListener("click", async () => {
               await signOut(auth);
             });
-            authButtons.appendChild(logoutBtn);
+            openSigninDesktopBtn.textContent = "Log out";
+            openSigninDesktopBtn.className = "btn-logout";
           } else {
             // Reset to Sign in button
             openSigninDesktopBtn.textContent = "Sign in";
             openSigninDesktopBtn.className = "btn-auth";
+            openSigninDesktopBtn.onclick = function() { openModal("login"); };
           }
         }
         
         // Update mobile button in menu
         if (navAuthContainer && openSigninMobileBtn) {
-          // Clear any existing logout buttons to prevent duplicates
-          const existingLogout = document.getElementById("logoutBtnMobile");
-          if (existingLogout) existingLogout.remove();
-          
           if (user) {
             const displayName = user.displayName || user.email?.split("@")[0] || "User";
-            openSigninMobileBtn.innerHTML = `Hi, ${displayName}`;
+            openSigninMobileBtn.textContent = `Hi, ${displayName}`;
             openSigninMobileBtn.className = "user-pill-mobile";
             
-            // Add logout button
-            const logoutBtn = document.createElement("button");
-            logoutBtn.id = "logoutBtnMobile";
-            logoutBtn.className = "btn-logout";
-            logoutBtn.textContent = "Log out";
-            logoutBtn.style.width = "100%";
-            logoutBtn.addEventListener("click", async () => {
+            // Replace onclick with logout handler
+            openSigninMobileBtn.onclick = null;
+            openSigninMobileBtn.removeEventListener("click", null);
+            openSigninMobileBtn.addEventListener("click", async () => {
               await signOut(auth);
             });
-            navAuthContainer.appendChild(logoutBtn);
           } else {
             openSigninMobileBtn.textContent = "Sign in";
             openSigninMobileBtn.className = "btn-auth";
+            openSigninMobileBtn.onclick = function() { openModal("login"); };
           }
         }
       });
