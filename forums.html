@@ -868,7 +868,7 @@
       </div>
     </div>
 
-    <section class="wpTable" aria-label="Forum list">
+    <section class="wpTable" aria-label="Forum list" id="forumListView">
       <div class="wpTableHead">
         <div>Topic</div>
         <div class="wpColReplies">Replies</div>
@@ -877,6 +877,34 @@
 
       <div id="topicList"></div>
       <div id="noResults" class="wpNoResults" style="display:none;">No results.</div>
+    </section>
+
+    <!-- Forum Detail View -->
+    <section id="forumDetailView" style="display: none;">
+      <button id="backToList" style="padding: 10px 16px; background: #0d2b57; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: 600;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Forums
+      </button>
+      
+      <div style="background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+        <h1 id="detailTitle" style="margin: 0 0 8px; font-size: 28px; color: #0d2b57;"></h1>
+        <p id="detailAuthor" style="margin: 0 0 16px; color: #666; font-size: 14px;"></p>
+        <p id="detailDesc" style="margin: 0; color: #444; font-size: 16px; line-height: 1.6;"></p>
+      </div>
+
+      <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+        <h2 style="margin-top: 0; color: #0d2b57;">Replies</h2>
+        <div id="repliesList" style="margin-bottom: 24px;"></div>
+
+        <h3 style="color: #0d2b57; margin-top: 24px;">Add your reply</h3>
+        <div style="display: flex; gap: 12px;">
+          <input id="replyName" type="text" placeholder="Your name (optional)" maxlength="60" style="flex: 0 0 200px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;">
+          <textarea id="replyText" placeholder="Share your thoughts..." maxlength="500" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical; min-height: 80px;"></textarea>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <button id="submitReply" style="padding: 10px 20px; background: #0d2b57; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Post Reply</button>
+          <span id="replyStatus" style="color: #666; padding-top: 10px; font-size: 14px;"></span>
+        </div>
+      </div>
     </section>
 
     <!-- Add Forum Modal -->
@@ -921,11 +949,11 @@
     function hideMenu(){ navLinks.style.right = "-200px"; }
   </script>
 
-  <!-- Forum Modal Management -->
+  <!-- Forum Management Script -->
   <script type="module">
-    import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, serverTimestamp, getDocs, query, orderBy, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
     
-    // Get forum modal elements
+    // DOM elements
     const addForumBtn = document.getElementById('addForumBtn');
     const addModal = document.getElementById('addModal');
     const createForumBtn = document.getElementById('createForumBtn');
@@ -935,19 +963,53 @@
     const addStatus = document.getElementById('addStatus');
     const closeButtons = document.querySelectorAll('[data-close="add"]');
     const topicList = document.getElementById('topicList');
+    const forumListView = document.getElementById('forumListView');
+    const forumDetailView = document.getElementById('forumDetailView');
+    const backToListBtn = document.getElementById('backToList');
+    const detailTitle = document.getElementById('detailTitle');
+    const detailAuthor = document.getElementById('detailAuthor');
+    const detailDesc = document.getElementById('detailDesc');
+    const repliesList = document.getElementById('repliesList');
+    const replyName = document.getElementById('replyName');
+    const replyText = document.getElementById('replyText');
+    const submitReply = document.getElementById('submitReply');
+    const replyStatus = document.getElementById('replyStatus');
 
-    // Get db from window (set by auth module)
     let db = null;
+    let currentForumId = null;
+
+    // Wait for Firebase to initialize
     const checkDb = setInterval(() => {
       if (window.db) {
         db = window.db;
         clearInterval(checkDb);
-        // Load forums once db is ready
         loadForums();
       }
     }, 100);
 
-    // Function to load and display all forums
+    // Helper: escape HTML
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Helper: format date
+    function formatDate(timestamp) {
+      if (!timestamp) return 'Just now';
+      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      const now = new Date();
+      const diff = now - date;
+      const hours = Math.floor(diff / 3600000);
+      const days = Math.floor(diff / 86400000);
+      
+      if (hours < 1) return 'Just now';
+      if (hours < 24) return hours + 'h ago';
+      if (days < 7) return days + 'd ago';
+      return date.toLocaleDateString();
+    }
+
+    // Load and display all forums
     async function loadForums() {
       if (!topicList || !db) return;
       
@@ -956,34 +1018,33 @@
         const q = query(forumsRef, orderBy('createdAt', 'desc'));
         const querySnapshot = await getDocs(q);
         
-        // Clear existing content
         topicList.innerHTML = '';
         
         if (querySnapshot.empty) {
-          topicList.innerHTML = '<p style="padding: 20px; text-align: center; color: #666;">No forums yet. Be the first to create one!</p>';
+          topicList.innerHTML = '<div style="padding: 40px 20px; text-align: center; color: #999;">No forums yet. Be the first to create one!</div>';
           return;
         }
         
-        // Add each forum to the list
-        querySnapshot.forEach((doc) => {
-          const forum = doc.data();
+        querySnapshot.forEach((docSnapshot) => {
+          const forum = docSnapshot.data();
+          const forumId = docSnapshot.id;
+          const replyCount = forum.replies || 0;
+          
           const forumHtml = `
-            <div class="topic">
+            <div class="topic" style="cursor: pointer; transition: background 0.2s;" onclick="window.openForum('${forumId}')">
               <div class="topic-main">
-                <div class="topic-ico">
+                <div class="topic-ico" style="background: #eef2ff; color: #0d2b57;">
                   <i class="fa-solid fa-comments"></i>
                 </div>
                 <div class="topic-text">
-                  <h2>${escapeHtml(forum.title)}</h2>
-                  <p>${escapeHtml(forum.description)}</p>
-                  ${forum.author ? `<p style="margin-top: 6px; font-size: 0.8rem; color: #999;">by ${escapeHtml(forum.author)}</p>` : ''}
+                  <h2 style="margin: 0 0 4px; color: #0d2b57; font-weight: 700;">${escapeHtml(forum.title)}</h2>
+                  <p style="margin: 0 0 8px; color: #666; font-size: 14px;">${escapeHtml(forum.description)}</p>
+                  ${forum.author ? `<p style="margin: 0; font-size: 13px; color: #999;">by ${escapeHtml(forum.author)}</p>` : '<p style="margin: 0; font-size: 13px; color: #999;">by Anonymous</p>'}
                 </div>
               </div>
-              <div class="metrics">
-                <div class="metric">
-                  <span class="label">Replies</span>
-                  <span class="value">${forum.replies || 0}</span>
-                </div>
+              <div style="text-align: center;">
+                <div style="font-weight: 700; color: #0d2b57; font-size: 18px;">${replyCount}</div>
+                <div style="font-size: 12px; color: #999; text-transform: uppercase; margin-top: 4px;">Replies</div>
               </div>
             </div>
           `;
@@ -991,24 +1052,147 @@
         });
       } catch (error) {
         console.error('Error loading forums:', error);
-        topicList.innerHTML = '<p style="padding: 20px; text-align: center; color: red;">Error loading forums</p>';
+        topicList.innerHTML = '<div style="padding: 20px; text-align: center; color: #c41e3a;">Error loading forums</div>';
       }
     }
 
-    // Helper function to escape HTML and prevent XSS
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
+    // Open forum detail view
+    window.openForum = async (forumId) => {
+      if (!db) return;
+      
+      try {
+        currentForumId = forumId;
+        const forumRef = doc(db, 'forums', forumId);
+        const forumSnap = await getDoc(forumRef);
+        
+        if (!forumSnap.exists()) {
+          alert('Forum not found');
+          return;
+        }
+        
+        const forum = forumSnap.data();
+        
+        // Update detail view
+        detailTitle.textContent = forum.title;
+        detailAuthor.textContent = `by ${forum.author || 'Anonymous'} • Created ${formatDate(forum.createdAt)}`;
+        detailDesc.textContent = forum.description;
+        
+        // Load replies
+        loadReplies(forumId);
+        
+        // Show detail view, hide list view
+        forumListView.style.display = 'none';
+        forumDetailView.style.display = 'block';
+        window.scrollTo(0, 0);
+      } catch (error) {
+        console.error('Error opening forum:', error);
+        alert('Error opening forum');
+      }
+    };
+
+    // Load replies for a forum
+    async function loadReplies(forumId) {
+      if (!db) return;
+      
+      try {
+        const repliesRef = collection(db, 'forums', forumId, 'replies');
+        const q = query(repliesRef, orderBy('createdAt', 'asc'));
+        const querySnapshot = await getDocs(q);
+        
+        repliesList.innerHTML = '';
+        
+        if (querySnapshot.empty) {
+          repliesList.innerHTML = '<div style="padding: 20px; text-align: center; color: #999;">No replies yet. Be the first to reply!</div>';
+          return;
+        }
+        
+        querySnapshot.forEach((docSnapshot) => {
+          const reply = docSnapshot.data();
+          const replyHtml = `
+            <div style="border-left: 3px solid #0d2b57; padding: 16px; margin-bottom: 12px; background: #f8fafc; border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                <strong style="color: #0d2b57;">${escapeHtml(reply.author || 'Anonymous')}</strong>
+                <span style="font-size: 12px; color: #999;">${formatDate(reply.createdAt)}</span>
+              </div>
+              <p style="margin: 0; color: #444; line-height: 1.6;">${escapeHtml(reply.text)}</p>
+            </div>
+          `;
+          repliesList.innerHTML += replyHtml;
+        });
+      } catch (error) {
+        console.error('Error loading replies:', error);
+        repliesList.innerHTML = '<div style="padding: 20px; text-align: center; color: #c41e3a;">Error loading replies</div>';
+      }
     }
 
-    // Open modal when Add Forum button is clicked
+    // Back to list
+    backToListBtn.addEventListener('click', () => {
+      forumDetailView.style.display = 'none';
+      forumListView.style.display = 'block';
+      currentForumId = null;
+      replyName.value = '';
+      replyText.value = '';
+      replyStatus.textContent = '';
+    });
+
+    // Submit reply
+    submitReply.addEventListener('click', async () => {
+      if (!currentForumId || !db) return;
+      
+      const author = replyName.value.trim() || 'Anonymous';
+      const text = replyText.value.trim();
+      
+      if (!text) {
+        replyStatus.textContent = 'Please enter a reply.';
+        replyStatus.style.color = '#c41e3a';
+        return;
+      }
+      
+      replyStatus.textContent = 'Posting...';
+      replyStatus.style.color = '#0d2b57';
+      submitReply.disabled = true;
+      
+      try {
+        // Add reply to subcollection
+        const repliesRef = collection(db, 'forums', currentForumId, 'replies');
+        await addDoc(repliesRef, {
+          author: author,
+          text: text,
+          createdAt: serverTimestamp()
+        });
+        
+        // Update reply count on main forum
+        const forumRef = doc(db, 'forums', currentForumId);
+        await updateDoc(forumRef, {
+          replies: increment(1),
+          updatedAt: serverTimestamp()
+        });
+        
+        // Clear form and reload
+        replyName.value = '';
+        replyText.value = '';
+        replyStatus.textContent = 'Reply posted!';
+        replyStatus.style.color = '#16a34a';
+        submitReply.disabled = false;
+        
+        // Reload replies
+        await new Promise(r => setTimeout(r, 500));
+        loadReplies(currentForumId);
+        replyStatus.textContent = '';
+      } catch (error) {
+        console.error('Error posting reply:', error);
+        replyStatus.textContent = 'Error posting reply: ' + error.message;
+        replyStatus.style.color = '#c41e3a';
+        submitReply.disabled = false;
+      }
+    });
+
+    // Add forum button
     if (addForumBtn) {
-      addForumBtn.addEventListener('click', function() {
+      addForumBtn.addEventListener('click', () => {
         if (addModal) {
           addModal.setAttribute('aria-hidden', 'false');
           addModal.style.display = 'block';
-          // Clear form
           newAuthor.value = '';
           newTitle.value = '';
           newDesc.value = '';
@@ -1017,9 +1201,9 @@
       });
     }
 
-    // Close modal when close buttons are clicked
-    closeButtons.forEach(function(btn) {
-      btn.addEventListener('click', function() {
+    // Close modal buttons
+    closeButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
         if (addModal) {
           addModal.setAttribute('aria-hidden', 'true');
           addModal.style.display = 'none';
@@ -1027,14 +1211,13 @@
       });
     });
 
-    // Handle form submission
+    // Create forum
     if (createForumBtn) {
-      createForumBtn.addEventListener('click', async function() {
+      createForumBtn.addEventListener('click', async () => {
         const author = newAuthor.value.trim() || 'Anonymous';
         const title = newTitle.value.trim();
         const description = newDesc.value.trim();
 
-        // Validation
         if (!title) {
           addStatus.textContent = 'Please enter a forum title.';
           addStatus.style.color = '#c41e3a';
@@ -1047,7 +1230,6 @@
           return;
         }
 
-        // Show loading state
         addStatus.textContent = 'Creating forum...';
         addStatus.style.color = '#0d2b57';
         createForumBtn.disabled = true;
@@ -1057,9 +1239,8 @@
             throw new Error('Database not initialized');
           }
 
-          // Add forum to Firestore
           const forumsRef = collection(db, 'forums');
-          const docRef = await addDoc(forumsRef, {
+          await addDoc(forumsRef, {
             title: title,
             description: description,
             author: author,
@@ -1068,25 +1249,17 @@
             replies: 0
           });
 
-          // Success
           addStatus.textContent = 'Forum created successfully!';
           addStatus.style.color = '#16a34a';
           
-          console.log('Forum created with ID:', docRef.id);
-          
-          // Close modal and reload forums after 1.5 seconds
-          setTimeout(function() {
+          setTimeout(() => {
             addModal.setAttribute('aria-hidden', 'true');
             addModal.style.display = 'none';
             createForumBtn.disabled = false;
-            
-            // Reset form
             newAuthor.value = '';
             newTitle.value = '';
             newDesc.value = '';
             addStatus.textContent = '';
-            
-            // Reload the forum list to show the new forum
             loadForums();
           }, 1500);
         } catch (error) {
@@ -1098,11 +1271,11 @@
       });
     }
 
-    // Close modal when clicking on backdrop
+    // Close modal on backdrop click
     const backdrop = document.querySelector('[data-close="add"]');
     if (backdrop) {
-      backdrop.addEventListener('click', function() {
-        if (addModal) {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
           addModal.setAttribute('aria-hidden', 'true');
           addModal.style.display = 'none';
         }
