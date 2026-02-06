@@ -571,7 +571,9 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
             openSigninDesktopBtn.innerHTML = `<span class="user-pill">${displayName}</span>`;
             
             // Add logout button if not present
-            if (!document.getElementById("logoutBtnDesktop")) {
+            const existingLogout = document.getElementById("logoutBtnDesktop");
+            if (existingLogout) existingLogout.remove();
+            if (true) {
               const logoutBtn = document.createElement("button");
               logoutBtn.id = "logoutBtnDesktop";
               logoutBtn.className = "btn-logout";
