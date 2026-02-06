@@ -63,6 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var ddParents = document.querySelectorAll('.nav-links ul li.has-dropdown');
   console.log('Found dropdown parents:', ddParents.length);
   
+  // Close all dropdowns on page load
+  ddParents.forEach(function (li) {
+    li.classList.remove('open');
+  });
+  
   ddParents.forEach(function (li) {
     var a = li.querySelector(':scope > a');
     if (!a) return;
@@ -90,8 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
         item.addEventListener('click', function (e) {
           console.log('Dropdown item clicked:', item.href);
           // Don't prevent default - let the link navigate
-          // Just close the dropdown
-          li.classList.remove('open');
+          // Close all dropdowns
+          ddParents.forEach(function (other) {
+            other.classList.remove('open');
+          });
           // Allow the click to proceed naturally
         });
       });
