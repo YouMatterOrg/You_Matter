@@ -125,13 +125,17 @@ document.addEventListener('DOMContentLoaded', function () {
       // Remove active class from all items
       li.classList.remove('active');
       
-      // Check if this item or any of its dropdown children match current path
-      var links = li.querySelectorAll('a');
-      links.forEach(function (link) {
-        if (link.href.includes(currentPath) || currentPath.includes(link.href.split('/').pop())) {
+      // Only check the direct child link, not dropdown children
+      var directLink = li.querySelector(':scope > a');
+      if (directLink) {
+        var linkHref = directLink.href;
+        var linkPath = linkHref.split('/').pop();
+        
+        // Match if the current path includes the link path (exact match)
+        if (currentPath.includes(linkPath) && linkPath !== '' && linkPath !== 'index.html') {
           li.classList.add('active');
         }
-      });
+      }
     });
   }
 
