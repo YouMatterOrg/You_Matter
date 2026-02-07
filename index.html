@@ -39,7 +39,7 @@
       /* Reduce background image opacity */
       .header.hero-header {
         position: relative;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/background.jpg") center / cover no-repeat;
+        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("images/background.jpg") center / cover no-repeat;
         background-blend-mode: darken;
         color: #ffffff;
         overflow: hidden;
@@ -132,6 +132,16 @@
         color: #111827;
         transform: translateY(-1px);
         box-shadow: 0 10px 24px rgba(15, 23, 42, 0.55);
+      }
+
+      .hero-header .hero-btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5), 0 10px 24px rgba(15, 23, 42, 0.55);
+      }
+
+      .hero-header .hero-btn:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
       }
 
       /* Auth buttons styling */
@@ -464,6 +474,9 @@
     </style>
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
+    
     <!-- Hero Section -->
     <header class="header hero-header">
         <nav>
@@ -523,7 +536,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <!-- Main Four Tabs Section -->
         <section class="homepage-section" id="main-tabs">
             <h2 class="reveal" data-anim="down" style="--anim-delay: 120ms;">Explore YOU MATTER</h2>
