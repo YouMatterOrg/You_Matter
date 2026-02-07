@@ -614,19 +614,15 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
         // Update desktop button
         if (openSigninDesktopBtn && authButtons) {
           if (user) {
-            // Hide the sign-in button and show logout button
+            // Modify existing button for logout
             const displayName = user.displayName || user.email?.split("@")[0] || "User";
-            openSigninDesktopBtn.innerHTML = `<span class="user-pill">${displayName}</span>`;
-            openSigninDesktopBtn.className = "user-pill";
-            
-            // Replace onclick with logout handler
+            openSigninDesktopBtn.textContent = "Log out";
+            openSigninDesktopBtn.className = "btn-logout";
             openSigninDesktopBtn.onclick = null;
             openSigninDesktopBtn.removeEventListener("click", null);
             openSigninDesktopBtn.addEventListener("click", async () => {
               await signOut(auth);
             });
-            openSigninDesktopBtn.textContent = "Log out";
-            openSigninDesktopBtn.className = "btn-logout";
           } else {
             // Reset to Sign in button
             openSigninDesktopBtn.textContent = "Sign in";
