@@ -24,6 +24,12 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
 .search-input-wrapper { display: flex; gap: 8px; align-items: center; }
 .search-input-wrapper input { flex: 1; padding: 10px 14px; border: 1px solid #e0e7ff; border-radius: 8px; font-size: 0.9rem; color: #0b2345; background: #ffffff; }
 .search-input-wrapper input::placeholder { color: #9ca3af; }
+.search-input-wrapper input::-webkit-autofill,
+.search-input-wrapper input::-webkit-autofill:hover,
+.search-input-wrapper input::-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #0b2345 !important;
+}
 .search-btn { background: #ff8c3a; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; }
 .search-btn:hover { background: #f07c2d; }
 
@@ -369,7 +375,7 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
     <div class="search-box">
       <h3 class="search-box-title">Search</h3>
       <div class="search-input-wrapper" autocomplete="off">
-        <input type="search" id="search-input" placeholder="Search Blog" autocomplete="off" data-lpignore="true" data-1p-ignore="" data-form-type="other" spellcheck="false" />
+        <input type="text" id="search-input" placeholder="Search Blog" autocomplete="off" spellcheck="false" aria-autocomplete="none" />
         <button class="search-btn" id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
       </div>
     </div>
@@ -572,6 +578,18 @@ const searchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-btn");
 const topicFilter = document.getElementById("topic-filter");
 const clearAllBtn = document.getElementById("clear-all");
+
+// Prevent password manager autofill on search input
+if (searchInput) {
+  searchInput.addEventListener('focus', (e) => {
+    e.target.value = '';
+  });
+  searchInput.addEventListener('blur', (e) => {
+    if (e.target.value === '') {
+      e.target.value = '';
+    }
+  });
+}
 
 let filteredPosts = [...posts];
 
