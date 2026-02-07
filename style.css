@@ -482,7 +482,7 @@ body.nav-ready nav{
 
 .four-tab-icon {
     font-size: 48px;
-    color: #ff8c3a;
+    color: #F5A623;
     margin-bottom: 20px;
     height: 60px;
     display: flex;
@@ -498,7 +498,7 @@ body.nav-ready nav{
 }
 
 .four-tab p {
-    color: #4a5568;
+    color: #666666;
     font-size: 0.95rem;
     line-height: 1.7;
     margin-bottom: 24px;
@@ -507,7 +507,7 @@ body.nav-ready nav{
 
 .four-tab-btn {
     display: inline-block;
-    background: #ff8c3a;
+    background: #F5A623;
     color: #ffffff;
     padding: 12px 28px;
     border-radius: 8px;
@@ -605,7 +605,7 @@ body.nav-ready nav{
 
 .cta-btn {
     display: inline-block;
-    background: #ff8c3a;
+    background: #F5A623;
     color: #ffffff;
     padding: 16px 40px;
     border-radius: 8px;
@@ -1206,7 +1206,7 @@ p{
 }
 
 .post-learn span {
-    border-bottom: 3px solid #ff8c3a;
+    border-bottom: 3px solid #F5A623;
     padding-bottom: 3px;
 }
 
