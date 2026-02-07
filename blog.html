@@ -24,11 +24,12 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
 .search-input-wrapper { display: flex; gap: 8px; align-items: center; }
 .search-input-wrapper input { flex: 1; padding: 10px 14px; border: 1px solid #e0e7ff; border-radius: 8px; font-size: 0.9rem; color: #0b2345; background: #ffffff; }
 .search-input-wrapper input::placeholder { color: #9ca3af; }
-.search-input-wrapper input::-webkit-autofill,
-.search-input-wrapper input::-webkit-autofill:hover,
-.search-input-wrapper input::-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px white inset !important;
-  -webkit-text-fill-color: #0b2345 !important;
+.search-input-wrapper input:-webkit-autofill,
+.search-input-wrapper input:-webkit-autofill:hover,
+.search-input-wrapper input:-webkit-autofill:focus,
+.search-input-wrapper input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: transparent !important;
 }
 .search-btn { background: #ff8c3a; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; }
 .search-btn:hover { background: #f07c2d; }
@@ -581,13 +582,32 @@ const clearAllBtn = document.getElementById("clear-all");
 
 // Prevent password manager autofill on search input
 if (searchInput) {
-  searchInput.addEventListener('focus', (e) => {
-    e.target.value = '';
-  });
-  searchInput.addEventListener('blur', (e) => {
-    if (e.target.value === '') {
+  // Clear any pre-filled values immediately
+  searchInput.value = '';
+  
+  // Prevent autofill on input event
+  searchInput.addEventListener('input', (e) => {
+    if (e.target.value && !e.target._userTyping) {
       e.target.value = '';
     }
+  });
+  
+  // Track user typing
+  searchInput.addEventListener('keydown', (e) => {
+    searchInput._userTyping = true;
+  });
+  
+  searchInput.addEventListener('keyup', (e) => {
+    searchInput._userTyping = false;
+  });
+  
+  // Clear on focus to prevent autofill
+  searchInput.addEventListener('focus', (e) => {
+    setTimeout(() => {
+      if (e.target.value && !e.target._userTyping) {
+        e.target.value = '';
+      }
+    }, 10);
   });
 }
 
