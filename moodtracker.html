@@ -95,6 +95,248 @@
                 gap: 15px;
             }
         }
+        
+        /* Auth Modal Styles */
+        .ym-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .ym-modal-overlay.is-open {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .ym-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .ym-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+        
+        .ym-modal-close:hover {
+            color: #000;
+        }
+        
+        .ym-modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 16px;
+        }
+        
+        .ym-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #0b2345;
+        }
+        
+        .ym-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin: 0 0 20px 0;
+        }
+        
+        .ym-chip {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        
+        .ym-chip:hover {
+            background: #e0e0e0;
+        }
+        
+        .ym-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 16px 0 8px 0;
+            color: #333;
+        }
+        
+        .ym-req {
+            color: #e74c3c;
+        }
+        
+        .ym-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        
+        .ym-input:focus {
+            outline: none;
+            border-color: #F5A623;
+            box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1);
+        }
+        
+        .ym-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 16px 0;
+        }
+        
+        .ym-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+        }
+        
+        .ym-check input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .ym-link {
+            background: none;
+            border: none;
+            color: #F5A623;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0;
+        }
+        
+        .ym-link:hover {
+            text-decoration: underline;
+        }
+        
+        .ym-primary {
+            width: 100%;
+            padding: 12px;
+            background: #F5A623;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        
+        .ym-primary:hover:not(:disabled) {
+            background: #e69a1b;
+        }
+        
+        .ym-primary:disabled,
+        .ym-primary-disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .ym-or {
+            display: flex;
+            align-items: center;
+            margin: 24px 0;
+            gap: 12px;
+        }
+        
+        .ym-or-line {
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .ym-or-text {
+            font-size: 13px;
+            color: #999;
+            font-weight: 600;
+        }
+        
+        .ym-provider {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        
+        .ym-provider:hover {
+            background: #f8f8f8;
+            border-color: #999;
+        }
+        
+        .ym-provider-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .ym-legal {
+            font-size: 12px;
+            color: #999;
+            margin: 20px 0;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .ym-msg {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            text-align: center;
+            min-height: 20px;
+            color: #e74c3c;
+            background: #fadbd8;
+            border: 1px solid #f5b7b1;
+        }
     </style>
 </head>
 <body>
