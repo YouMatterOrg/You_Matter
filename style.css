@@ -1419,132 +1419,132 @@ select:focus-visible {
    ======================================== */
 
 .ym-modal-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background: rgba(0, 0, 0, 0.55) !important;
-    display: none !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 10000 !important;
-    padding: 16px !important;
-    overflow-y: auto !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 10000;
+    overflow-y: auto;
 }
 
 .ym-modal-overlay.is-open {
-    display: flex !important;
+    display: flex;
 }
 
+/* Modal card */
 .ym-modal {
-    background: white;
-    border-radius: 12px;
-    padding: 40px;
-    max-width: 450px;
-    width: 90%;
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    color: #111;
+    border-radius: 18px;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+    padding: 28px;
+    position: relative;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    position: relative;
+    margin: auto;
 }
 
 .ym-modal-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 24px;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
     cursor: pointer;
-    color: #666;
-    transition: color 0.2s;
+    font-size: 16px;
 }
 
-.ym-modal-close:hover {
-    color: #000;
-}
-
+/* Head */
 .ym-modal-head {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .ym-title {
-    font-size: 28px;
-    font-weight: 700;
     margin: 0;
-    color: #0b2345;
+    font-size: clamp(28px, 6vw, 34px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
 }
 
 .ym-subtitle {
-    font-size: 14px;
-    color: #666;
-    margin: 0 0 20px 0;
+    margin: 0 0 10px 0;
+    color: #444;
+    font-size: 18px;
 }
 
 .ym-chip {
-    background: #f0f0f0;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid #111;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s;
-    white-space: nowrap;
+    font-size: 14px;
+    transition: all 0.2s ease;
 }
 
 .ym-chip:hover {
-    background: #e0e0e0;
+    background: #f5f5f5;
 }
 
+/* Form */
 .ym-label {
     display: block;
-    font-size: 14px;
-    font-weight: 500;
-    margin: 16px 0 8px 0;
-    color: #333;
+    margin: 12px 0 6px;
+    font-size: clamp(14px, 3vw, 16px);
+    font-weight: 700;
+    color: #111;
 }
 
 .ym-req {
-    color: #e74c3c;
+    color: #b91c1c;
 }
 
 .ym-input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 12px 14px;
     border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    transition: border-color 0.2s;
+    border: 1.5px solid #ccc;
+    font-size: clamp(14px, 3vw, 16px);
+    outline: none;
     box-sizing: border-box;
+    background: #fff;
+    transition: border-color 0.2s ease;
 }
 
 .ym-input:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1);
+    border-color: #111;
+    box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
 }
 
 .ym-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin: 16px 0;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 12px 0 8px;
+    flex-wrap: wrap;
 }
 
 .ym-check {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
-    color: #333;
-    cursor: pointer;
+    font-size: clamp(13px, 3vw, 16px);
+    font-weight: 600;
+    color: #111;
 }
 
 .ym-check input {
@@ -1554,105 +1554,116 @@ select:focus-visible {
 }
 
 .ym-link {
-    background: none;
-    border: none;
-    color: var(--color-accent);
-    font-size: 13px;
+    border: 0;
+    background: transparent;
+    color: #0066cc;
+    text-decoration: underline;
+    font-size: clamp(13px, 3vw, 15px);
     cursor: pointer;
-    text-decoration: none;
-    font-weight: 500;
     padding: 0;
+    font-weight: 600;
 }
 
 .ym-link:hover {
-    text-decoration: underline;
+    color: #004fa3;
 }
 
 .ym-primary {
     width: 100%;
-    padding: 12px;
-    background: var(--color-accent);
-    color: white;
-    border: none;
+    margin-top: 12px;
+    padding: 12px 16px;
     border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
+    border: 0;
+    background: #222;
+    color: #fff;
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 20px;
-    transition: background 0.2s;
+    transition: background 0.2s ease;
 }
 
 .ym-primary:hover:not(:disabled) {
-    background: #e69a1b;
+    background: #111;
 }
 
-.ym-primary:disabled,
+.ym-primary:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.ym-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .ym-primary-disabled {
-    background: #ccc;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
 .ym-or {
     display: flex;
     align-items: center;
-    margin: 24px 0;
     gap: 12px;
+    margin: 14px 0;
 }
 
 .ym-or-line {
-    flex: 1;
     height: 1px;
     background: #ddd;
+    flex: 1;
 }
 
 .ym-or-text {
-    font-size: 13px;
-    color: #999;
+    color: #666;
     font-weight: 600;
+    font-size: 13px;
 }
 
 .ym-provider {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    background: white;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    transition: background 0.2s, border-color 0.2s;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #111;
+    background: #fff;
+    font-size: clamp(14px, 3vw, 16px);
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
 }
 
-.ym-provider:hover {
-    background: #f8f8f8;
-    border-color: #999;
+.ym-provider:hover:not(:disabled) {
+    background: #f5f5f5;
 }
 
 .ym-provider-icon {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
 }
 
 .ym-legal {
-    font-size: 12px;
-    color: #999;
-    margin: 20px 0;
-    text-align: center;
-    line-height: 1.4;
+    margin: 10px 0 0 0;
+    color: #666;
+    font-size: clamp(12px, 2.5vw, 14px);
+    line-height: 1.5;
 }
 
 .ym-msg {
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    text-align: center;
-    min-height: 20px;
-    color: #e74c3c;
-    background: #fadbd8;
-    border: 1px solid #f5b7b1;
+    margin-top: 10px;
+    min-height: 16px;
+    font-size: clamp(13px, 2.5vw, 15px);
+    color: #c41e3a;
+    font-weight: 700;
 }
