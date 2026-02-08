@@ -438,6 +438,16 @@ body.nav-ready nav{
     transition: transform .25s ease, opacity .25s ease, visibility 0s;
 }
 
+/* Also show on hover for desktop */
+@media (min-width: 769px) {
+    .nav-links ul li.has-dropdown:hover > .dropdown{
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+    }
+}
+
 /* Mobile: dropdown fits within the slide-out menu */
 @media (max-width: 768px){
     .nav-links{ text-align: left; }
