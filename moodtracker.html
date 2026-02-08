@@ -76,11 +76,11 @@
         <h1>Mood Tracker</h1>
     </header>
 
-    <main class="flex-1 min-h-screen flex flex-col items-center py-10 relative">
+    <button id="backButton" onclick="goBack()" class="hidden fixed left-8 top-32 z-50 text-gray-700 hover:text-gray-900 text-4xl font-bold transition-colors bg-white rounded-full p-3 shadow-lg" title="Go back" style="position: fixed !important;">
+        <i class="fa-solid fa-arrow-left"></i>
+    </button>
 
-        <button id="backButton" onclick="goBack()" class="hidden fixed left-8 top-32 z-40 text-gray-700 hover:text-gray-900 text-4xl font-bold transition-colors bg-white rounded-full p-3 shadow-lg" title="Go back">
-            <i class="fa-solid fa-arrow-left"></i>
-        </button>
+    <main class="flex-1 min-h-screen flex flex-col items-center py-10 relative">
 
         <div id="dashboardView" class="w-full max-w-4xl z-10 space-y-6">
             <div class="bg-white rounded-xl shadow-lg p-6">
