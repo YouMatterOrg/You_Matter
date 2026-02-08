@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mood Tracker | YOU MATTER</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Health Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background-color: #ffffff !important;
+            background-color: #f97316;
+            background-image: radial-gradient(rgba(255,255,255,0.3) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        .white-glow {
+            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(249,115,22,0) 75%);
         }
         .mood-btn.active {
             background-color: #f3f4f6;
@@ -20,65 +21,124 @@
         }
     </style>
 </head>
-<body>
-    <header class="sub-header">
-        <nav>
-            <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
-            <div class="nav-links" id="navLinks">
-                <i class="fa fa-times" onclick="hideMenu()"></i>
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li class="has-dropdown">
-                        <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="about-youmatter.html">About You Matter</a></li>
-                            <li><a href="about-who-we-are.html">Who We Are</a></li>
-                            <li><a href="about-why-we-started.html">Why We Started</a></li>
-                            <li><a href="about-what-we-do.html">What We Do</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="course.html">SERVICES <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="appointment.html">Appointment</a></li>
-                            <li><a href="check-in.html">Check-in</a></li>
-                            <li><a href="moodtracker.html" aria-current="page">Mood Tracker</a></li>
-                            <li><a href="gethelp.html">Get Help</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-dropdown">
-                        <a href="blog.html">LEARN <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="disorders.html">Disorders</a></li>
-                            <li><a href="factvsfiction.html">Fact vs Fiction</a></li>
-                            <li><a href="lifestages.html">Life Stages</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
-                    <li class="has-dropdown">
-                        <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
-                        <ul class="dropdown">
-                            <li><a href="forums.html">Forums</a></li>
-                            <li><a href="FAQ.html">FAQ</a></li>
-                        </ul>
-                    </li>
-                    <li id="navAuthContainer" class="nav-auth-container">
-                      <button id="openSignin" class="btn-auth" type="button">Sign in</button>
-                    </li>
-                </ul>
+<body class="flex min-h-screen">
+
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-30">
+        <div class="p-4 border-b">
+            <div class="flex items-center gap-2 mb-2">
+                <div class="w-8 h-8 bg-blue-900 rounded-full flex items-center justify-center text-white text-xs">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="font-bold text-[11px]">Signed in</p>
+                    <p class="text-[10px] text-gray-400 truncate">rishilalchandani14...</p>
+                </div>
             </div>
-            <div id="authButtons" class="nav-actions">
-              <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
+            <button class="text-rose-500 text-[11px] font-bold hover:underline flex items-center gap-1">
+                Sign out <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+            <p class="text-[10px] text-gray-400 mt-2 italic">Synced with server <i class="fa-solid fa-check"></i></p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-2 space-y-1">
+            <div onclick="toggleView('dashboard')" class="bg-black text-white p-2 rounded flex items-center gap-2 cursor-pointer text-[13px] font-bold">
+                <i class="fa-solid fa-house w-4 text-center"></i> Home
             </div>
-            <i class="fa fa-bars" onclick="showMenu()"></i>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-regular fa-heart mr-2 w-4 text-center"></i> Mood</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('moodForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2">
+                        <i class="fa-solid fa-plus text-[10px]"></i> Add
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-moon mr-2 w-4 text-center"></i> Sleep</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('sleepForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-weight mr-2 w-4 text-center"></i> Weight</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('weightForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-bell mr-2 w-4 text-center"></i> Meditate</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('meditateForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-person-running mr-2 w-4 text-center"></i> Run</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('runForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                    <div class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-file-lines text-[10px]"></i> Log</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-dumbbell mr-2 w-4 text-center"></i> Push-ups</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('pushupsForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-trophy mr-2 w-4 text-center"></i> Sit-ups</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('situpsForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="p-2 hover:bg-gray-100 rounded flex justify-between items-center cursor-pointer text-[13px] font-bold text-gray-700">
+                    <span><i class="fa-solid fa-person mr-2 w-4 text-center"></i> Leg raises</span>
+                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                </div>
+                <div class="pl-8 space-y-1 mt-1">
+                    <div onclick="toggleView('legraiseForm')" class="p-1.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded cursor-pointer text-[12px] flex items-center gap-2"><i class="fa-solid fa-plus text-[10px]"></i> Add</div>
+                </div>
+            </div>
+
+            <div class="pt-4 px-2 pb-1 text-[10px] text-gray-400 uppercase tracking-widest font-bold">Graphs</div>
+            <div onclick="toggleView('graphsView')" class="p-2 hover:bg-gray-100 rounded flex items-center gap-2 cursor-pointer text-[13px] font-bold text-gray-700">
+                <i class="fa-solid fa-chart-simple w-4 text-center"></i> View Graphs
+            </div>
         </nav>
-        <h1>Mood Tracker</h1>
-    </header>
+    </aside>
 
-    <main class="flex-1 min-h-screen flex flex-col items-center py-10 relative">
+    <main class="flex-1 ml-64 min-h-screen flex flex-col items-center py-10 relative">
+        <div class="absolute inset-0 white-glow pointer-events-none"></div>
 
-        <button id="backButton" onclick="goBack()" class="hidden fixed left-8 top-6 z-40 text-gray-700 hover:text-gray-900 text-5xl font-bold transition-colors" title="Go back">
+        <button id="backButton" onclick="goBack()" class="hidden fixed left-72 top-6 z-40 text-white hover:text-gray-200 text-5xl font-bold transition-colors" title="Go back">
             <i class="fa-solid fa-arrow-left"></i>
         </button>
 
@@ -110,13 +170,11 @@
                     <button onclick="toggleView('legraiseForm')" class="bg-gradient-to-br from-[#f97316] to-[#fb923c] text-white py-6 rounded-2xl font-bold text-lg flex flex-col items-center gap-2 transition-transform active:scale-95 hover:from-[#ea580c] hover:to-[#facc15] shadow-lg">
                         <i class="fa-solid fa-person text-2xl"></i> Add leg raises
                     </button>
-                    <button onclick="toggleView('graphsView')" class="bg-gradient-to-br from-[#3b82f6] to-[#60a5fa] text-white py-6 rounded-2xl font-bold text-lg flex flex-col items-center gap-2 transition-transform active:scale-95 hover:from-[#2563eb] hover:to-[#3b82f6] shadow-lg">
-                        <i class="fa-solid fa-chart-simple text-2xl"></i> View Graphs
-                    </button>
                 </div>
             </div>
 
-            <div id="activityLogContainer" class="space-y-6"></div>
+            <div id="activityLogContainer" class="space-y-6">
+                </div>
         </div>
 
         <!-- Graphs View -->
@@ -174,7 +232,7 @@
                     <i class="fa-regular fa-heart text-4xl"></i>
                     <h1 class="text-5xl font-bold text-gray-900">Add mood</h1>
                 </div>
-                <p class="text-gray-600 italic text-lg mb-8">How are you feeling?</p>
+                <p class="text-gray-600 italic text-lg mb-8">How are you feeling this afternoon?</p>
        
                 <form id="moodEntryForm" onsubmit="handleSave(event)" class="space-y-8">
                     <div>
@@ -289,7 +347,8 @@
                     <i class="fa-solid fa-bell text-4xl"></i>
                     <h1 class="text-5xl font-bold text-gray-900">Meditate</h1>
                 </div>
-                <p class="text-gray-600 italic text-lg mb-4">Select a preset time, enter a custom time or meditate freely</p>
+                <p class="text-gray-600 italic text-lg mb-4">This is a place where you can meditate. Select a preset time, enter a custom time or meditate freely with one of your own chosen times. Once your meditation is finished you will have the opportunity to record it if you choose.</p>
+                <p class="text-gray-600 text-sm mb-8">Record your mood before and after to see how meditation changes things for you.</p>
        
                 <div id="meditationMenu" class="space-y-8">
                     <h2 class="text-2xl font-bold mb-4">Presets</h2>
@@ -548,18 +607,6 @@
             </div>
         </div>
     </main>
-
-    <footer class="footer">
-        <h4>About Us</h4>
-        <p>Built with purpose.</p>
-        <div class="icons">
-            <i class="fab fa-facebook-f" aria-label="Facebook"></i>
-            <i class="fab fa-twitter" aria-label="Twitter"></i>
-            <i class="fab fa-instagram" aria-label="Instagram"></i>
-            <i class="fab fa-linkedin-in" aria-label="LinkedIn"></i>
-        </div>
-        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
-    </footer>
 
     <script>
         let selectedMoodValue = null;
@@ -1351,369 +1398,6 @@
                 document.getElementById('weightFeedback').innerHTML = `<p class="text-gray-700">${generateFeedback(weightData, 'weight')}</p>`;
             }
         }
-
-        function signOutUser() {
-            if (window.auth) {
-                window.auth.signOut().then(() => {
-                    console.log('Signed out');
-                    location.reload();
-                });
-            }
-        }
     </script>
-
-    <!-- Auth Modal -->
-    <div id="authModalOverlay" class="ym-modal-overlay" aria-hidden="true">
-        <div class="ym-modal" role="dialog" aria-modal="true" aria-labelledby="ymModalTitle">
-            <button class="ym-modal-close" id="closeAuthModal" aria-label="Close">✕</button>
-
-            <!-- SIGN IN VIEW -->
-            <div id="ymSignInView">
-                <div class="ym-modal-head">
-                    <h2 id="ymModalTitle" class="ym-title">Sign in</h2>
-                    <button class="ym-chip" id="switchToRegister" type="button">Register</button>
-                </div>
-
-                <label class="ym-label" for="ymEmail">Email address</label>
-                <input id="ymEmail" class="ym-input" type="email" autocomplete="email" />
-
-                <label class="ym-label" for="ymPassword">Password</label>
-                <input id="ymPassword" class="ym-input" type="password" autocomplete="current-password" />
-
-                <div class="ym-row">
-                    <label class="ym-check">
-                        <input id="ymStaySignedIn" type="checkbox" checked />
-                        <span>Stay signed in</span>
-                    </label>
-
-                    <button class="ym-link" id="ymForgot" type="button">Forgot your password?</button>
-                </div>
-
-                <button class="ym-primary" id="ymSignInBtn" type="button">Sign in</button>
-
-                <div class="ym-or">
-                    <div class="ym-or-line"></div>
-                    <div class="ym-or-text">OR</div>
-                    <div class="ym-or-line"></div>
-                </div>
-
-                <button class="ym-provider" id="ymGoogleBtn" type="button">
-                    <svg class="ym-provider-icon" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    <span>Continue with Google</span>
-                </button>
-
-                <p class="ym-legal">
-                    By clicking Sign in or Continue with Google you agree to You Matter's Terms of Use and Privacy Policy.
-                </p>
-
-                <div class="ym-msg" id="ymMsg"></div>
-            </div>
-
-            <!-- REGISTER VIEW -->
-            <div id="ymRegisterView" style="display:none;">
-                <div class="ym-modal-head">
-                    <h2 class="ym-title">Create your account</h2>
-                    <button class="ym-chip" id="switchToSignIn" type="button">Sign in</button>
-                </div>
-
-                <p class="ym-subtitle">Registration is easy.</p>
-
-                <label class="ym-label" for="ymRegEmail">Email address <span class="ym-req">*</span></label>
-                <input id="ymRegEmail" class="ym-input" type="email" autocomplete="email" />
-
-                <label class="ym-label" for="ymFirstName">First name <span class="ym-req">*</span></label>
-                <input id="ymFirstName" class="ym-input" type="text" autocomplete="given-name" />
-
-                <label class="ym-label" for="ymRegPassword">Password <span class="ym-req">*</span></label>
-                <input id="ymRegPassword" class="ym-input" type="password" autocomplete="new-password" />
-
-                <p class="ym-legal">
-                    By clicking Register or Continue with Google you agree to You Matter's Terms of Use and Privacy Policy.
-                </p>
-
-                <button class="ym-primary ym-primary-disabled" id="ymRegisterBtn" type="button">Register</button>
-
-                <div class="ym-or">
-                    <div class="ym-or-line"></div>
-                    <div class="ym-or-text">OR</div>
-                    <div class="ym-or-line"></div>
-                </div>
-
-                <button class="ym-provider" id="ymGoogleBtn2" type="button">
-                    <svg class="ym-provider-icon" viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    <span>Continue with Google</span>
-                </button>
-
-                <div class="ym-msg" id="ymMsg2"></div>
-            </div>
-        </div>
-    </div>
-
-    <script src="menu.js"></script>
-    <!-- Auth modal management -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDWRLEiEmgcG7cvShqSvuePlx8Jw-s2MTg",
-            authDomain: "youmatter-46c43.firebaseapp.com",
-            projectId: "youmatter-46c43",
-            storageBucket: "youmatter-46c43.firebasestorage.app",
-            messagingSenderId: "971089399934",
-            appId: "1:971089399934:web:2d8e0a2988b1938f46082f",
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        
-        setPersistence(auth, browserLocalPersistence).catch(err => console.error('Persistence error:', err));
-        
-        window.auth = auth;
-        window.db = db;
-
-        // Wait for DOM to be ready before accessing elements
-        function setupAuth() {
-            let overlay = document.getElementById("authModalOverlay");
-            const modal = overlay?.querySelector(".ym-modal");
-            const closeBtn = document.getElementById("closeAuthModal");
-
-            const signInView = document.getElementById("ymSignInView");
-            const registerView = document.getElementById("ymRegisterView");
-
-            const switchToRegister = document.getElementById("switchToRegister");
-            const switchToSignIn = document.getElementById("switchToSignIn");
-
-            const msg1 = document.getElementById("ymMsg");
-            const msg2 = document.getElementById("ymMsg2");
-
-            const authButtons = document.getElementById("authButtons");
-            const navAuthContainer = document.getElementById("navAuthContainer");
-            const openSigninDesktopBtn = document.getElementById("openSigninDesktop");
-            const openSigninMobileBtn = document.getElementById("openSignin");
-
-            const emailEl = document.getElementById("ymEmail");
-            const passEl = document.getElementById("ymPassword");
-            const stayEl = document.getElementById("ymStaySignedIn");
-
-            const regEmailEl = document.getElementById("ymRegEmail");
-            const firstNameEl = document.getElementById("ymFirstName");
-            const regPassEl = document.getElementById("ymRegPassword");
-
-            const signInBtn = document.getElementById("ymSignInBtn");
-            const registerBtn = document.getElementById("ymRegisterBtn");
-
-            const googleBtn1 = document.getElementById("ymGoogleBtn");
-            const googleBtn2 = document.getElementById("ymGoogleBtn2");
-
-            function setMsg(el, t){
-                if (!el) return;
-                el.textContent = t || "";
-            }
-
-            function openModal(mode){
-                if (!overlay) return;
-                overlay.classList.add("is-open");
-                overlay.setAttribute("aria-hidden", "false");
-                setMsg(msg1, "");
-                setMsg(msg2, "");
-
-                if (mode === "signup") showRegister();
-                else showSignIn();
-
-                setTimeout(() => {
-                    if (mode === "signup") regEmailEl?.focus();
-                    else emailEl?.focus();
-                }, 50);
-            }
-            window.openModal = openModal;
-
-            function closeModal(){
-                if (!overlay) return;
-                overlay.classList.remove("is-open");
-                overlay.setAttribute("aria-hidden", "true");
-            }
-
-            function showRegister(){
-                if (signInView) signInView.style.display = "none";
-                if (registerView) registerView.style.display = "block";
-            }
-
-            function showSignIn(){
-                if (registerView) registerView.style.display = "none";
-                if (signInView) signInView.style.display = "block";
-            }
-
-            closeBtn?.addEventListener("click", closeModal);
-            overlay?.addEventListener("click", (e) => {
-                if (e.target === overlay) closeModal();
-            });
-            window.addEventListener("keydown", (e) => {
-                if (e.key === "Escape") closeModal();
-            });
-
-            switchToRegister?.addEventListener("click", showRegister);
-            switchToSignIn?.addEventListener("click", showSignIn);
-
-            openSigninDesktopBtn?.addEventListener("click", () => openModal("login"));
-            openSigninMobileBtn?.addEventListener("click", () => openModal("login"));
-
-            function refreshRegisterState(){
-                const ok =
-                    (regEmailEl?.value || "").trim().length > 3 &&
-                    (firstNameEl?.value || "").trim().length > 0 &&
-                    (regPassEl?.value || "").length >= 6;
-                if (registerBtn) {
-                    registerBtn.disabled = !ok;
-                    registerBtn.classList.toggle("ym-primary-disabled", !ok);
-                }
-            }
-            regEmailEl?.addEventListener("input", refreshRegisterState);
-            firstNameEl?.addEventListener("input", refreshRegisterState);
-            regPassEl?.addEventListener("input", refreshRegisterState);
-            refreshRegisterState();
-
-            async function applyPersistence(){
-                const stay = !!stayEl?.checked;
-                await setPersistence(auth, stay ? browserLocalPersistence : browserSessionPersistence);
-            }
-
-            if (signInBtn) {
-                signInBtn.addEventListener("click", async () => {
-                    setMsg(msg1, "");
-                    const email = (emailEl.value || "").trim();
-                    const password = passEl.value || "";
-                    
-                    if (!email) {
-                        setMsg(msg1, "Please enter your email address.");
-                        return;
-                    }
-                    if (!password) {
-                        setMsg(msg1, "Please enter your password.");
-                        return;
-                    }
-                    
-                    try{
-                        await applyPersistence();
-                        await signInWithEmailAndPassword(auth, email, password);
-                        closeModal();
-                    } catch(e){
-                        console.error(e);
-                        if (e.code === "auth/user-not-found") {
-                            setMsg(msg1, "No account found with this email address.");
-                        } else if (e.code === "auth/wrong-password") {
-                            setMsg(msg1, "Incorrect password. Please try again.");
-                        } else if (e.code === "auth/invalid-email") {
-                            setMsg(msg1, "Please enter a valid email address.");
-                        } else if (e.code === "auth/user-disabled") {
-                            setMsg(msg1, "This account has been disabled.");
-                        } else {
-                            setMsg(msg1, e.message || "Sign in failed. Please try again.");
-                        }
-                    }
-                });
-            }
-
-            if (registerBtn) {
-                registerBtn.addEventListener("click", async () => {
-                    setMsg(msg2, "");
-                    const email = (regEmailEl.value || "").trim();
-                    const password = regPassEl.value || "";
-                    const name = (firstNameEl.value || "").trim();
-                    
-                    try{
-                        await setPersistence(auth, browserLocalPersistence);
-                        const cred = await createUserWithEmailAndPassword(auth, email, password);
-                        if (name) await updateProfile(cred.user, { displayName: name });
-                        closeModal();
-                    } catch(e){
-                        console.error(e);
-                        if (e.code === "auth/email-already-in-use") {
-                            setMsg(msg2, "This email is already registered. Please sign in instead.");
-                        } else if (e.code === "auth/weak-password") {
-                            setMsg(msg2, "Password should be at least 6 characters.");
-                        } else if (e.code === "auth/invalid-email") {
-                            setMsg(msg2, "Please enter a valid email address.");
-                        } else {
-                            setMsg(msg2, e.message || "Registration failed. Please try again.");
-                        }
-                    }
-                });
-            }
-
-            async function googleSignIn(targetMsgEl){
-                setMsg(targetMsgEl, "");
-                try{
-                    await applyPersistence();
-                    const provider = new GoogleAuthProvider();
-                    await signInWithPopup(auth, provider);
-                    closeModal();
-                } catch(e){
-                    console.error(e);
-                    setMsg(targetMsgEl, e.code || e.message);
-                }
-            }
-            googleBtn1?.addEventListener("click", () => googleSignIn(msg1));
-            googleBtn2?.addEventListener("click", () => googleSignIn(msg2));
-
-            onAuthStateChanged(auth, (user) => {
-                if (openSigninDesktopBtn && authButtons) {
-                    if (user) {
-                        const displayName = user.displayName || user.email?.split("@")[0] || "User";
-                        openSigninDesktopBtn.textContent = "Log out";
-                        openSigninDesktopBtn.className = "btn-logout";
-                        openSigninDesktopBtn.onclick = null;
-                        openSigninDesktopBtn.removeEventListener("click", null);
-                        openSigninDesktopBtn.addEventListener("click", async () => {
-                            await signOut(auth);
-                        });
-                    } else {
-                        openSigninDesktopBtn.textContent = "Sign in";
-                        openSigninDesktopBtn.className = "btn-auth";
-                        openSigninDesktopBtn.onclick = function() { openModal("login"); };
-                    }
-                }
-                
-                if (navAuthContainer && openSigninMobileBtn) {
-                    if (user) {
-                        const displayName = user.displayName || user.email?.split("@")[0] || "User";
-                        openSigninMobileBtn.textContent = "Log out";
-                        openSigninMobileBtn.className = "btn-logout";
-                        openSigninMobileBtn.onclick = null;
-                        openSigninMobileBtn.removeEventListener("click", null);
-                        openSigninMobileBtn.addEventListener("click", async () => {
-                            await signOut(auth);
-                        });
-                    } else {
-                        openSigninMobileBtn.textContent = "Sign in";
-                        openSigninMobileBtn.className = "btn-auth";
-                        openSigninMobileBtn.onclick = function() { openModal("login"); };
-                    }
-                }
-            });
-        }
-
-        // Setup auth when DOM is ready
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", setupAuth);
-        } else {
-            setupAuth();
-        }
-    </script>
-
-    <script src="accessibility.js"></script>
-    <script src="image-accessibility.js"></script>
 </body>
 </html>

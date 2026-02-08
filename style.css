@@ -438,14 +438,6 @@ body.nav-ready nav{
     transition: transform .25s ease, opacity .25s ease, visibility 0s;
 }
 
-/* Also show on hover for desktop */
-.nav-links ul li.has-dropdown:hover > .dropdown{
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
-}
-
 /* Mobile: dropdown fits within the slide-out menu */
 @media (max-width: 768px){
     .nav-links{ text-align: left; }
@@ -1370,8 +1362,8 @@ select:focus-visible {
     border-color: var(--color-accent);
 }
 
-/* Active state for navigation dropdowns */
-.nav-links ul li.has-dropdown.active > .dropdown,
+/* Active state for navigation dropdowns - only open when explicitly toggled */
+.nav-links ul li.has-dropdown.open > .dropdown,
 .nav-links ul li.has-dropdown[aria-expanded="true"] > .dropdown {
     opacity: 1;
     transform: translateY(0);
