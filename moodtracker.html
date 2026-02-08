@@ -331,219 +331,233 @@
         window.auth = auth;
         window.db = db;
 
-        let overlay = document.getElementById("authModalOverlay");
-        const modal = overlay?.querySelector(".ym-modal");
-        const closeBtn = document.getElementById("closeAuthModal");
+        // Wait for DOM to be ready before accessing elements
+        function setupAuth() {
+            let overlay = document.getElementById("authModalOverlay");
+            const modal = overlay?.querySelector(".ym-modal");
+            const closeBtn = document.getElementById("closeAuthModal");
 
-        const signInView = document.getElementById("ymSignInView");
-        const registerView = document.getElementById("ymRegisterView");
+            const signInView = document.getElementById("ymSignInView");
+            const registerView = document.getElementById("ymRegisterView");
 
-        const switchToRegister = document.getElementById("switchToRegister");
-        const switchToSignIn = document.getElementById("switchToSignIn");
+            const switchToRegister = document.getElementById("switchToRegister");
+            const switchToSignIn = document.getElementById("switchToSignIn");
 
-        const msg1 = document.getElementById("ymMsg");
-        const msg2 = document.getElementById("ymMsg2");
+            const msg1 = document.getElementById("ymMsg");
+            const msg2 = document.getElementById("ymMsg2");
 
-        const authButtons = document.getElementById("authButtons");
-        const navAuthContainer = document.getElementById("navAuthContainer");
-        const openSigninDesktopBtn = document.getElementById("openSigninDesktop");
-        const openSigninMobileBtn = document.getElementById("openSignin");
+            const authButtons = document.getElementById("authButtons");
+            const navAuthContainer = document.getElementById("navAuthContainer");
+            const openSigninDesktopBtn = document.getElementById("openSigninDesktop");
+            const openSigninMobileBtn = document.getElementById("openSignin");
 
-        const emailEl = document.getElementById("ymEmail");
-        const passEl = document.getElementById("ymPassword");
-        const stayEl = document.getElementById("ymStaySignedIn");
+            const emailEl = document.getElementById("ymEmail");
+            const passEl = document.getElementById("ymPassword");
+            const stayEl = document.getElementById("ymStaySignedIn");
 
-        const regEmailEl = document.getElementById("ymRegEmail");
-        const firstNameEl = document.getElementById("ymFirstName");
-        const regPassEl = document.getElementById("ymRegPassword");
+            const regEmailEl = document.getElementById("ymRegEmail");
+            const firstNameEl = document.getElementById("ymFirstName");
+            const regPassEl = document.getElementById("ymRegPassword");
 
-        const signInBtn = document.getElementById("ymSignInBtn");
-        const registerBtn = document.getElementById("ymRegisterBtn");
+            const signInBtn = document.getElementById("ymSignInBtn");
+            const registerBtn = document.getElementById("ymRegisterBtn");
 
-        const googleBtn1 = document.getElementById("ymGoogleBtn");
-        const googleBtn2 = document.getElementById("ymGoogleBtn2");
+            const googleBtn1 = document.getElementById("ymGoogleBtn");
+            const googleBtn2 = document.getElementById("ymGoogleBtn2");
 
-        function setMsg(el, t){
-            if (!el) return;
-            el.textContent = t || "";
-        }
+            function setMsg(el, t){
+                if (!el) return;
+                el.textContent = t || "";
+            }
 
-        function openModal(mode){
-            if (!overlay) return;
-            overlay.classList.add("is-open");
-            overlay.setAttribute("aria-hidden", "false");
-            setMsg(msg1, "");
-            setMsg(msg2, "");
+            function openModal(mode){
+                if (!overlay) return;
+                overlay.classList.add("is-open");
+                overlay.setAttribute("aria-hidden", "false");
+                setMsg(msg1, "");
+                setMsg(msg2, "");
 
-            if (mode === "signup") showRegister();
-            else showSignIn();
+                if (mode === "signup") showRegister();
+                else showSignIn();
 
-            setTimeout(() => {
-                if (mode === "signup") regEmailEl?.focus();
-                else emailEl?.focus();
-            }, 50);
-        }
-        window.openModal = openModal;
+                setTimeout(() => {
+                    if (mode === "signup") regEmailEl?.focus();
+                    else emailEl?.focus();
+                }, 50);
+            }
+            window.openModal = openModal;
 
-        function closeModal(){
-            if (!overlay) return;
-            overlay.classList.remove("is-open");
-            overlay.setAttribute("aria-hidden", "true");
-        }
+            function closeModal(){
+                if (!overlay) return;
+                overlay.classList.remove("is-open");
+                overlay.setAttribute("aria-hidden", "true");
+            }
 
-        function showRegister(){
-            if (signInView) signInView.style.display = "none";
-            if (registerView) registerView.style.display = "block";
-        }
+            function showRegister(){
+                if (signInView) signInView.style.display = "none";
+                if (registerView) registerView.style.display = "block";
+            }
 
-        function showSignIn(){
-            if (registerView) registerView.style.display = "none";
-            if (signInView) signInView.style.display = "block";
-        }
+            function showSignIn(){
+                if (registerView) registerView.style.display = "none";
+                if (signInView) signInView.style.display = "block";
+            }
 
-        closeBtn?.addEventListener("click", closeModal);
-        overlay?.addEventListener("click", (e) => {
-            if (e.target === overlay) closeModal();
-        });
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeModal();
-        });
+            closeBtn?.addEventListener("click", closeModal);
+            overlay?.addEventListener("click", (e) => {
+                if (e.target === overlay) closeModal();
+            });
+            window.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") closeModal();
+            });
 
-        switchToRegister?.addEventListener("click", showRegister);
-        switchToSignIn?.addEventListener("click", showSignIn);
+            switchToRegister?.addEventListener("click", showRegister);
+            switchToSignIn?.addEventListener("click", showSignIn);
 
-        openSigninDesktopBtn?.addEventListener("click", () => openModal("login"));
-        openSigninMobileBtn?.addEventListener("click", () => openModal("login"));
+            openSigninDesktopBtn?.addEventListener("click", () => openModal("login"));
+            openSigninMobileBtn?.addEventListener("click", () => openModal("login"));
 
-        function refreshRegisterState(){
-            const ok =
-                (regEmailEl?.value || "").trim().length > 3 &&
-                (firstNameEl?.value || "").trim().length > 0 &&
-                (regPassEl?.value || "").length >= 6;
+            function refreshRegisterState(){
+                const ok =
+                    (regEmailEl?.value || "").trim().length > 3 &&
+                    (firstNameEl?.value || "").trim().length > 0 &&
+                    (regPassEl?.value || "").length >= 6;
+                if (registerBtn) {
+                    registerBtn.disabled = !ok;
+                    registerBtn.classList.toggle("ym-primary-disabled", !ok);
+                }
+            }
+            regEmailEl?.addEventListener("input", refreshRegisterState);
+            firstNameEl?.addEventListener("input", refreshRegisterState);
+            regPassEl?.addEventListener("input", refreshRegisterState);
+            refreshRegisterState();
+
+            async function applyPersistence(){
+                const stay = !!stayEl?.checked;
+                await setPersistence(auth, stay ? browserLocalPersistence : browserSessionPersistence);
+            }
+
+            if (signInBtn) {
+                signInBtn.addEventListener("click", async () => {
+                    setMsg(msg1, "");
+                    const email = (emailEl.value || "").trim();
+                    const password = passEl.value || "";
+                    
+                    if (!email) {
+                        setMsg(msg1, "Please enter your email address.");
+                        return;
+                    }
+                    if (!password) {
+                        setMsg(msg1, "Please enter your password.");
+                        return;
+                    }
+                    
+                    try{
+                        await applyPersistence();
+                        await signInWithEmailAndPassword(auth, email, password);
+                        closeModal();
+                    } catch(e){
+                        console.error(e);
+                        if (e.code === "auth/user-not-found") {
+                            setMsg(msg1, "No account found with this email address.");
+                        } else if (e.code === "auth/wrong-password") {
+                            setMsg(msg1, "Incorrect password. Please try again.");
+                        } else if (e.code === "auth/invalid-email") {
+                            setMsg(msg1, "Please enter a valid email address.");
+                        } else if (e.code === "auth/user-disabled") {
+                            setMsg(msg1, "This account has been disabled.");
+                        } else {
+                            setMsg(msg1, e.message || "Sign in failed. Please try again.");
+                        }
+                    }
+                });
+            }
+
             if (registerBtn) {
-                registerBtn.disabled = !ok;
-                registerBtn.classList.toggle("ym-primary-disabled", !ok);
+                registerBtn.addEventListener("click", async () => {
+                    setMsg(msg2, "");
+                    const email = (regEmailEl.value || "").trim();
+                    const password = regPassEl.value || "";
+                    const name = (firstNameEl.value || "").trim();
+                    
+                    try{
+                        await setPersistence(auth, browserLocalPersistence);
+                        const cred = await createUserWithEmailAndPassword(auth, email, password);
+                        if (name) await updateProfile(cred.user, { displayName: name });
+                        closeModal();
+                    } catch(e){
+                        console.error(e);
+                        if (e.code === "auth/email-already-in-use") {
+                            setMsg(msg2, "This email is already registered. Please sign in instead.");
+                        } else if (e.code === "auth/weak-password") {
+                            setMsg(msg2, "Password should be at least 6 characters.");
+                        } else if (e.code === "auth/invalid-email") {
+                            setMsg(msg2, "Please enter a valid email address.");
+                        } else {
+                            setMsg(msg2, e.message || "Registration failed. Please try again.");
+                        }
+                    }
+                });
             }
+
+            async function googleSignIn(targetMsgEl){
+                setMsg(targetMsgEl, "");
+                try{
+                    await applyPersistence();
+                    const provider = new GoogleAuthProvider();
+                    await signInWithPopup(auth, provider);
+                    closeModal();
+                } catch(e){
+                    console.error(e);
+                    setMsg(targetMsgEl, e.code || e.message);
+                }
+            }
+            googleBtn1?.addEventListener("click", () => googleSignIn(msg1));
+            googleBtn2?.addEventListener("click", () => googleSignIn(msg2));
+
+            onAuthStateChanged(auth, (user) => {
+                if (openSigninDesktopBtn && authButtons) {
+                    if (user) {
+                        const displayName = user.displayName || user.email?.split("@")[0] || "User";
+                        openSigninDesktopBtn.textContent = "Log out";
+                        openSigninDesktopBtn.className = "btn-logout";
+                        openSigninDesktopBtn.onclick = null;
+                        openSigninDesktopBtn.removeEventListener("click", null);
+                        openSigninDesktopBtn.addEventListener("click", async () => {
+                            await signOut(auth);
+                        });
+                    } else {
+                        openSigninDesktopBtn.textContent = "Sign in";
+                        openSigninDesktopBtn.className = "btn-auth";
+                        openSigninDesktopBtn.onclick = function() { openModal("login"); };
+                    }
+                }
+                
+                if (navAuthContainer && openSigninMobileBtn) {
+                    if (user) {
+                        const displayName = user.displayName || user.email?.split("@")[0] || "User";
+                        openSigninMobileBtn.textContent = "Log out";
+                        openSigninMobileBtn.className = "btn-logout";
+                        openSigninMobileBtn.onclick = null;
+                        openSigninMobileBtn.removeEventListener("click", null);
+                        openSigninMobileBtn.addEventListener("click", async () => {
+                            await signOut(auth);
+                        });
+                    } else {
+                        openSigninMobileBtn.textContent = "Sign in";
+                        openSigninMobileBtn.className = "btn-auth";
+                        openSigninMobileBtn.onclick = function() { openModal("login"); };
+                    }
+                }
+            });
         }
-        regEmailEl?.addEventListener("input", refreshRegisterState);
-        firstNameEl?.addEventListener("input", refreshRegisterState);
-        regPassEl?.addEventListener("input", refreshRegisterState);
-        refreshRegisterState();
 
-        async function applyPersistence(){
-            const stay = !!stayEl?.checked;
-            await setPersistence(auth, stay ? browserLocalPersistence : browserSessionPersistence);
+        // Setup auth when DOM is ready
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", setupAuth);
+        } else {
+            setupAuth();
         }
-
-        signInBtn?.addEventListener("click", async () => {
-            setMsg(msg1, "");
-            const email = (emailEl.value || "").trim();
-            const password = passEl.value || "";
-            
-            if (!email) {
-                setMsg(msg1, "Please enter your email address.");
-                return;
-            }
-            if (!password) {
-                setMsg(msg1, "Please enter your password.");
-                return;
-            }
-            
-            try{
-                await applyPersistence();
-                await signInWithEmailAndPassword(auth, email, password);
-                closeModal();
-            } catch(e){
-                console.error(e);
-                if (e.code === "auth/user-not-found") {
-                    setMsg(msg1, "No account found with this email address.");
-                } else if (e.code === "auth/wrong-password") {
-                    setMsg(msg1, "Incorrect password. Please try again.");
-                } else if (e.code === "auth/invalid-email") {
-                    setMsg(msg1, "Please enter a valid email address.");
-                } else if (e.code === "auth/user-disabled") {
-                    setMsg(msg1, "This account has been disabled.");
-                } else {
-                    setMsg(msg1, e.message || "Sign in failed. Please try again.");
-                }
-            }
-        });
-
-        registerBtn?.addEventListener("click", async () => {
-            setMsg(msg2, "");
-            const email = (regEmailEl.value || "").trim();
-            const password = regPassEl.value || "";
-            const name = (firstNameEl.value || "").trim();
-            
-            try{
-                await setPersistence(auth, browserLocalPersistence);
-                const cred = await createUserWithEmailAndPassword(auth, email, password);
-                if (name) await updateProfile(cred.user, { displayName: name });
-                closeModal();
-            } catch(e){
-                console.error(e);
-                if (e.code === "auth/email-already-in-use") {
-                    setMsg(msg2, "This email is already registered. Please sign in instead.");
-                } else if (e.code === "auth/weak-password") {
-                    setMsg(msg2, "Password should be at least 6 characters.");
-                } else if (e.code === "auth/invalid-email") {
-                    setMsg(msg2, "Please enter a valid email address.");
-                } else {
-                    setMsg(msg2, e.message || "Registration failed. Please try again.");
-                }
-            }
-        });
-
-        async function googleSignIn(targetMsgEl){
-            setMsg(targetMsgEl, "");
-            try{
-                await applyPersistence();
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
-                closeModal();
-            } catch(e){
-                console.error(e);
-                setMsg(targetMsgEl, e.code || e.message);
-            }
-        }
-        googleBtn1?.addEventListener("click", () => googleSignIn(msg1));
-        googleBtn2?.addEventListener("click", () => googleSignIn(msg2));
-
-        onAuthStateChanged(auth, (user) => {
-            if (openSigninDesktopBtn && authButtons) {
-                if (user) {
-                    const displayName = user.displayName || user.email?.split("@")[0] || "User";
-                    openSigninDesktopBtn.textContent = "Log out";
-                    openSigninDesktopBtn.className = "btn-logout";
-                    openSigninDesktopBtn.onclick = null;
-                    openSigninDesktopBtn.removeEventListener("click", null);
-                    openSigninDesktopBtn.addEventListener("click", async () => {
-                        await signOut(auth);
-                    });
-                } else {
-                    openSigninDesktopBtn.textContent = "Sign in";
-                    openSigninDesktopBtn.className = "btn-auth";
-                    openSigninDesktopBtn.onclick = function() { openModal("login"); };
-                }
-            }
-            
-            if (navAuthContainer && openSigninMobileBtn) {
-                if (user) {
-                    const displayName = user.displayName || user.email?.split("@")[0] || "User";
-                    openSigninMobileBtn.textContent = "Log out";
-                    openSigninMobileBtn.className = "btn-logout";
-                    openSigninMobileBtn.onclick = null;
-                    openSigninMobileBtn.removeEventListener("click", null);
-                    openSigninMobileBtn.addEventListener("click", async () => {
-                        await signOut(auth);
-                    });
-                } else {
-                    openSigninMobileBtn.textContent = "Sign in";
-                    openSigninMobileBtn.className = "btn-auth";
-                    openSigninMobileBtn.onclick = function() { openModal("login"); };
-                }
-            }
-        });
     </script>
 
     <script src="accessibility.js"></script>
