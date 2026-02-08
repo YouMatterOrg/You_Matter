@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Tracker</title>
+    <title>Mood Tracker | YOU MATTER</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,11 +24,115 @@
             background-color: #f3f4f6;
             outline: 2px solid #ea580c;
         }
+        body { 
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; 
+            background: #f5f6fa; 
+            color: #0b2345; 
+        }
+        .mood-tracker-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .mood-tracker-sidebar {
+            width: 256px;
+            background: white;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100%;
+            z-index: 30;
+        }
+        .mood-tracker-main {
+            flex: 1;
+            margin-left: 256px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 16px 60px;
+            position: relative;
+        }
+        .white-glow {
+            background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(249,115,22,0) 75%);
+        }
+        .mood-btn.active {
+            background-color: #f3f4f6;
+            outline: 2px solid #ea580c;
+        }
+        @media (max-width: 768px) {
+            .mood-tracker-sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .mood-tracker-main {
+                margin-left: 0;
+                padding: 20px 12px 40px;
+            }
+        }
     </style>
 </head>
-<body class="flex min-h-screen">
+<body>
+    <header class="sub-header">
+        <nav>
+            <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li class="has-dropdown">
+                        <a href="about-youmatter.html">ABOUT US <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="about-youmatter.html">About You Matter</a></li>
+                            <li><a href="about-who-we-are.html">Who We Are</a></li>
+                            <li><a href="about-why-we-started.html">Why We Started</a></li>
+                            <li><a href="about-what-we-do.html">What We Do</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="course.html">SERVICES <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="appointment.html">Appointment</a></li>
+                            <li><a href="check-in.html">Check-in</a></li>
+                            <li><a href="moodtracker.html" aria-current="page">Mood Tracker</a></li>
+                            <li><a href="gethelp.html">Get Help</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="blog.html">LEARN <i class="fa-solid fa-angle-down" style="font-size:0.85em;margin-left:6px;"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="disorders.html">Disorders</a></li>
+                            <li><a href="factvsfiction.html">Fact vs Fiction</a></li>
+                            <li><a href="lifestages.html">Life Stages</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                    <li class="has-dropdown">
+                        <a href="forums.html">CONNECT <i class="fa-solid fa-angle-down"></i></a>
+                        <ul class="dropdown">
+                            <li><a href="forums.html">Forums</a></li>
+                            <li><a href="FAQ.html">FAQ</a></li>
+                        </ul>
+                    </li>
+                    <li id="navAuthContainer" class="nav-auth-container">
+                      <button id="openSignin" class="btn-auth" type="button">Sign in</button>
+                    </li>
+                </ul>
+            </div>
+            <div id="authButtons" class="nav-actions">
+              <button id="openSigninDesktop" class="btn-auth" type="button">Sign in</button>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Mood Tracker</h1>
+    </header>
 
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-30">
+    <main id="main-content" class="mood-tracker-container">
+        <aside class="mood-tracker-sidebar">
         <div class="p-4 border-b">
             <div class="flex items-center gap-2 mb-2">
                 <div class="w-8 h-8 bg-blue-900 rounded-full flex items-center justify-center text-white text-xs">
@@ -135,7 +244,7 @@
         </nav>
     </aside>
 
-    <main class="flex-1 ml-64 min-h-screen flex flex-col items-center py-10 relative">
+    <div class="mood-tracker-main">
         <div class="absolute inset-0 white-glow pointer-events-none"></div>
 
         <button id="backButton" onclick="goBack()" class="hidden fixed left-72 top-6 z-40 text-white hover:text-gray-200 text-5xl font-bold transition-colors" title="Go back">
@@ -606,9 +715,22 @@
                 </form>
             </div>
         </div>
+    </div>
     </main>
 
-    <script>
+    <footer class="footer">
+        <h4>About Us</h4>
+        <p>Built with purpose.</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f" aria-label="Facebook"></i>
+            <i class="fab fa-twitter" aria-label="Twitter"></i>
+            <i class="fab fa-instagram" aria-label="Instagram"></i>
+            <i class="fab fa-linkedin-in" aria-label="LinkedIn"></i>
+        </div>
+        <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
+    </footer>
+
+    <script src="menu.js"></script>
         let selectedMoodValue = null;
 
         let currentView = 'dashboard';
