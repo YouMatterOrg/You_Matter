@@ -26,9 +26,9 @@
     --font-size-h2: 2.5rem;
     --font-size-h3: 1.5rem;
     --font-size-h4: 1.1rem;
-    --font-size-body: 1rem;
-    --font-size-small: 0.95rem;
-    --font-size-smaller: 0.9rem;
+    --font-size-body: 18px;
+    --font-size-small: 16px;
+    --font-size-smaller: 15px;
     
     --line-height-heading: 1.2;
     --line-height-body: 1.8;
@@ -39,6 +39,7 @@
     margin: 0;
     padding: 0;
     font-family: var(--font-family);
+    font-size: 18px;
 }
 
 /* Skip to main content link - visible on focus */
