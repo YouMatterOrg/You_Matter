@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- Minimal hero overrides: image + diagonal grey panel -->
+    <!-- rishi - this is the hero section styels, dont touch plz -->
     <style>
       /* right-side light orange diagonal panel */
       .header.hero-header::before {
@@ -474,10 +474,10 @@
     </style>
 </head>
 <body>
-    <!-- Skip to main content link for accessibility -->
+    <!-- rishi add this skip link thing for accesibility stuff -->
     <a href="#main-content" class="skip-to-main">Skip to main content</a>
     
-    <!-- Hero Section -->
+    <!-- hero secton - rishi made this look cool -->
     <header class="header hero-header">
         <nav>
             <a href="index.html"><img src="images/logo.png" alt="YOU MATTER Logo"></a>
@@ -538,13 +538,13 @@
     </header>
 
     <main id="main-content">
-        <!-- Main Four Tabs Section -->
+        <!-- dhairya made these 4 tabs look niice -->
         <section class="homepage-section" id="main-tabs">
             <h2 class="reveal" data-anim="down" style="--anim-delay: 120ms;">Explore YOU MATTER</h2>
             <p class="homepage-section-subtitle reveal" data-anim="up" style="--anim-delay: 200ms;">Everything you need to understand mental health, get support, and connect with others on similar journeys.</p>
             
             <div class="four-tabs-container">
-                <!-- Tab 1: About Us -->
+                <!-- dhairya tab 1 about us -->
                 <article class="four-tab reveal" data-anim="up" style="--anim-delay: 120ms;" role="region" aria-label="About Us section">
                     <a href="about-youmatter.html" class="four-tab-link">
                         <div class="four-tab-icon">
@@ -556,7 +556,7 @@
                     </a>
                 </article>
 
-                <!-- Tab 2: Mental Health Conditions -->
+                <!-- rishi tab 2 mental helth conditions -->
                 <article class="four-tab reveal" data-anim="up" style="--anim-delay: 200ms;" role="region" aria-label="Mental Health Conditions section">
                     <a href="disorders.html" class="four-tab-link">
                         <div class="four-tab-icon">
@@ -568,7 +568,7 @@
                     </a>
                 </article>
 
-                <!-- Tab 3: Testimonials -->
+                <!-- dhairya tab 3 testimonals -->
                 <article class="four-tab reveal" data-anim="up" style="--anim-delay: 280ms;" role="region" aria-label="Stories of Hope section">
                     <a href="testimonials.html" class="four-tab-link">
                         <div class="four-tab-icon">
@@ -580,7 +580,7 @@
                     </a>
                 </article>
 
-                <!-- Tab 4: Blog -->
+                <!-- rishi tab 4 blog stuff -->
                 <article class="four-tab reveal" data-anim="up" style="--anim-delay: 360ms;" role="region" aria-label="Blog & Insights section">
                     <a href="blog.html" class="four-tab-link">
                         <div class="four-tab-icon">
@@ -594,7 +594,7 @@
             </div>
         </section>
 
-        <!-- Quick Links Section -->
+        <!-- dhairya quick links section, these r handy -->
         <section class="quick-links-section" role="region" aria-label="Quick Access">
             <h2 class="reveal" data-anim="down" style="--anim-delay: 120ms;">Quick Access</h2>
             <p class="homepage-section-subtitle reveal" data-anim="up" style="--anim-delay: 200ms;">Go straight to what you need.</p>
@@ -637,7 +637,7 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+        <!-- dhairya cta button section thing -->
         <section class="cta-section" role="region" aria-label="Call to action">
             <h2 class="reveal" data-anim="down" style="--anim-delay: 120ms;">Ready to Take the First Step?</h2>
             <p class="reveal" data-anim="up" style="--anim-delay: 200ms;">Your mental health matters. Whether you're looking for information, support, or just want to understand yourself better, we're here to help.</p>
@@ -645,7 +645,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- rishi - footer goes here obviosly -->
     <footer class="footer">
         <h4>About Us</h4>
         <p>Built with purpose.</p>
@@ -658,12 +658,12 @@
         <p>MADE WITH <i class="fa-regular fa-heart"></i> BY THE YOU MATTER TEAM</p>
     </footer>
 
-    <!-- Auth Modal -->
+    <!-- rishi - login popup modal thingy, took forever to get working lol -->
     <div id="authModalOverlay" class="ym-modal-overlay" aria-hidden="true">
       <div class="ym-modal" role="dialog" aria-modal="true" aria-labelledby="ymModalTitle">
         <button class="ym-modal-close" id="closeAuthModal" aria-label="Close">✕</button>
 
-        <!-- SIGN IN VIEW -->
+        <!-- dhairya sign in form view -->
         <div id="ymSignInView">
           <div class="ym-modal-head">
             <h2 id="ymModalTitle" class="ym-title">Sign in</h2>
@@ -710,7 +710,7 @@
           <div class="ym-msg" id="ymMsg"></div>
         </div>
 
-        <!-- REGISTER VIEW -->
+        <!-- dhairya registar form thingy -->
         <div id="ymRegisterView" style="display:none;">
           <div class="ym-modal-head">
             <h2 class="ym-title">Create your account</h2>
@@ -757,7 +757,7 @@
 
     <script src="menu.js"></script>
 
-    <!-- Auth modal management -->
+    <!-- rishi - firebase auth stuff, dont mess with this its fragile -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
       import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
@@ -1042,7 +1042,7 @@
 
     </script>
 
-    <!-- Entrance animations: reveal elements on load and scroll -->
+    <!-- rishi - cool scroll animatons, makes stuff fade in n stuff -->
     <script>
             (function(){
                 const els = document.querySelectorAll('.reveal');
@@ -1062,11 +1062,12 @@
             })();
         </script>
 
-    <!-- Accessibility enhancements: active navigation, keyboard navigation, focus states -->
+    <!-- rishi - accesibilty js file, helps with keybord nav and stuff -->
     <script src="accessibility.js"></script>
 
-    <!-- Chatbase Chat Widget -->
+    <!-- rishi - chatbot widget, preety cool ai thing -->
     <script src="chatbot.js"></script>
+    <!-- rishi - this fixes alt text on imgs automaticaly -->
     <script src="image-accessibility.js"></script>
 </body>
 </html>
