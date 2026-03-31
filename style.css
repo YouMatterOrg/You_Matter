@@ -1153,10 +1153,17 @@ p{
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-bottom: 48px;
     position: relative;
     overflow: hidden;
+}
+
+/* Keep nav anchored at the top of sub-header pages */
+.sub-header nav {
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
 }
 
 .sub-header::after {
