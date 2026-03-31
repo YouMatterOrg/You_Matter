@@ -19,7 +19,7 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
 .blog-intro p { font-size: 0.98rem; color: #6b7280; }
 
 /* Search Box */
-.search-box { background: #f4f7ff; padding: 20px; border-radius: 12px; }
+.search-box { background: #fff8ee; padding: 20px; border-radius: 12px; border: 1px solid #ffe0a0; }
 .search-box-title { font-size: 1.1rem; font-weight: 700; color: #0b2345; margin-bottom: 16px; }
 .search-input-wrapper { display: flex; gap: 8px; align-items: center; }
 .search-input-wrapper input { flex: 1; padding: 10px 14px; border: 1px solid #e0e7ff; border-radius: 8px; font-size: 0.9rem; color: #0b2345; background: #ffffff; }
@@ -32,28 +32,28 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
   -webkit-text-fill-color: transparent !important;
 }
 .search-btn { background: #F5A623; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; }
-.search-btn:hover { background: #f07c2d; }
+.search-btn:hover { background: #e67e2f; }
 
 /* Filter Dropdowns */
 .filter-group { background: #ffffff; padding: 16px; border-radius: 12px; border: 1px solid #e0e7ff; }
 .filter-label { font-size: 0.95rem; font-weight: 600; color: #0b2345; margin-bottom: 10px; display: block; }
 .filter-select { width: 100%; padding: 10px 12px; border: 1px solid #e0e7ff; border-radius: 8px; font-size: 0.9rem; color: #0b2345; background: #ffffff; cursor: pointer; }
-.filter-select:hover { border-color: #0b2345; }
+.filter-select:hover { border-color: #F5A623; }
 
 /* Clear All */
-.clear-all { color: #0b2345; font-size: 0.95rem; font-weight: 600; cursor: pointer; text-decoration: underline; }
+.clear-all { color: #F5A623; font-size: 0.95rem; font-weight: 600; cursor: pointer; text-decoration: underline; }
 .clear-all:hover { text-decoration: none; }
 
 #blog-list { display: grid; grid-template-columns: repeat(3, minmax(240px, 1fr)); gap: 24px; }
-.post-card { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; background: #f4f7ff; border-radius: 16px; padding: 24px; border: 1px solid #e0e7ff; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08); cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease; }
-.post-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12); background: #edf3ff; }
-.post-label { font-size: 0.85rem; font-weight: 600; color: #2563eb; margin-bottom: 12px; }
+.post-card { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #e5e7eb; border-left: 5px solid #F5A623; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08); cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease; }
+.post-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(13, 43, 87, 0.14); }
+.post-label { font-size: 0.85rem; font-weight: 600; color: #F5A623; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
 .post-title { font-size: 1.25rem; line-height: 1.4; font-weight: 700; color: #0b2345; margin: 0; }
-.post-learn { margin-top: auto; padding-top: 16px; font-size: 0.95rem; font-weight: 600; color: #2563eb; display: inline-flex; align-items: center; text-decoration: none; }
-.post-learn span { border-bottom: 2px solid #2563eb; padding-bottom: 2px; }
+.post-learn { margin-top: auto; padding-top: 16px; font-size: 0.95rem; font-weight: 600; color: #F5A623; display: inline-flex; align-items: center; text-decoration: none; }
+.post-learn span { border-bottom: 2px solid #F5A623; padding-bottom: 2px; }
 
 #blog-detail { display: none; margin-top: 40px; grid-column: 1 / -1; }
-.detail-card { background: #ffffff; border-radius: 24px; border: 1px solid #e5e7eb; padding: 40px; box-shadow: 0 16px 50px rgba(15, 23, 42, 0.10); }
+.detail-card { background: #ffffff; border-radius: 24px; border: 1px solid #e5e7eb; border-left: 5px solid #F5A623; padding: 40px; box-shadow: 0 16px 50px rgba(15, 23, 42, 0.10); }
 .detail-title { font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: #0b2345; }
 .detail-meta { font-size: 0.9rem; color: #6b7280; margin-bottom: 28px; }
 .detail-body { display: flex; flex-direction: column; gap: 16px; }
@@ -61,7 +61,7 @@ body { font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Se
 .btn-row { margin-top: 24px; }
 .btn-back { appearance: none; border-radius: 999px; padding: 10px 20px; border: 1px solid #cbd5e1; background: #ffffff; font-size: 0.9rem; cursor: pointer; font-weight: 500; color: #0b2345; display: inline-flex; align-items: center; gap: 6px; transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease; }
 .btn-back i { font-size: 0.85rem; }
-.btn-back:hover { background: #e5edff; border-color: #2563eb; transform: translateY(-1px); }
+.btn-back:hover { background: #fff8ee; border-color: #F5A623; transform: translateY(-1px); }
 
 @media (max-width: 900px) {
   .blog-wrapper { grid-template-columns: 1fr; gap: 24px; }
