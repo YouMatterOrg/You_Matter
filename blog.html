@@ -621,37 +621,6 @@ const searchBtn = document.getElementById("search-btn");
 const topicFilter = document.getElementById("topic-filter");
 const clearAllBtn = document.getElementById("clear-all");
 
-// Prevent password manager autofill on search input
-if (searchInput) {
-  // Clear any pre-filled values immediately
-  searchInput.value = '';
-  
-  // Prevent autofill on input event
-  searchInput.addEventListener('input', (e) => {
-    if (e.target.value && !e.target._userTyping) {
-      e.target.value = '';
-    }
-  });
-  
-  // Track user typing
-  searchInput.addEventListener('keydown', (e) => {
-    searchInput._userTyping = true;
-  });
-  
-  searchInput.addEventListener('keyup', (e) => {
-    searchInput._userTyping = false;
-  });
-  
-  // Clear on focus to prevent autofill
-  searchInput.addEventListener('focus', (e) => {
-    setTimeout(() => {
-      if (e.target.value && !e.target._userTyping) {
-        e.target.value = '';
-      }
-    }, 10);
-  });
-}
-
 let filteredPosts = [...posts];
 
 function filterPosts() {
@@ -730,7 +699,6 @@ searchInput.addEventListener("input", filterPosts);
 searchBtn.addEventListener("click", filterPosts);
 topicFilter.addEventListener("change", filterPosts);
 btnBack.addEventListener("click", goBack);
-clearAllBtn.addEventListener("click", clearFilters);
 clearAllBtn.addEventListener("click", clearFilters);
 
 // Initialize
@@ -1060,7 +1028,6 @@ checkUrlForPost();
             openSigninMobileBtn.onclick = function() { openModal("login"); };
           }
         }
-      });
       });
     </script>
 
