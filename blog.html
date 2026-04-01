@@ -622,9 +622,11 @@ const topicFilter = document.getElementById("topic-filter");
 const clearAllBtn = document.getElementById("clear-all");
 
 let filteredPosts = [...posts];
+let detailOpen = false;
 
 function filterPosts() {
-  const searchTerm = searchInput.value.toLowerCase();
+  if (detailOpen) return;
+  const searchTerm = searchInput.value.toLowerCase().trim();
   const selectedTopic = topicFilter.value;
 
   filteredPosts = posts.filter(post => {
@@ -664,17 +666,21 @@ function renderList() {
 function openPost(id) {
   const post = posts.find(p => p.id === id);
   if (!post) return;
+  detailOpen = true;
   detailTitleEl.textContent = post.title;
   detailMetaEl.textContent = `${post.date} · ${post.tag}`;
   detailBodyEl.innerHTML = post.body;
   blogListEl.style.display = "none";
+  document.querySelector(".blog-intro").style.display = "none";
   blogDetailEl.style.display = "block";
   document.querySelector(".blog-main").scrollIntoView({ behavior: "smooth" });
 }
 
 function goBack() {
+  detailOpen = false;
   blogDetailEl.style.display = "none";
   blogListEl.style.display = "grid";
+  document.querySelector(".blog-intro").style.display = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -704,16 +710,9 @@ clearAllBtn.addEventListener("click", clearFilters);
 // Initialize — clear any browser-autofilled values, then render all posts
 searchInput.value = "";
 topicFilter.value = "";
-filterPosts();
+filteredPosts = [...posts];
+renderList();
 checkUrlForPost();
-
-// Re-render after a short delay to handle late browser autofill
-setTimeout(function() {
-  if (filteredPosts.length === 0 && !searchInput.value && !topicFilter.value) {
-    filteredPosts = [...posts];
-    renderList();
-  }
-}, 200);
 </script>
 <!-- ================= AUTH MODAL ================= -->
 <div id="authModalOverlay" class="ym-modal-overlay">
