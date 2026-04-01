@@ -1156,7 +1156,6 @@ p{
     justify-content: space-between;
     padding-bottom: 48px;
     position: relative;
-    overflow: hidden;
 }
 
 /* Keep nav anchored at the top of sub-header pages */
