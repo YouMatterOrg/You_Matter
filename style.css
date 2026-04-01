@@ -1163,6 +1163,8 @@ p{
     justify-content: space-between;
     align-items: center;
     padding-top: 20px;
+    position: relative;
+    z-index: 2;
 }
 
 .sub-header::after {
@@ -1173,6 +1175,7 @@ p{
     right: 0;
     height: 4px;
     background: linear-gradient(90deg, #F5A623, #e67e2f);
+    z-index: 1;
 }
 
 .sub-header h1{
