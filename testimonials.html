@@ -53,11 +53,10 @@
         }
 
         .testimonial-card-link {
-            display: block;
+            display: flex;
             text-decoration: none;
             color: inherit;
             height: 100%;
-            display: flex;
             flex-direction: column;
         }
 
@@ -79,6 +78,7 @@
             padding: 24px;
             display: flex;
             flex-direction: column;
+            flex-grow: 1;
         }
 
         .testimonial-card h3 {
@@ -113,6 +113,8 @@
             font-weight: 600;
             transition: background 0.3s ease;
             text-align: center;
+            margin-top: auto;
+            align-self: flex-start;
         }
 
         .learn-more-btn:hover {
