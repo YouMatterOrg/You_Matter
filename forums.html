@@ -10,538 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-  <!--
-    :root{
-      --ink: #0b1220;
-      --muted: #475569;
-      --muted2:#64748b;
-      --border:#e5e7eb;
-      --card:#ffffff;
-      --shell:#f8fafc;
-      --brand:#0d2b57;
-
-      --good:#16a34a;
-      --info:#2563eb;
-      --soft:#eef2ff;
-
-      --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
-      --shadow2: 0 6px 16px rgba(2, 6, 23, 0.08);
-      --radius: 16px;
-      --radius2: 12px;
-      --ring: 0 0 0 4px rgba(37, 99, 235, 0.18);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--ink);
-    }
-    a { color: inherit; }
-
-    /* Prefer-reduced-motion */
-    @media (prefers-reduced-motion: reduce) {
-      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-    }
-
-    .content-section {
-      width: 100%;
-      background: #ffffff;
-      padding: 46px 20px 80px;
-    }
-    .content-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      color: var(--ink);
-    }
-
-    /* ---- TOP CALLOUT (Crisis) ---- */
-    .crisis-banner{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:14px;
-      padding: 14px 16px;
-      border: 1px solid rgba(37, 99, 235, 0.18);
-      background: linear-gradient(180deg, #ffffff, #f8fbff);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      margin-bottom: 18px;
-    }
-    .crisis-left{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-    }
-    .crisis-icon{
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(37, 99, 235, 0.10);
-      border: 1px solid rgba(37, 99, 235, 0.18);
-      color: var(--info);
-      flex: 0 0 auto;
-    }
-    .crisis-text h3{
-      margin: 0 0 2px;
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: var(--brand);
-    }
-    .crisis-text p{
-      margin:0;
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-    .crisis-actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex: 0 0 auto;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      text-decoration:none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--brand);
-      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow2); }
-    .btn:focus{ outline: none; box-shadow: var(--ring); }
-    .btn-primary{
-      border-color: rgba(13, 43, 87, 0.25);
-      background: linear-gradient(180deg, #0d2b57, #0b2448);
-      color: #fff;
-    }
-    .btn-quiet{
-      background: #f8fafc;
-    }
-
-    /* ---- PAGE HEADER ---- */
-    .forum-header-main{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap: 16px;
-      margin: 18px 0 18px;
-    }
-    .forum-title h1{
-      margin:0 0 6px;
-      font-size: 2.1rem;
-      font-weight: 700;
-      color: var(--brand);
-      letter-spacing: -0.02em;
-    }
-    .forum-title p{
-      margin:0;
-      font-size: 0.98rem;
-      color: var(--muted);
-      max-width: 68ch;
-      line-height: 1.55;
-    }
-    .forum-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 8px;
-      justify-content:flex-end;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(2,6,23,0.08);
-      background: #fff;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #0f172a;
-      box-shadow: 0 3px 10px rgba(2,6,23,0.05);
-      white-space: nowrap;
-    }
-    .pill i{ color: var(--info); }
-    .pill strong{ color: var(--brand); font-weight: 700; }
-
-    /* ---- MAIN SHELL ---- */
-    .forum-shell{
-      background: var(--shell);
-      border: 1px solid rgba(2,6,23,0.06);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    /* ---- TOOLBAR ---- */
-    .forum-tools{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      padding: 14px;
-      border: 1px solid rgba(2,6,23,0.06);
-      border-radius: var(--radius);
-      background: #fff;
-      margin-bottom: 16px;
-    }
-    .tool-left{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex: 1 1 520px;
-      min-width: 260px;
-    }
-    .search-wrap{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      border: 1px solid rgba(2,6,23,0.10);
-      border-radius: 14px;
-      padding: 10px 12px;
-      background: #ffffff;
-      flex: 1 1 auto;
-      min-width: 220px;
-    }
-    .search-wrap i{ color: var(--muted2); }
-    .search-wrap input{
-      border: none;
-      outline: none;
-      width: 100%;
-      font-size: 0.92rem;
-      color: var(--ink);
-      font-family: inherit;
-    }
-    .search-wrap input::placeholder{ color: #94a3b8; }
-
-    .select{
-      border: 1px solid rgba(2,6,23,0.10);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 0.88rem;
-      color: var(--ink);
-      background: #fff;
-      font-family: inherit;
-      outline:none;
-    }
-    .select:focus{ box-shadow: var(--ring); border-color: rgba(37,99,235,0.35); }
-
-    .tool-right{
-      display:flex;
-      gap: 10px;
-      flex: 0 0 auto;
-      align-items:center;
-    }
-
-    /* ---- GRID LAYOUT ---- */
-    .forum-grid{
-      display:grid;
-      grid-template-columns: 1.7fr 0.9fr;
-      gap: 16px;
-      align-items:start;
-    }
-
-    /* ---- BOARD ---- */
-    .board{
-      border-radius: var(--radius);
-      overflow:hidden;
-      border: 1px solid rgba(2,6,23,0.06);
-      background: #fff;
-    }
-    .board-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding: 14px 16px;
-      background: linear-gradient(180deg, #0d2b57, #0b2448);
-      color:#fff;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      font-size: 0.95rem;
-    }
-    .board-header .small{
-      font-weight: 500;
-      font-size: 0.82rem;
-      opacity: 0.9;
-    }
-
-    .topic{
-      display:grid;
-      grid-template-columns: minmax(0, 1.7fr) 180px 260px;
-      gap: 14px;
-      padding: 16px;
-      border-top: 1px solid rgba(2,6,23,0.06);
-      align-items:center;
-      transition: background .18s ease, transform .18s ease;
-      background: #fff;
-    }
-    .topic:hover{
-      background: #f8fafc;
-    }
-    .topic-main{
-      display:flex;
-      gap: 12px;
-      align-items:flex-start;
-      min-width: 0;
-    }
-    .topic-ico{
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border: 1px solid rgba(13,43,87,0.18);
-      background: rgba(13,43,87,0.05);
-      color: var(--brand);
-      flex: 0 0 auto;
-    }
-    .topic-text h2{
-      margin: 0 0 4px;
-      font-size: 1.02rem;
-      font-weight: 700;
-      color: var(--brand);
-      letter-spacing: -0.01em;
-    }
-    .topic-text p{
-      margin: 0;
-      font-size: 0.88rem;
-      color: var(--muted2);
-      line-height: 1.45;
-    }
-    .tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .tag{
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      padding: 6px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(2,6,23,0.08);
-      background: #fff;
-      color: #0f172a;
-    }
-    .tag.soft{ background: #f1f5f9; }
-    .tag.calm{ background: #eef2ff; border-color: rgba(99,102,241,0.25); color:#3730a3; }
-    .tag.green{ background: #ecfdf5; border-color: rgba(22,163,74,0.22); color:#166534; }
-
-    .metrics{
-      display:flex;
-      gap: 14px;
-      justify-content:flex-end;
-      text-align:right;
-      color: var(--muted2);
-      font-size: 0.82rem;
-    }
-    .metric{
-      min-width: 76px;
-    }
-    .metric .label{
-      display:block;
-      text-transform: uppercase;
-      letter-spacing: 0.10em;
-      font-size: 0.68rem;
-      color: #94a3b8;
-      margin-bottom: 2px;
-    }
-    .metric .value{
-      font-weight: 800;
-      color: var(--brand);
-      font-size: 0.92rem;
-    }
-
-    .latest-link{
-      text-decoration:none;
-      color: inherit;
-      display:block;
-      border-radius: 14px;
-      padding: 10px 12px;
-      background: linear-gradient(180deg, #0b1120, #0b1220);
-      border: 1px solid rgba(148,163,184,0.14);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .latest-link:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(2,6,23,0.22);
-      border-color: rgba(96,165,250,0.35);
-    }
-    .latest{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      min-width: 0;
-    }
-    .avatar{
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: #22c55e;
-      color:#052e16;
-      font-weight: 900;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex: 0 0 auto;
-      border: 1px solid rgba(2,6,23,0.18);
-    }
-    .latest-text{
-      min-width: 0;
-    }
-    .latest-title{
-      margin:0 0 2px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #93c5fd;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      max-width: 210px;
-    }
-    .latest-meta{
-      margin:0;
-      font-size: 0.76rem;
-      color: #cbd5e1;
-      opacity: 0.9;
-    }
-
-    /* ---- SIDEBAR ---- */
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap: 14px;
-    }
-    .panel{
-      background: #fff;
-      border: 1px solid rgba(2,6,23,0.06);
-      border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.06);
-    }
-    .panel h3{
-      margin: 0 0 10px;
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: var(--brand);
-      letter-spacing: -0.01em;
-    }
-    .panel p{
-      margin: 0 0 10px;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-    .checklist{
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted2);
-      font-size: 0.86rem;
-      line-height: 1.6;
-    }
-    .checklist li + li{ margin-top: 8px; }
-
-    .mini-actions{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .reactions{
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .react{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(2,6,23,0.08);
-      background: #fff;
-      font-size: 0.80rem;
-      font-weight: 700;
-      color: #0f172a;
-      cursor: pointer;
-      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
-    }
-    .react:hover{ transform: translateY(-1px); box-shadow: 0 8px 18px rgba(2,6,23,0.08); }
-    .react:focus{ outline:none; box-shadow: var(--ring); }
-    .react i{ color: #ef4444; }
-    .react.blue i{ color: var(--info); }
-    .react.green i{ color: var(--good); }
-
-    /* ---- RULES SECTION ---- */
-    .rules-wrap{
-      margin-top: 18px;
-      border-radius: var(--radius);
-      overflow:hidden;
-      border: 1px solid rgba(2,6,23,0.06);
-      background: #020617;
-      box-shadow: var(--shadow);
-    }
-    .rules-head{
-      padding: 16px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(148,163,184,0.18);
-    }
-    .rules-head h3{
-      margin:0;
-      color:#f8fafc;
-      font-size: 1.02rem;
-      font-weight: 800;
-    }
-    .rules-body{
-      padding: 16px;
-    }
-    .rules-body p{
-      margin: 0 0 10px;
-      color: #e5e7eb;
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-    .rules-list{
-      margin:0;
-      padding-left: 18px;
-      color:#cbd5e1;
-      font-size: 0.86rem;
-      line-height: 1.6;
-    }
-    .rules-list li + li{ margin-top: 8px; }
-    .rules-body strong{ color:#fff; }
-
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 1000px){
-      .forum-grid{ grid-template-columns: 1fr; }
-      .topic{ grid-template-columns: 1fr; }
-      .metrics{ justify-content:flex-start; text-align:left; }
-      .latest-link{ max-width: 100%; }
-      .forum-header-main{ flex-direction:column; align-items:flex-start; }
-      .forum-badges{ justify-content:flex-start; }
-      .crisis-actions{ flex-wrap: wrap; justify-content:flex-end; }
-    }
-  -->
   <style>
 
         /* Modal overlay */
@@ -881,29 +349,31 @@
     </section>
 
     <!-- Forum Detail View -->
-    <section id="forumDetailView" style="display: none;">
-      <button id="backToList" style="padding: 10px 16px; background: #0d2b57; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 20px; font-weight: 600;">
+    <section id="forumDetailView" style="display: none; max-width: 1040px; margin: 0 auto;">
+      <button id="backToList" class="wpBackBtn">
         <i class="fa-solid fa-arrow-left"></i> Back to Forums
       </button>
       
-      <div style="background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-        <h1 id="detailTitle" style="margin: 0 0 8px; font-size: 28px; color: #0d2b57;"></h1>
-        <p id="detailAuthor" style="margin: 0 0 16px; color: #666; font-size: 14px;"></p>
-        <p id="detailDesc" style="margin: 0; color: #444; font-size: 16px; line-height: 1.6;"></p>
+      <div class="wpDetailCard">
+        <h1 id="detailTitle" class="wpDetailTitle"></h1>
+        <p id="detailAuthor" class="wpDetailMeta"></p>
+        <p id="detailDesc" class="wpDetailDesc"></p>
       </div>
 
-      <div style="background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-        <h2 style="margin-top: 0; color: #0d2b57;">Replies</h2>
-        <div id="repliesList" style="margin-bottom: 24px;"></div>
+      <div class="wpRepliesCard">
+        <h2>Replies</h2>
+        <div id="repliesList"></div>
 
-        <h3 style="color: #0d2b57; margin-top: 24px;">Add your reply</h3>
-        <div style="display: flex; gap: 12px;">
-          <input id="replyName" type="text" placeholder="Your name (optional)" maxlength="60" style="flex: 0 0 200px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;">
-          <textarea id="replyText" placeholder="Share your thoughts..." maxlength="500" style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical; min-height: 80px;"></textarea>
-        </div>
-        <div style="display: flex; gap: 8px; margin-top: 12px;">
-          <button id="submitReply" style="padding: 10px 20px; background: #0d2b57; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Post Reply</button>
-          <span id="replyStatus" style="color: #666; padding-top: 10px; font-size: 14px;"></span>
+        <div class="wpReplyForm">
+          <h3>Add your reply</h3>
+          <div class="wpReplyFormRow">
+            <input id="replyName" class="wpReplyInput" type="text" placeholder="Your name (optional)" maxlength="60">
+            <textarea id="replyText" class="wpReplyTextarea" placeholder="Share your thoughts..." maxlength="500"></textarea>
+          </div>
+          <div class="wpReplyActions">
+            <button id="submitReply" class="wpSubmitBtn">Post Reply</button>
+            <span id="replyStatus" class="wpReplyStatus"></span>
+          </div>
         </div>
       </div>
     </section>
@@ -1022,7 +492,7 @@
         topicList.innerHTML = '';
         
         if (querySnapshot.empty) {
-          topicList.innerHTML = '<div style="padding: 40px 20px; text-align: center; color: #999;">No forums yet. Be the first to create one!</div>';
+          topicList.innerHTML = '<div style="padding: 50px 20px; text-align: center; color: #9ca3af;"><i class="fa-solid fa-comments" style="font-size: 2rem; color: #d1d5db; margin-bottom: 12px; display: block;"></i>No forums yet. Be the first to create one!</div>';
           return;
         }
         
@@ -1042,21 +512,20 @@
           }
           
           const forumHtml = `
-            <div class="topic" style="cursor: pointer; transition: background 0.2s;" onclick="window.openForum('${forumId}')">
-              <div class="topic-main">
-                <div class="topic-ico" style="background: #eef2ff; color: #0d2b57;">
-                  <i class="fa-solid fa-comments"></i>
-                </div>
-                <div class="topic-text">
-                  <h2 style="margin: 0 0 4px; color: #0d2b57; font-weight: 700;">${escapeHtml(forum.title)}</h2>
-                  <p style="margin: 0 0 8px; color: #666; font-size: 14px;">${escapeHtml(forum.description)}</p>
-                  ${forum.author ? `<p style="margin: 0; font-size: 13px; color: #999;">by ${escapeHtml(forum.author)}</p>` : '<p style="margin: 0; font-size: 13px; color: #999;">by Anonymous</p>'}
+            <div class="wpRow" onclick="window.openForum('${forumId}')">
+              <div class="wpTopicCell">
+                <div class="wpTopicIcon"><i class="fa-solid fa-comments"></i></div>
+                <div>
+                  <div class="wpTopicTitle">${escapeHtml(forum.title)}</div>
+                  <div class="wpTopicDesc">${escapeHtml(forum.description)}</div>
+                  <div class="wpTopicAuthor">${forum.author ? 'by ' + escapeHtml(forum.author) : 'by Anonymous'}</div>
                 </div>
               </div>
-              <div style="text-align: center;">
-                <div style="font-weight: 700; color: #0d2b57; font-size: 18px;">${replyCount}</div>
-                <div style="font-size: 12px; color: #999; text-transform: uppercase; margin-top: 4px;">Replies</div>
+              <div class="wpReplies">
+                ${replyCount}
+                <span class="wpRepliesLabel">Replies</span>
               </div>
+              <div class="wpLatest">${formatDate(forum.updatedAt || forum.createdAt)}</div>
             </div>
           `;
           topicList.innerHTML += forumHtml;
@@ -1120,12 +589,12 @@
         querySnapshot.forEach((docSnapshot) => {
           const reply = docSnapshot.data();
           const replyHtml = `
-            <div style="border-left: 3px solid #0d2b57; padding: 16px; margin-bottom: 12px; background: #f8fafc; border-radius: 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
-                <strong style="color: #0d2b57;">${escapeHtml(reply.author || 'Anonymous')}</strong>
-                <span style="font-size: 12px; color: #999;">${formatDate(reply.createdAt)}</span>
+            <div class="wpReplyItem">
+              <div class="wpReplyHead">
+                <strong class="wpReplyAuthor">${escapeHtml(reply.author || 'Anonymous')}</strong>
+                <span class="wpReplyTime">${formatDate(reply.createdAt)}</span>
               </div>
-              <p style="margin: 0; color: #444; line-height: 1.6;">${escapeHtml(reply.text)}</p>
+              <p class="wpReplyText">${escapeHtml(reply.text)}</p>
             </div>
           `;
           repliesList.innerHTML += replyHtml;
